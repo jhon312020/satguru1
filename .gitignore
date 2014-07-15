@@ -1,0 +1,42 @@
+# User specific & automatically generated files #
+#################################################
+/application/Config/database.php
+/application/config/database_1.php
+/application/DesignTemplate
+/application/pdf
+/application/system
+/application/temp
+/application/voucher_pdf_files
+/application/sql
+/application/RequirementsSharedByJisha
+/application/assets
+/application/credit
+/application/logs
+
+#  Admin Specific files #
+#########################
+/admin/application/Config/database.php
+/admin/application/autofill
+/admin/application/banner_images
+/admin/application/css
+/admin/application/excel
+/admin/application/font
+/admin/application/holiday_images
+/admin/application/holiday_symbol
+/admin/application/img
+/admin/application/js
+/admin/application/upload_files
+/admin/application/logs
+
+
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db

@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+<?php $this->load->view('links'); ?>
+<!-- Validation -->
+<script src="<?php echo WEB_DIR_ADMIN ?>js/plugins/validation/jquery.validate.min.js"></script>
+<script src="<?php echo WEB_DIR_ADMIN ?>js/plugins/validation/additional-methods.min.js"></script>
+<body>
+	
+	<div id="modal-user" class="modal hide">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="user-infos"><?php echo $admin_det->first_name." ".$admin_det->last_name; ?></h3>
+		</div>
+		<div class="modal-body">
+			<div class="row-fluid">
+				<div class="span2">
+					<img src="img/demo/user-1.jpg" alt="">
+				</div>
+				<div class="span10">
+					<dl class="dl-horizontal" style="margin-top:0;">
+						<dt>Full name:</dt>
+						<dd><?php echo $admin_det->first_name." ".$admin_det->last_name; ?></dd>
+						<dt>Email:</dt>
+						<dd><?php echo $admin_det->email; ?></dd>
+						
+					</dl>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal">Close</button>
+		</div>
+	</div>
+	<div id="navigation">
+		<div class="container-fluid">
+			<a href="#" id="brand"><img src="<?php echo WEB_DIR_ADMIN ?>img/newlogo.png"></a>
+			<a href="#" class="toggle-nav" rel="tooltip" data-placement="bottom" title="Toggle navigation"><i class="icon-reorder"></i></a>
+			<ul class='main-nav'>
+				<li class='active'>
+					<a href="<?php echo WEB_URL_ADMIN ?>admin/admin_dashboard">
+						<span>Home</span>
+					</a>
+				</li>
+				
+			<?php $this->load->view('topmenu'); ?>
+		</div>
+	</div>
+	<div class="container-fluid" id="content">
+		
+		<?php $this->load->view('leftmenu'); ?>
+		<div id="main">
+			<div class="container-fluid">
+				<div class="page-header">
+					<div class="pull-left">
+						<h1>B2C Markup</h1>
+					</div>
+					<div class="pull-right">
+						<ul class="minitiles">
+							<li class='grey'>
+								
+							</li>
+							<li class='lightgrey'>
+								
+							</li>
+						</ul>
+						<ul class="stats">
+							
+							<li class='lightred'>
+								<i class="icon-calendar"></i>
+								<div class="details">
+									<span class="big">February 22, 2013</span>
+									<span>Wednesday, 13:56</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="breadcrumbs">
+					<ul>
+						<li>
+							<a href="<?php echo WEB_URL_ADMIN ?>admin/admin_dashboard">Dashboard</a>
+							<i class="icon-angle-right"></i>
+						</li>
+						
+					</ul>
+					<div class="close-bread">
+						<a href="#"><i class="icon-remove"></i></a>
+					</div>
+				</div>
+				
+				
+				
+				<div class="box box-color box-bordered red">
+							<div class="box-title">
+								<h3>
+									<i class="icon-ok"></i>
+									B2C Markup - <?php echo $ty; ?>
+								</h3>
+							</div>
+							<div class="box-content">
+							<h4>API BASED</h4>
+								<form action="<?php echo WEB_URL_ADMIN ?>admin/b2cmarkupinsert/1" method="POST" class='form-horizontal form-validate' id="bb">
+									<div class="control-group">
+										<label for="textfield" class="control-label">API Name</label>
+										<div class="controls">
+											<select name="api" id="api" class="input-xlarge" data-rule-required="true">
+											<?php foreach($api_list as $key => $value) { ?>
+												<option value="<?php echo $value->api_id?>"><?php echo $value->api_name ?></option>
+											<?php } ?>
+											</select>
+										</div>
+									</div>
+									<div class="control-group">
+										<label for="textfield" class="control-label">Markup (%)</label>
+										<div class="controls">
+											<input type="text" name="markup" id="markup" class="input-xlarge" data-rule-number="true" value="<?php if(isset($markupdet)) { if($markupdet!= '') { echo $markupdet->markup; } } ?>" >
+										</div>
+									</div>
+									<input type="hidden" name="module_type" value="1" />
+									<div class="form-actions">
+										<input type="submit" class="btn btn-primary" value="Submit">
+										
+									</div>
+								</form>
+							</div>
+							
+							<div class="box-content">
+							<h4>COUNTRY BASED</h4>
+								<form action="<?php echo WEB_URL_ADMIN ?>admin/b2cmarkupinsertcountry/1" method="POST" class='form-horizontal form-validate' id="bb">
+									<div class="control-group">
+										<label for="textfield" class="control-label">API Name</label>
+										<div class="controls">
+											<select name="api_country" id="api_country" class="input-xlarge" data-rule-required="true">
+											<?php foreach($api_list as $key => $value) { ?>
+												<option value="<?php echo $value->api_id?>"><?php echo $value->api_name ?></option>
+											<?php } ?>
+											</select>
+										</div>
+									</div>
+									<div class="control-group">
+										<label for="textfield" class="control-label">Markup (%)</label>
+										<div class="controls">
+											<input type="text" name="markup_country" id="markup_country" class="input-xlarge" data-rule-number="true" value="<?php if(isset($markupdet)) { if($markupdet!= '') { echo $markupdet->markup; } } ?>" >
+										</div>
+									</div>
+									<?php $country = $this->Home_Model->getcountry(); ?>
+									<div class="control-group">
+										<label for="textfield" class="control-label">Country</label>
+										<div class="controls">
+											<select name="country_name" id="country_name" class="input-xlarge" data-rule-required="true">
+											<option value="">Select</option>
+											<?php if(isset($country)) { if($country != '') { foreach($country as $cnt) { ?>
+											<option value="<?php echo $cnt->country_id; ?>"><?php echo $cnt->name; ?></option>
+											<?php } } } ?>
+											</select>
+										</div>
+									</div>
+									<div class="form-actions">
+										<input type="submit" class="btn btn-primary" value="Submit">
+										
+									</div>
+								</form>
+								
+							</div>
+							
+							
+						</div>
+				
+			</div>
+			
+		</div></div>
+		
+	</body>
+
+	</html>
+

@@ -359,7 +359,7 @@ public function __construct()
 					$this->Home_Model->add_facilitycode($facilitycode,$facility_id);
 				}  
 			}
-			$Cancellation = $this->input->post('cp');
+			/*$Cancellation = $this->input->post('cp');
 			$excp = $this->input->post('excp');
 			$exdate1 = $this->input->post('exdate');
 			$exdatetill2 = $this->input->post('exdatetill');
@@ -370,8 +370,16 @@ public function __construct()
 			$cancel_id = $this->db->insert_id();
 			$cancelcode="C".$cancel_id;
 			$this->Home_Model->add_cancellationpolicycode($cancelcode,$cancel_id);
-		} 
+		}*/ 
 		
+			$Cancellation = $this->input->post('cp');
+			if ($Cancellation)
+			{
+				$this->Home_Model->add_cancellationpolicy($hotelcode, $Cancellation);
+				$cancel_id = $this->db->insert_id();
+				$cancelcode="C".$cancel_id;
+				$this->Home_Model->add_cancellationpolicycode($cancelcode, $cancel_id);
+			}
 			redirect('admin/addroom/'.$hotelcode,'refresh');
 		}
 		else
@@ -526,7 +534,7 @@ public function __construct()
 				$redirect = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 				$redirectimage=dirname(dirname(dirname(dirname($redirect))));
 				$redirectupload=$redirectimage."/banner_images/";
-				if($_FILES['roomimage']['name'] !='')
+				if($roomimage)
 			{		
 				$rd = "room".rand(10,1000);
 				$file=$rd.$_FILES['roomimage']['name'][$i];
@@ -573,7 +581,6 @@ public function __construct()
 				redirect('admin/edithotel/'.$hotelid_id,'refresh');
 			
 			} */
-			
 			redirect('admin/manageprice/'.$hotelid_id1,'refresh');
 			
 		}

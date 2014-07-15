@@ -277,12 +277,17 @@ class Home_Model extends CI_Model
 		$this->db->update('hotel_images',$data);
 	}
 	
-	function add_cancellationpolicy($hotelcode,$Cancellation,$excp,$exdate1,$exdatetill2)
+	/*function add_cancellationpolicy($hotelcode,$Cancellation,$excp,$exdate1,$exdatetill2)
 	{
 		$data = array('HotelCode'=>$hotelcode,'cancelpolicy'=>$Cancellation,'exclude'=>$excp,'excludefrom'=>$exdate1,'excludeto'=>$exdatetill2,'createdby'=>'admin');
 		$this->db->insert('hotel_cancellationpolicy',$data);
-	}
+	}*/
 	
+	function add_cancellationpolicy($hotelcode, $Cancellation)
+	{
+		$data = array('HotelCode'=>$hotelcode,'cancelpolicy'=>$Cancellation,'createdby'=>'admin');
+		$this->db->insert('hotel_cancellationpolicy',$data);
+	}
 	function add_cancellationpolicycode($cancelcode,$cancel_id)
 	{
 		$data = array('cancelcode'=>$cancelcode);
@@ -303,7 +308,8 @@ class Home_Model extends CI_Model
 		}
 	}
 	
-	function add_room($hotelid_id1,$roomname,$roomsize,$beds,$extrabed,$description,$left_ban2,$createdby,$status)
+	//function add_room($hotelid_id1,$roomname,$roomsize,$beds,$extrabed,$description,$left_ban2,$createdby,$status)
+	function add_room($hotelid_id1,$roomname,$roomsize,$beds,$extrabed,$description,$left_ban2,$createdby = 'admin',$status = 1)
 	{
 		$data = array('HotelCode'=>$hotelid_id1,'RoomName'=>$roomname,'roomsize'=>$roomsize,'beds'=>$beds,'extrabed'=>$extrabed,'description'=>$description,'left_ban2'=>$left_ban2,'createdby'=>'admin','status'=>'1');
 		$this->db->insert('hotel_room_list',$data);

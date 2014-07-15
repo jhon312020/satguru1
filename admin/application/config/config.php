@@ -17,7 +17,7 @@
 //$config['base_url']	= '';
 if($_SERVER['HTTP_HOST']=='localhost' || $_SERVER['HTTP_HOST']=='192.168.1.11' )
 {
-	$config['base_url']	= "http://".$_SERVER['HTTP_HOST']."/www/satguru2/admin/";
+	$config['base_url']	= "http://".$_SERVER['HTTP_HOST']."/www/satguru1/admin/";
 }
 else
 {

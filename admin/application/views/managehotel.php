@@ -339,58 +339,6 @@ function airlinname_empty(val)
                 <input type="checkbox" value="Car Parking" name="carparking">
                 &nbsp;Car Parking&nbsp;&nbsp; </div>
             </div>
-            <script type="text/javascript">
-
-					  $(document).ready(function(){
-				  
-						  var counter = 2;
-						  
-						  $("#addButton").click(function () {
-							  $('body').on('focus',".datepick", function(){
-							$(this).datepicker();
-						});
-								  
-							  if(counter>10){
-								  alert("Only 10 textboxes allow");
-								  return false;
-							  }   
-							  
-							  var newTextBoxDiv = $(document.createElement('div')).attr("id", 'TextBoxDiv' + counter);
-								 
-								  
-								  
-							
-							 newTextBoxDiv.after().html('<div class="control-group"><label for="textfield" class="control-label">Cancellation Policy'+ counter + ' : </label><div class="controls">' +
-								  '	<select name="cp[]">  <?php for($i=1;$i<=31;$i++) { ?><option value="<?php echo $i;?>" ><?php echo $i;}?> </select> Days Throughout Contract Period.</div></div><div class="control-group"><label for="textfield" class="control-label">Excluding'+ counter + ' : </label><div class="controls">' +
-								  '<select name="excp[]">  <?php for($i=1;$i<=31;$i++) { ?><option value="<?php echo $i;?>" ><?php echo $i;}?> </select> </div></div><div class="control-group"><label for="textfield" class="control-label">Days during dates '+ counter + ' : </label><div class="controls">' +
-								  ' <input type="text" name="exdate[]" id="exdate[]"  class="input-xlarge datepick"></div></div><div class="control-group"><label for="textfield" class="control-label">Till '+ counter + ' : </label><div class="controls">' +
-								  '<input type="text" name="exdatetill[]" id="exdatetill[]"  class="input-xlarge datepick"></div></div>'); 
-							  newTextBoxDiv.appendTo("#TextBoxesGroup");
-								  
-							  counter++;
-						  });
-				  
-						  $("#removeButton").click(function () {
-							  if(counter==1){
-								  alert("No more textbox to remove");
-								  return false;
-							  }   
-							  counter--;
-							  
-							  $("#TextBoxDiv" + counter).remove();
-						  });
-						  
-						  $("#getButtonValue").click(function () {
-						  
-							  var msg = '';
-							  for(i=1; i<counter; i++){
-								  msg += "\n Textbox #" + i + " : " + $('#textbox' + i).val();
-							  }
-							  alert(msg);
-						  });
-						  
-					});
-</script>
             <div class="box-title">
           <h3> <i class="icon-ok"><img src="<?php echo WEB_DIR_ADMIN ?>css/icon_cancellation.png"></i>Cancellation Policy</h3>
         </div> 
@@ -398,41 +346,16 @@ function airlinname_empty(val)
             <div id='TextBoxesGroup'>
               <div id="TextBoxDiv1">
                 <div class="control-group">
+					<br/>
                   <label for="textfield" class="control-label">Cancellation Policy</label>
                   <div class="controls">
-                    <select name="cp[]">
-                      <?php for($i=1;$i<=31;$i++) { ?>
-                      <option value="<?php echo $i;?>" ><?php echo $i;}?>
-                    </select>
-                    Days Throughout Contract Period. </div>
-                </div>
-                <div class="control-group">
-                  <label for="textfield" class="control-label">Excluding</label>
-                  <div class="controls">
-                    <select name="excp[]">
-                      <?php for($i=1;$i<=31;$i++) { ?>
-                      <option value="<?php echo $i;?>" ><?php echo $i;}?>
-                    </select>
-                  </div>
-                </div>
-                <br>
-                <br>
-                <div class="control-group">
-                  <label for="textfield" class="control-label">Days during dates </label>
-                  <div class="controls">
-                    <input type="text" name="exdate[]" id="exdate[]"  class="input-xlarge datepick">
-                    <br>
-                    <br>
-                    till &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" name="exdatetill[]" id="exdatetill[]"  class="input-xlarge datepick">
-                    <br>
-                    <br>
-                  </div>
+                    <textarea name="cp" id="cp" rows="10" cols="10" data-rule-required="true"></textarea>
+                    </div>
                 </div>
               </div>
             </div>
-            <input type='button' value='Add More' id='addButton'>
-            <input type='button' value='Remove More' id='removeButton'>
+             <br>
+             <br>
             </div>
             
             <div class=" group-container">

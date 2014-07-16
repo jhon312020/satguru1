@@ -42,15 +42,17 @@
 				}
 				
 				
-                $link = 'hotels/hotel_details/'.$result[$i]->HotelCode;
-                $links = 'hotelbeds/hotel_availbility/'.$result[$i]->HotelCode;?>
+                //$link = 'hotels/hotel_details/'.$result[$i]->HotelCode;
+                $link = 'index.php/hotel/hotel_details/'.$result[$i]->HotelCode.'/'.base64_encode('own');
+                //$links = 'hotelbeds/hotel_availbility/'.$result[$i]->HotelCode;
+                ?>
 
 <div class="bg_whight searchhotel_box margin_bottom10">
   <div class="padding10 HotelInfoBox" data-star="<?php echo $starRating; ?>" data-price="<?php echo $result[$i]->AvgPrice; ?>" data-hotel-name="<?php  echo $result[$i]->HotelName; echo preg_replace("/[^a-z0-9_-]/i", " ",  $result[$i]->HotelName); ?>" data-location="<?php echo $result[$i]->HotelName;?> ">
     <div class="padding5 text3">
       <div class="hotel_image"><a href="<?php echo base_url().$link; ?>" target=_blank><img src="<?php echo $image; ?>" width="140" height="140" style="border: none;" /></a></div>
       <div style="width: 480px; float: left;">
-      <div class="text12" style="color:#08427e; float:left;"> <a href="<?php echo $link;?>" target=_blank><?php echo $result[$i]->HotelName; ?><img src="<?php echo base_url().$starimage; ?>" style="border: none;"/></a></div>
+      <div class="text12" style="color:#08427e; float:left;"> <a href="<?php echo base_url().$link;?>" target=_blank><?php echo $result[$i]->HotelName; ?><img src="<?php echo base_url().$starimage; ?>" style="border: none;"/></a></div>
       <div style="color:#535353; font-size:11px; float:left; width:480px; margin:5px 0px; word-wrap:break-word;"><?php echo  preg_replace("/[^a-z0-9_-]/i", " ",  $result[$i]->Address).'   '.$result[$i]->Location.'   '.$result[$i]->PostalCode; ?></div>
       <!-- <div class="stars<?php //echo $starRating; ?>"></div> -->
       <div class="clr_space"></div>

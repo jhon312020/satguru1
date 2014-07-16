@@ -19,95 +19,181 @@ class Hotel extends CI_Controller {
 	}
 	function search($city_value='')
 	{
-		
-	//	header('Cache-Control: max-age=900');
+		$this->load->model('Hotelbeds_Model');
+		if(isset($_SESSION['city_val']) && $_POST['cityval'] == '')
+		{
+			$_SESSION['city_val'] = $_SESSION['city_val'];
+		}
+		else
+		{
+			$_SESSION['city_val'] = $_POST['cityval'];
+		}
+		if(isset($_SESSION['room_count']) && $this->input->post('room_count')== '')
+		{
+			$_SESSION['room_count'] = $_SESSION['room_count'];
+		}
+		else
+		{
+			$_SESSION['room_count'] = $this->input->post('room_count');
+		}
+		if(isset($_SESSION['adult']) && $this->input->post('adult')== '')
+		{
+			$_SESSION['adult'] = $_SESSION['adult'];
+		}
+		else
+		{
+			$_SESSION['adult'] = $this->input->post('adult');
+		}
+		if(isset($_SESSION['child']) && $this->input->post('child')== '')
+		{
+			$_SESSION['child'] = $_SESSION['child'];
+		}
+		else
+		{
+			$_SESSION['child'] = $this->input->post('child');
+		}
+		if(isset($_SESSION['child_age']) && $this->input->post('child_age')== '')
+		{
+			$_SESSION['child_age'] = $_SESSION['child_age'];
+		}
+		else
+		{
+			$_SESSION['child_age'] = $this->input->post('child_age');
+		}
+		if(isset($_SESSION['sd']) && $this->input->post('sd')== '')
+		{
+			$_SESSION['sd'] = $_SESSION['sd'];
+		}
+		else
+		{
+			$_SESSION['sd'] = $this->input->post('sd');
+		}
+		if(isset($_SESSION['ed']) && $this->input->post('ed')== '')
+		{
+			$_SESSION['ed'] = $_SESSION['ed'];
+		}
+		else
+		{
+			$_SESSION['ed'] = $this->input->post('ed');
+		}
+		$this->load->model('Hotels_Model');
+		$sess_id=session_id();
+		$cityName = explode(",",$_SESSION['city_val']);
+		$adultCount= array_slice($_SESSION['adult'], 0, $_SESSION['room_count']);
+		$childCount= array_slice($_SESSION['child'], 0, $_SESSION['room_count']);
+		$destId=$this->Hotels_Model->getDestinationCodeOnName($cityName);
+	//echo '<pre>';print_r($destId);exit;
+		$_SESSION['hotel_search']['full_city']=$_SESSION['city_val'];
+		$_SESSION['hotel_search']['country'] = trim($cityName[1]);
+		$_SESSION['hotel_search']['city'] = $cityName[0];
+		if ($destId)
+		{
+			$_SESSION['hotel_search']['dest_code']=$destId->city_code;
+			$_SESSION['hotel_search']['count_code']=$destId->countrycode;
+		}
+		else
+		{
+			$_SESSION['hotel_search']['dest_code'] = '';
+			$_SESSION['hotel_search']['count_code']= '';
+		}
+		//echo $_SESSION['hotel_search']['dest_code'];exit;
+		$_SESSION['hotel_search']['room_count']= $_SESSION['room_count'];
+		$_SESSION['hotel_search']['adult']= $_SESSION['adult'];
+		$_SESSION['hotel_search']['child']= $childCount;
+		$_SESSION['hotel_search']['adult_count']= $_SESSION['adult'];
+		//$_SESSION['hotel_search']['adult_count']= array_sum($adultCount);
+		$_SESSION['hotel_search']['child_count']= array_sum($childCount);
+		$_SESSION['hotel_search']['sess_id']=session_id();
+		$_SESSION['hotel_search']['child_age']=$_SESSION['child_age'];
+		$cin_val = explode("-",$_SESSION['sd']);
+		$cout_val = explode("-",$_SESSION['ed']);
+		$_SESSION['hotel_search']['org_cin']=$_SESSION['sd'];
+		$_SESSION['hotel_search']['org_cout']=$_SESSION['ed'];
+		$_SESSION['hotel_search']['cin']= $cin_val[1].'/'.$cin_val[2].'/'.$cin_val[0];
+		$_SESSION['hotel_search']['cout']= $cout_val[1].'/'.$cout_val[2].'/'.$cout_val[0];
+		$_SESSION['hotel_search']['session_id']=$sess_id;
+		$diff =  abs(strtotime($cout_val[0].'-'.$cout_val[1].'-'.$cout_val[2])- strtotime($cin_val[0].'-'.$cin_val[1].'-'.$cin_val[2]) );
+		$sec   = $diff % 60;
+		$diff  = intval($diff / 60);
+		$min   = $diff % 60;
+		$diff  = intval($diff / 60);
+		$hours = $diff % 24;
+		$_SESSION['hotel_search']['days']  = intval($diff / 24);
+		$sess_id=session_id();
+		//header('Cache-Control: max-age=900');
 		//echo '<pre/>';
 		//print_r($_POST);exit;
-				
-					 unset($_SESSION['hotel_xml_data']);
-                    $_SESSION['hotel_xml_data']=array();
-					$_SESSION['hotelspro_xml_data']=array();
-					$_SESSION['asiantravel_xml_data']=array();
-					
-			$this->form_validation->set_rules('cityval', 'City', 'required');
-			$this->form_validation->set_rules('adult', 'Adult', 'required');
-			$this->form_validation->set_rules('child', 'Child', 'required');
-			$this->form_validation->set_rules('room_count', 'Room Count','required');
-			if($this->form_validation->run()==FALSE)
+		$result = $this->Hotelbeds_Model->fetch_search_result_all_id_all($_SESSION['hotel_search']['session_id']);
+		unset($_SESSION['hotel_xml_data']);
+		$_SESSION['hotel_xml_data']=array();
+		if ($result)
+		{
+			$_SESSION['hotel_xml_data'] = $result;
+		}
+		$_SESSION['hotelspro_xml_data']=array();
+		$_SESSION['asiantravel_xml_data']=array();
+		$this->form_validation->set_rules('cityval', 'City', 'required');
+		$this->form_validation->set_rules('adult', 'Adult', 'required');
+		$this->form_validation->set_rules('child', 'Child', 'required');
+		$this->form_validation->set_rules('room_count', 'Room Count','required');
+		if($this->form_validation->run()==FALSE)
+		{
+			if(!isset($_SESSION['set_basic_session']))
 			{
-			
-				if(!isset($_SESSION['set_basic_session']))
+				redirect('home','refresh');
+			}
+			else
+			{
+				$api_r=array();
+				$api_r1=array();
+				$api = $this->Hotel_Model->api_status_id($this->domain);
+				if($api != '')
 				{
-					
-					redirect('home','refresh');
+					for($k=0;$k<count($api);$k++)
+					{
+						$api_r[]= "'".$api[$k]->api_name."'";
+						$api_r1[]= $api[$k]->api_name;
+					}
+					$api_f = implode(",",$api_r);
+					$api_f1 = implode(",",$api_r1);
 				}
 				else
 				{
-						
-					 $api_r=array();
-						$api_r1=array();
-						$api = $this->Hotel_Model->api_status_id($this->domain);
-						
-					
-						if($api != '')
-						{
-							for($k=0;$k<count($api);$k++)
-							{	
-							
-									$api_r[]= "'".$api[$k]->api_name."'";
-									$api_r1[]= $api[$k]->api_name;
-							
-							}
-							$api_f = implode(",",$api_r);
-							$api_f1 = implode(",",$api_r1);
-						}
-						else
-						{
-							$api_f="'Nil'";
-							$api_f1='';
-						}
-						
-						$data['api_fs'] =$api_f;
-						$data['api'] =$api_f1;
-		//echo '<pre/>';
-		//print_r($data);exit;	
-			
+					$api_f="'Nil'";
+					$api_f1='';
+				}
+				$data['api_fs'] =$api_f;
+				$data['api'] =$api_f1;
+				//echo '<pre/>';
+				//print_r($data);exit;	
 				$data['result'] = '';
 				$data['min_val'] =0;
 				$data['max_val'] =0;
 				$data['tot_rec'] =0;
-			
-
-	
-		$this->load->view('hotel/search_result',$data);
-					
-				}
+				$this->load->view('hotel/search_result',$data);
 			}
-			else
+		}
+		else
+		{
+			$check_child_age = array_sum($_POST['child']);
+			$age=array();
+			if($check_child_age >= 1)
 			{
-					
-				$check_child_age = array_sum($_POST['child']);
-				$age=array();
-				if($check_child_age >= 1)
+				for($l=0;$l<count($_POST['child']);$l++)
 				{
-					for($l=0;$l<count($_POST['child']);$l++)
+					if(isset($_POST['child_age'.$l]))
 					{
-						if(isset($_POST['child_age'.$l]))
-						{
-							
-							$age[] = implode(",",$_POST['child_age'.$l]);
-						}
-						else
-						{
-							$age[] = 0;
-						}
+						
+						$age[] = implode(",",$_POST['child_age'.$l]);
+					}
+					else
+					{
+						$age[] = 0;
 					}
 				}
-				
-				/**************************  set session variables  ***********************************************/
-				/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-			
-				
+			}
+			/**************************  set session variables  ***********************************************/
+			/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 			$city_code_v = $this->Api_Model->get_city_details_new(trim($_POST['cityval']));
 			//echo '<pre/>';
 			//print_r($city_code_v);exit;
@@ -115,92 +201,91 @@ class Hotel extends CI_Controller {
 			$_SESSION['chotel_count']=$chotel_count;
 			if($city_code_v!='')
 			{
-			
-			if($city_code_v->Global_Citycode!='')
-			{	
-				$_SESSION['city']  = $city_code_v->Global_City;
-				$_SESSION['city_code']  =  $city_code_v->Global_Citycode;
-				
-				$_SESSION['cin']  = $_POST['sd'];
-				$_SESSION['cout']  = $_POST['ed'];
-				$_SESSION['hotel_name']  = '';
-				$_SESSION['star_rate']  = '';
-				$_SESSION['room_count']  = $_POST['room_count'];
-				$_SESSION['adult']  = $_POST['adult'];
-				$_SESSION['child']  = $_POST['child'];
-				$_SESSION['adult_count']  = array_sum($_POST['adult']);
-				$_SESSION['child_count']  = array_sum($_POST['child']);
-				$_SESSION['child_age']=$age;
-				$cin_val = explode("-",$_SESSION['cin']);
-				$cout_val = explode("-",$_SESSION['cout']);
-				$diff =  strtotime($cout_val[2].'-'.$cout_val[1].'-'.$cout_val[0])- strtotime($cin_val[2].'-'.$cin_val[1].'-'.$cin_val[0]) ;
-				$sec   = $diff % 60;
-				$diff  = intval($diff / 60);
-				$min   = $diff % 60;
-				$diff  = intval($diff / 60);
-				$hours = $diff % 24;
-				$_SESSION['days']  = intval($diff / 24);
-				$_SESSION['set_basic_session']  = TRUE;
-				/**************************  set session variables  ***********************************************/
-				/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-				
-
-		if(isset($_SESSION['set_basic_session']))
-		{
-			
-			$data['set_basic_session'] =  $_SESSION['set_basic_session'];
-			
-			/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   delete data's ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-			if(isset($_SESSION['session_data_id']))
-			{
-				$this->Api_Model->delete_temp_data($_SESSION['session_data_id']);
-				//$this->Api_Model->delete_shoppingcart_data($_SESSION['session_data_id']);
-			}
-			/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  delete data's ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-				
-			$_SESSION['session_data_id']='';
-			$_SESSION['session_data_id']=session_id();
-			$this->ses_id= $_SESSION['session_data_id'];
-			$data['ses_id']=$_SESSION['session_data_id'];
-			//api
-		}
-		else
-		{
-			$data['set_basic_session'] ='0';
-		}
-		 $api_r=array();
-						$api_r1=array();
-						$api = $this->Hotel_Model->api_status_id($this->domain);
+				if($city_code_v->Global_Citycode!='')
+				{	
+					$_SESSION['city']  = $city_code_v->Global_City;
+					$_SESSION['city_code']  =  $city_code_v->Global_Citycode;
+					
+					$_SESSION['cin']  = $_POST['sd'];
+					$_SESSION['cout']  = $_POST['ed'];
+					$_SESSION['hotel_name']  = '';
+					$_SESSION['star_rate']  = '';
+					$_SESSION['room_count']  = $_POST['room_count'];
+					$_SESSION['adult']  = $_POST['adult'];
+					$_SESSION['child']  = $_POST['child'];
+					$_SESSION['adult_count']  = array_sum($_POST['adult']);
+					$_SESSION['child_count']  = array_sum($_POST['child']);
+					$_SESSION['child_age']=$age;
+					$cin_val = explode("-",$_SESSION['cin']);
+					$cout_val = explode("-",$_SESSION['cout']);
+					$diff =  strtotime($cout_val[2].'-'.$cout_val[1].'-'.$cout_val[0])- strtotime($cin_val[2].'-'.$cin_val[1].'-'.$cin_val[0]) ;
+					$sec   = $diff % 60;
+					$diff  = intval($diff / 60);
+					$min   = $diff % 60;
+					$diff  = intval($diff / 60);
+					$hours = $diff % 24;
+					$_SESSION['days']  = intval($diff / 24);
+					$_SESSION['set_basic_session']  = TRUE;
+					/**************************  set session variables  ***********************************************/
+					/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+					if(isset($_SESSION['set_basic_session']))
+					{
 						
-						if($api != '')
-						{
-							for($k=0;$k<count($api);$k++)
-							{	
-							
-									$api_r[]= "'".$api[$k]->api_name."'";
-									$api_r1[]= $api[$k]->api_name;
-							
-							}
-							$api_f = implode(",",$api_r);
-							$api_f1 = implode(",",$api_r1);
-						}
-						else
-						{
-							$api_f="'Nil'";
-							$api_f1='';
-						}
+						$data['set_basic_session'] =  $_SESSION['set_basic_session'];
 						
-						$data['api_fs'] =$api_f;
-						$data['api'] =$api_f1;
-				$data['result'] = '';
-				$data['min_val'] =0;
-				$data['max_val'] =0;
-				$data['tot_rec'] =0;
-			
-
-	
-		$this->load->view('hotel/search_result',$data);
-	
+						/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   delete data's ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+						if(isset($_SESSION['session_data_id']))
+						{
+							$this->Api_Model->delete_temp_data($_SESSION['session_data_id']);
+							//$this->Api_Model->delete_shoppingcart_data($_SESSION['session_data_id']);
+						}
+						/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  delete data's ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+							
+						$_SESSION['session_data_id']='';
+						$_SESSION['session_data_id']=session_id();
+						$this->ses_id= $_SESSION['session_data_id'];
+						$data['ses_id']=$_SESSION['session_data_id'];
+						//api
+					}
+					else
+					{
+						$data['set_basic_session'] ='0';
+					}
+					$api_r=array();
+					$api_r1=array();
+					$api = $this->Hotel_Model->api_status_id($this->domain);
+					if($api != '')
+					{
+						for($k=0;$k<count($api);$k++)
+						{	
+						
+								$api_r[]= "'".$api[$k]->api_name."'";
+								$api_r1[]= $api[$k]->api_name;
+						
+						}
+						$api_f = implode(",",$api_r);
+						$api_f1 = implode(",",$api_r1);
+					}
+					else
+					{
+						$api_f="'Nil'";
+						$api_f1='';
+					}
+					$data['api_fs'] =$api_f;
+					$data['api'] =$api_f1;
+					$data['result'] = '';
+					$data['min_val'] =0;
+					$data['max_val'] =0;
+					$data['tot_rec'] =0;
+					$this->load->view('hotel/search_result',$data);
+				}
+				else
+				{
+					$data['error']='';
+					$data['error_header']='';
+					
+					$this->load->view('hotel/others/error',$data);
+				}
 			}
 			else
 			{
@@ -209,18 +294,7 @@ class Hotel extends CI_Controller {
 				
 				$this->load->view('hotel/others/error',$data);
 			}
-			}
-			else
-			{
-				$data['error']='';
-				$data['error_header']='';
-				
-				$this->load->view('hotel/others/error',$data);
-			}
-			
-			}
-		
-		
+		}
 	}
 	
 	function search_v1()
@@ -454,6 +528,7 @@ class Hotel extends CI_Controller {
 	}
 	function fetch_search_result_page($ses,$final)
 	{ 
+		//$result = array_merge_recursive($_SESSION['hotelspro_xml_data'],$_SESSION['asiantravel_xml_data']);
 		$result = array_merge_recursive($_SESSION['hotelspro_xml_data'],$_SESSION['asiantravel_xml_data']);
 		$result1 = $result;
 		/*$hc='';
@@ -570,6 +645,16 @@ class Hotel extends CI_Controller {
 
 
         $data['total_record'] = 0;
+        if ($_SESSION['hotel_xml_data'])
+        {
+			$data['own_inventory'] = $_SESSION['hotel_xml_data'];
+			$data['own_inventory'] = $this->load->view('hotel/search_result_ajax_own_inventory', $data, true);
+		}
+		else
+		{
+			$data['own_inventory'] = '';
+			$_SESSION['OwnInventoryHotelList'] = array();
+		}
         $data['result_data'] = $result;
         $_SESSION['temp_hotels'] = $result;
    
@@ -578,8 +663,10 @@ class Hotel extends CI_Controller {
 		
 		$numbers = array_map(array('hotel','get_price_values'), $data['result_data']);
 		  
-		$min_val = min($numbers);
-		$max_val =  max($numbers);
+		//$min_val = min($numbers);
+		//$max_val =  max($numbers);
+		$min_val = $numbers?min($numbers):0;
+		$max_val =  $numbers?max($numbers):0;
 		$tot_rec =   count($data['result_data']);
 		
 		print json_encode(array(

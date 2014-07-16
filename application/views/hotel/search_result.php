@@ -358,7 +358,6 @@ top: 0;
 						$('#place').html(data.place);
 						$('#priceStarts').html(data.per_night_min);
 						$('#chain').html(data.chain);
-						
 						$('#result').html(data.hotel_search_result);
 						if(i == (a.length)) 		
 						{
@@ -429,11 +428,14 @@ top: 0;
 					$("#hotelCount").text(hotelCount);	
 					$("#hotelCount1").text(hotelCount);	
 			}
-		  },		  
+			else
+			{
+				$('#result').html('<div class="no_available" style="text-align:center"><h1>There are no available hotels  for your stay. </h1><img src="'+api_dir+'assets/images/no_hotel_img.png" width="154" height="154" /><br /><br /><div class="no_available_text" style="color:#333">Sorry, we have no prices for hotels in this date range matching your criteria. One or more of your preferences may be affecting the number of exact matches found. Try searching again with a wider search criteria. <br></div></div>');
+			}
+		  },
 		 	error:function(request, status, error){
 			$('#preloading_div').fadeOut('slow');
 			$('#black_grid').fadeOut('slow');
-
 
 			if(i==0)
 			{

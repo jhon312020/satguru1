@@ -1,9 +1,12 @@
-
 <?php
-
 $room_count = $_SESSION['room_count'];
 $no_of_days = $_SESSION['days'];
-if(isset($result_data))
+$own_inventory_hotel_list = $_SESSION['OwnInventoryHotelList'];
+if ($own_inventory)
+{
+	echo $own_inventory;
+}
+if(isset($result_data) && $result_data)
 {   $ii = 0;
     $count_val = $total_record;
     foreach($result_data as $i=>$v) {
@@ -14,18 +17,19 @@ if(isset($result_data))
     $available='Instant';
 	$api_table = 'get_permanent_details_v4_'.$res_api;
 	$result = $this->Hotel_Model->$api_table($res_hotel_code);
-	
-	
 		// echo $this->db->last_query();echo '<br>';
 
     if(isset($result->Hotel_name) && $result->Hotel_name !='')
 	{
-		
+		if (in_array($result->Hotel_name, $own_inventory_hotel_list))
+	{
+		continue;
+	}
 				
 					$image = $result->Hotel_thumbnail;
 					if($image=='')
 					{
-					$image = base_url().'assets/images/img/noimagefound.jpg';	
+					$image = base_url().'assets/images/img/noimagefound.jpg';
 					}
 				$totalPriceAry[]=$res_total_cost;
 

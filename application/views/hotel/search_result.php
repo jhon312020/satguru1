@@ -1,18 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>DSS DEMO</title>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main_style.css" type="text/css"/>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/search_result.css" type="text/css"/>
+<?php $this->load->view('header_footer/header_hotel'); ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/smart_tab.css" type="text/css"/>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.smartTab.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/menu_jquery.js"></script>
 <link href="<?php echo base_url(); ?>assets/slider_scripts/listings-59ffb9b6c75d3dc35ae9fc56850da63e.css" rel="stylesheet" type="text/css" />
-
-</head>
 <style type="text/css">
 
 .stepcarousel{
@@ -60,11 +51,6 @@ top: 0;
 
 
 </style>
-<body>
-        <!--########################## HEADER INCLUDE ##############################-->
-        <?php $this->load->view('header_footer/header_hotel'); ?>
-        <!--########################## HEADER INCLUDE ##############################-->
-        <!--#################################### BODY CONTENT STARTS #################################################--->
         <div class="inner_wrapper">
             <!-- LEFT PART -->
             <div class="left_part"> 
@@ -129,17 +115,6 @@ top: 0;
                      
                      
                 </div>
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 
                 <div style="clear:both;"></div>
                 
@@ -267,8 +242,7 @@ top: 0;
         </div>
         <!--#################################### BODY CONTENT ENDS ###################################################--->
         <!--########################## FOOTER INCLUDE ##############################-->
-      <div style=" bottom:0px; background:bottom;">
-        <?php $this->load->view('header_footer/footer'); ?></div>
+        <?php $this->load->view('header_footer/footer'); ?>
         <!--########################## FOOTER INCLUDE ##############################-->
         
          <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 

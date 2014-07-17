@@ -23,35 +23,35 @@
 			<div class="search-panel">
 				<div class="search-spc">
 					<span class="where">
-						<h5>Where</h5><br />
-						<h6>YOUR DESTINATION</h6>
-						<input type="text"  value="&nbsp;&nbsp;ENTER A DESTINATION OR A HOTEL NAME"  />
+						<h5>&nbsp;</h5><br />
+						<h6>One Way</h6>
+						<input type="text" value="" />
 					</span>
 					<span class="when">
-						<h5>When</h5><br />
-						<h6>CHECK IN</h6>
-						<input class="but-eve" type="text"  value="&nbsp;&nbsp;MM/DD/YY" />
+						<h5>&nbsp;</h5><br />
+						<h6>Round Trip</h6>
+						<input type="text" value="" />
 					</span>
 					<span class="check">
 						<h5>&nbsp;</h5><br />
-						<h6>CHECK OUT</h6>
-						<input class="but-eve" type="text"  value="&nbsp;&nbsp;MM/DD/YY" />
+						<h6>Leaving From</h6>
+						<input type="text" value="" />
 					</span>
 					<span class="who">
-						<h5>Who</h5><br />
-						<h6>ROOMS</h6>
-						<input class="but-Arr" type="text" value="&nbsp;&nbsp;01" />
+						<h5>&nbsp;</h5><br />
+						<h6>Travelling to</h6>
+						<input type="text" value="" />					
 					</span>
 					
 					<span class="adults">
 						<h5>&nbsp;</h5><br />
-						<h6>ADULTS</h6>
-						<input class="but-Arr" type="text" value="&nbsp;&nbsp;02" />
+						<h6>Departure</h6>
+						<input type="text" value="" />
 					</span>
 					<span class="kids">
 						<h5>&nbsp;</h5><br />
-						<h6>KIDS</h6>
-						<input class="but-Arr" type="text" value="&nbsp;&nbsp;01" />
+						<h6>Return</h6>
+						<input type="text" value="" />
 					</span>
 					<span class="search-bt">
 					<img class="mybutton" src="<?php echo base_url(); ?>assets/new_css/images/search-bt.jpg" />

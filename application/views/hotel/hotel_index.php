@@ -51,7 +51,7 @@
 						<h5>&nbsp;</h5><br />
 						<h6>NIGHTS</h6>
 						<div class="customselect">
-						<select class="but-Arr" name="nights" onchange="changeDate();" id="select_nights">
+						<select class="but-Arr" name="nights" onChange="changeDate();" id="select_nights">
 							<option value="1" selected="">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>

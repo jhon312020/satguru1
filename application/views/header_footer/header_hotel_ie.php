@@ -13,14 +13,15 @@
       $('.popbox,.popbox1').popbox();
     });
   </script>-->
+  <!-- 
   <div style="height: 120px; border-bottom: 2px solid #f47706;">
   <div class="inner_wrapper " style="width: 1020px; margin:auto; margin-left:10%;">
         
         <div style="width: 100%; float: left;">
         <div style="width: 280px; float: left;">
             <div class="logo toplayer">
-			<a href="<?php echo base_url(); ?>">
-			 <img src="<?php echo base_url(); ?>assets/images/logo.png" border="0" />
+			<a href="<?php //echo base_url(); ?>">
+			 <img src="<?php //echo base_url(); ?>assets/images/logo.png" border="0" />
 			 </a>
 			 
 		   </div>
@@ -44,12 +45,12 @@ float: right;">
 					 if($this->session->userdata('b2c_logged_in')) { ?>
 						<li>	<span style="color:#fff;">Hi, <?php echo $this->session->userdata('b2c_firstname'); ?></span>
                         </li> | 
-                    <li>    <a href="<?php echo site_url(); ?>/account/mybooking">My Account</a> </li>
+                    <li>    <a href="<?php //echo site_url(); ?>/account/mybooking">My Account</a> </li>
                         |
-                    <li>    <a href="<?php echo site_url(); ?>/login/logout">Logout</a> </li>
+                    <li>    <a href="<?php //echo site_url(); ?>/login/logout">Logout</a> </li>
 					<?php } else { ?>
-					<li>	<a href="<?php echo site_url(); ?>/login/member_login"> Login</a> </li> |
-                    <li>	<a href="<?php echo site_url(); ?>/login/member_registration">Regsiter</a> </li>
+					<li>	<a href="<?php //echo site_url(); ?>/login/member_login"> Login</a> </li> |
+                    <li>	<a href="<?php //echo site_url(); ?>/login/member_registration">Regsiter</a> </li>
 					<?php } ?>
 					
                    
@@ -60,7 +61,7 @@ float: right;">
 
 <div class="header-top-in right10" style="margin-right:0px;">
 <span class="call_small_txt">Call an <br /> expert</span>
-            <span class="fleft"><img src="<?php echo base_url(); ?>assets/images/phone_icon.png" /></span>
+            <span class="fleft"><img src="<?php //echo base_url(); ?>assets/images/phone_icon.png" /></span>
             <span class="call_txt">1234567890</span>
 </div>
 
@@ -71,16 +72,16 @@ float: right;">
 <nav>	
             <div id="navbar">
                 <ul>
-                    <li><a href="<?php echo site_url(); ?>/home/flights" ><img src="<?php echo base_url(); ?>assets/images/flight_icon.png" border="0" align="absmiddle" /> Flights </a> </li>
+                    <li><a href="<?php //echo site_url(); ?>/home/flights" ><img src="<?php //echo base_url(); ?>assets/images/flight_icon.png" border="0" align="absmiddle" /> Flights </a> </li>
                     <li style="background: linear-gradient(to bottom, #f19c25 0%, #f19c25 50%, #ef6806 50%, #ef6806 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);" >
                     
-                    <a href="<?php echo site_url(); ?>/home/hotels" style="background: linear-gradient(to bottom, #f19c25 0%, #f19c25 50%, #ef6806 50%, #ef6806 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);" ><img src="<?php echo base_url(); ?>assets/images/hotel_icon.png" border="0" align="absmiddle" style="margin-top:-5px;" /> Hotel</a>
+                    <a href="<?php //echo site_url(); ?>/home/hotels" style="background: linear-gradient(to bottom, #f19c25 0%, #f19c25 50%, #ef6806 50%, #ef6806 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);" ><img src="<?php //echo base_url(); ?>assets/images/hotel_icon.png" border="0" align="absmiddle" style="margin-top:-5px;" /> Hotel</a>
                     
                     </li>
                     
                     <li >
                     
-                    <a href="<?php echo site_url(); ?>/home/cars" ><img src="<?php echo base_url(); ?>assets/images/car_icon.png" border="0" align="absmiddle" style="margin-top:-5px;" /> Car</a>
+                    <a href="<?php //echo site_url(); ?>/home/cars" ><img src="<?php //echo base_url(); ?>assets/images/car_icon.png" border="0" align="absmiddle" style="margin-top:-5px;" /> Car</a>
                     
                     </li>
                    
@@ -96,11 +97,11 @@ float: right;">
 <!--        <div class="clear"></div>-->
         <!-- NAVIGATION -->
         
-        <!-- NAVIGATION END -->
+        <!-- NAVIGATION END --
      
     </div>
   </div>
-      <!-- INNER WRAPPER END -->
+      <!-- INNER WRAPPER END --
   
   <div id="wrapper">
     
@@ -109,5 +110,314 @@ z-index: 3;
 position: relative;
 background-image: url(../images/bg1.jpg);
 background-repeat: repeat;
-background-position: top;"></div>-->
+background-position: top;"></div> -->
     
+
+<div class="header">
+	<div class="top-menu">
+		<ul class="top-nav">
+			<li><a href="#">HOME</a></li>
+			<li><a href="#">ABOUTUS</a></li>
+			<li><a href="#">CONTACT US</a></li>
+			<li><a href="#">FAQ</a></li>
+		</ul>
+	</div>
+	<div class="logo">
+		<div class="logo-img">
+			<h1><img src="<?php echo base_url(); ?>assets/images/images/logo.jpg" /></h1>
+		</div>
+	
+		<div class="mainmenu">
+			<section id="container">
+			
+				<div id="menu"><!-- Menu starts here -->
+				
+				<ul class="menu"><!-- List starts here -->
+				<span class="bor"></span>
+				<li><a href="#">TOURS</a> <span class="arr"></span><!-- 5 columns starts here -->
+				
+				<div class="dropdown-4columns"><!-- Container 4 columns starts here -->
+				
+				
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				
+				</div><!-- 4 columns ends here -->
+				
+				</li><!-- Container 5 columns ends here -->
+				<span class="bor"></span>
+				
+				<li><a href="#">FLIGHTS</a><span class="arr"></span><!-- 4 columns starts here -->
+				
+				<div class="dropdown-4columns"><!-- Container 4 columns starts here -->
+				
+				
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				
+				</div><!-- 4 columns ends here -->
+				
+				</li><!-- Container 4 columns ends here -->
+				<span class="bor"></span>
+				
+				<li><a href="#">HOTELS</a><span class="arr"></span><!-- 3 columns starts here -->
+				
+				<div class="dropdown-4columns"><!-- Container 4 columns starts here -->
+				
+				
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				
+				</div><!-- 4 columns ends here -->
+				
+				</li><!-- Container 3 columns ends here -->
+				<span class="bor"></span>
+				
+				<li><a href="#">CARS</a><span class="arr"></span><!-- 2 columns starts here -->
+				
+				<div class="dropdown-4columns"><!-- Container 4 columns starts here -->
+				
+				
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				
+				</div><!-- 4 columns ends here -->
+				
+				</li><!-- Container 2 columns ends here -->
+				<span class="bor"></span>
+				
+				<li><a href="#">PROMOS</a><!-- 1 column starts here -->
+				
+				<div class="dropdown-4columns"><!-- Container 4 columns starts here -->
+				
+				
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				<div class="col-1">
+				
+				<ul class="blue">
+					<li><a href="#" title="Home">Home</a></li>
+					<li><a href="#" title="About Us">About</a></li>
+					<li><a href="#" title="Images">Images</a></li>
+					<li><a href="#" title="Sign in">Sign in</a></li>
+				</ul>   
+				 
+				</div>
+				
+				
+				</div><!-- 4 columns ends here -->
+				</li><!-- Container 1 columnn ends here -->
+				<span class="bor"></span>
+				
+				</ul><!-- List ends here -->
+				
+				</div><!-- Menu ends here -->
+			</section>
+		</div>
+	 </div>
+	<div class="clear"></div>
+</div>

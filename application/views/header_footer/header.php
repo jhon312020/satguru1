@@ -11,6 +11,9 @@
 
 
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/new_css/js/modernizr.custom.04022.js"></script>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/search_result.css" type="text/css"/>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/smart_tab_rounded.css" type="text/css"/>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/nivo-slider.css" type="text/css" media="screen" />
 
 
 <script src="<?php echo base_url(); ?>assets/new_css/js/jquery.min-1.6.js"></script>

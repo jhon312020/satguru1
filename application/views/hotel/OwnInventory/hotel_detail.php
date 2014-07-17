@@ -1,12 +1,6 @@
 <?php 
-$hotel_details = $this->Hotelbeds_Model->fetch_search_by_id($hotelCode);
-//$hotel_detailsss = $this->Hotelbeds_Model->fetch_ficilities($hotelCode);
-//$hotel_detailss = $this->Hotelbeds_Model->fetch_sear($hotelCode);
-//$roomdetals=$this->Hotelbeds_Model->fetch_rooms($hotelCode);
-//echo '<pre>';print_r($hotel_details);
-
-
-//$prices = $this->Hotelbeds_Model->fetch_search_price($_SESSION['hotel_search']['session_id']); ?>
+	$hotel_details = $this->Hotelbeds_Model->fetch_search_by_id($hotelCode);
+?>
 <script type="text/javascript" src="<?php echo base_url()?>assets/Validation/js/jquery.validationEngine.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>assets/Validation/js/languages/jquery.validationEngine-en.js"></script>
 <link rel="stylesheet" href="<?php echo base_url()?>assets/Validation/css/validationEngine.jquery.css" media="all" type="text/css" />
@@ -242,7 +236,6 @@ top: 0;
                 <div class="bg03">
                     <div class="tab-box"> 
                         <a href="javascript:;" class="tabLink activeLink" id="cont-1">Availability</a> 
-                        <a href="javascript:;" class="tabLink " id="cont-2">Facilities</a> 
                     <a href="javascript:;" class="tabLink " id="cont-3">Amenities</a> 
                         <a href="javascript:;" class="tabLink " id="cont-4">Photos</a> 
                         <a href="javascript:;" class="tabLink " id="cont-5">Description</a> 
@@ -262,13 +255,7 @@ top: 0;
                               </div>
                         </div>
                     </div>
-                    <div class="tabcontent hide" id="cont-2-1"> 
                     
-                        <div class="padding10">
-      				
-<div id="sampless"></div>
-                        </div><div class="clear"></div>
-                    </div>
                     <div class="tabcontent hide" id="cont-3-1"> 
                     
                         <div class="padding10">
@@ -630,15 +617,13 @@ top: 0;
         });
     </script>
 </html>   
-
-    <script>    
+    <script type = 'text/javascript'>    
 	var hotelcode = "<?php echo $hotelCode; ?>";
       $(document).ready(function(){
-		  //alert(hotelcode);
         var callAjax = function(){
           $.ajax({
             method:'get',
-           url: "<?php echo base_url(); ?>room.php",				
+           url: "<?php echo base_url(); ?>room.php",
 		   data: 'search='+hotelcode,
             success:function(data){
 				//alert(data);
@@ -650,15 +635,14 @@ top: 0;
       });
     </script> 
     <script>
-	var hotelcode = "<?php echo $hotelCode; ?>";
-	
+	/*var hotelcode = "<?php echo $hotelCode; ?>";
 	//alert(hotelcode); 
       $(document).ready(function(){
 		  //alert(hotelcode);
         var callAjax = function(){
           $.ajax({
             method:'get',
-           url: "<?php echo base_url(); ?>HotelInformation.php",				
+           url: "<?php echo base_url(); ?>HotelInformation.php",
 		   data: 'search='+hotelcode,
             success:function(data){
 				$("#sampless").html(data);
@@ -668,7 +652,7 @@ top: 0;
           });
         }
         setInterval(callAjax);
-      });
+      });*/
     </script>
 	<script>
 	var hotelcode = "<?php echo $hotelCode; ?>";
@@ -679,7 +663,7 @@ top: 0;
         var callAjax = function(){
           $.ajax({
             method:'get',
-           url: "<?php echo base_url(); ?>amenieties.php",				
+           url: "<?php echo base_url(); ?>amenities.php",
 		   data: 'search='+hotelcode,
             success:function(data){
 				$("#samplesss").html(data);
@@ -700,7 +684,7 @@ top: 0;
         var callAjax = function(){
           $.ajax({
             method:'get',
-           url: "<?php echo base_url(); ?>images.php",				
+           url: "<?php echo base_url(); ?>images.php",
 		   data: 'search='+hotelcode,
             success:function(data){
 				$("#samplessss").html(data);

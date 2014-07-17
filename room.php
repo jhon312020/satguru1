@@ -1,7 +1,7 @@
 <?php 
 	session_start();
 	include("db.php");
-	$hotelhotelIds = $_GET['search'];
+	$hotelIds = $_GET['search'];
 	$ses = $_SESSION['hotel_search']['session_id'];
 	$cinval = explode("/",$_SESSION['hotel_search']['cin']);
 	$cin  = $cinval[2].'-'.$cinval[0].'-'.$cinval[1];
@@ -9,14 +9,14 @@
 	$cout  = $coutval[2].'-'.$coutval[0].'-'.$coutval[1];
 	$adult = $_SESSION['hotel_search']['adult'];
 	$hotelRoomResult = mysql_query("SELECT * FROM  hotel_room_list WHERE HotelCode = '$hotelIds'and status = '1' GROUP BY RoomName");
-	$hotelRoomhotelRoomRowCount = mysql_num_hotelRoomRows($hotelRoomResult);
-	while ($hotelRoomhotelRoomRow = mysql_fetch_array($hotelRoomResult))
+	$hotelRoomhotelRoomRowCount = mysql_num_rows($hotelRoomResult);
+	while ($hotelRoomRow = mysql_fetch_array($hotelRoomResult))
 	{
-		if(isset($hotelRoomhotelRoomRowCount) > 0)
+		if(isset($hotelRoomRowCount) > 0)
 		{
 			$hotelRoomRow['id'] = $hotelRoomRow['RoomCode'];
 		}
-		$datetoday=date('Y-m-d');
+		$datetoday = date('Y-m-d');
 		if($hotelRoomRow['AvgPrice'] == '') 
 		{
 			$hotelRoomPriceResult = mysql_query("SELECT * FROM  hotel_room_price WHERE HotelCode = '$hotelIds' and Roomcode='".$hotelRoomRow['RoomCode']."' and  rateto >= '".$datetoday."' and ratefrom <= '".$datetoday."'");

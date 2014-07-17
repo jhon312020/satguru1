@@ -5,26 +5,24 @@
         $showAdultChild='';
         for($r=0;$r<$count;$r++)
         {
-            $showAdultChild.='<div class="fleft top10">
-                        <label style="color:#fff; font-weight:bold; font-size:11px;"  class="label">Adult(s)</label> <br />
-                        <select name="adult[]" style="-moz-appearance: none; -webkit-appearance: none; text-indent: 0.01px; padding:5px; height:30px;" class="search_input_box2" id="adult_count'.$r.'">';
+            $showAdultChild.='<span class="adults"><h5>&nbsp;</h5><br />
+							<h6>ADULTS</h6><div class="customselect">
+                        <select name="adult[]" class="but-Arr" id="adult_count'.$r.'">';
                             for($a=1;$a<=4;$a++){
                                 $showAdultChild.='<option value="'.$a.'">'.$a.'</option>';
                             }
                         $showAdultChild.='</select>
-                    </div>
-                    <div class="fleft left10 top10">
-                        <label class="label" style="color:#fff; font-weight:bold; font-size:11px; ">Child(ren)</label> <br />
-                        <select name="child[]" class="search_input_box2" style="-moz-appearance: none; -webkit-appearance: none;      text-indent: 0.01px;      padding:5px; height:30px; color:#2F382F; " id="child_count'.$r.'">
+                    </div> </span>
+                    <span class="kids"><h5>&nbsp;</h5><br /><h6>KIDS</h6>
+							<div class="customselect">
+                        <select name="child[]" class="but-Arr" id="child_count'.$r.'">
                             <option value="0">0</option>';
                             for($c=1;$c<=3;$c++){
                                 $showAdultChild.='<option value="'.$c.'">'.$c.'</option>';
                             }
                         $showAdultChild.='</select>
-                  </div>
-                  <div id="child_age'.$r.'">
-                      
-                  </div>
+                  </div> </span>
+				  <span class="kids" id="child_age'.$r.'"></span>
                   <div class="clear"></div>';
             
             $showAdultChild.='<script type="text/javascript">
@@ -61,15 +59,12 @@
             for($i=0; $i<$childCount; $i++)
             {
                 $ch=$i+1;
-                $showChild.='<div class="fleft left10 top10" style="color:#fff; font-weight:bold; font-size:11px; ">
-                                    Child Age '.$ch.'<br>
-                                    <select name="child_age'.$rm.'[]" style="-moz-appearance: none; -webkit-appearance: none;     text-indent: 0.01px;      padding:5px; height:30px;" class="search_input_box2">';
-                                       for($ag=1;$ag<=10;$ag++)
-                                       {
-                                           $showChild.='<option value="'.$ag.'">'.$ag.'</option>';
-                                       }
-                                    $showChild.='</select>
-                             </div>';
+				$showChild.='<div style="float:left;margin-right:20px;"><h5>&nbsp;</h5><br><h6>Child Age'.$ch.'</h6> <div class="customselect"> <select class="but-Arr" name="child_age'.$rm.'[]">';
+					   for($ag=1;$ag<=10;$ag++)
+					   {
+						   $showChild.='<option value="'.$ag.'">'.$ag.'</option>';
+					   }
+					$showChild.='</select> </div></div>';
             }
         }
         return $showChild;

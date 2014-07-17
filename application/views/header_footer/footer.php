@@ -137,6 +137,26 @@ function check_new_sub(email)
 	}
 	else
 	{
+		/* $.ajax
+			({
+				 type: "POST",
+				 url: "<?php echo site_url(); ?>/home/check_sub",
+				  data: "source="+email,
+				  success: function(msg)
+				  {
+					 if(msg == 1)
+					 {
+						 document.getElementById("user_error1").innerHTML = "Email id already exists";
+						 document.getElementById("email_sub").value = '';
+				 		 document.getElementById("email_sub").focus();
+						 return false;
+					 }
+					 else
+					 {
+					  	 document.getElementById("user_error1").innerHTML = "Thanks for subscribing with us!!!!";
+					 }
+				  }
+			});*/
 		 document.getElementById("user_error1").innerHTML = "";
 	}
 }

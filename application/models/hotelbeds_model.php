@@ -40,13 +40,13 @@ class Hotelbeds_Model extends CI_Model {
     function fetch_search_by_id($id){
 		$see=$_SESSION['hotel_search']['session_id'];
 	//	$select = "SELECT  * FROM  asia_hotel_search_list WHERE  HotelCode = '$id' AND (session_id='$see' or session_id='') ";
-		$select = "SELECT * FROM asia_hotel_search_list WHERE HotelCode = '$id' AND (session_id='$see' or session_id='')";
-		 $query = $this->db->query($select);
+		//$select = "SELECT * FROM asia_hotel_search_list WHERE HotelCode = '$id' AND (session_id='$see' or session_id='')";
+		 ///$query = $this->db->query($select);
 		 
-		if($query->num_rows() == '' ){
+		//if($query->num_rows() == '' ){
 			 $select = "SELECT  * FROM hotel_search_list WHERE HotelCode = '$id'";
 		     $query = $this->db->query($select);
-		}
+		//}
 		
 			if ( $query->num_rows > 0 ) {
 		

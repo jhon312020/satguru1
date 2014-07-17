@@ -1387,62 +1387,107 @@ echo $profitPercentage;exit;
 		//$api= 'Asiantravel';
 		if(isset($_SESSION['session_data_id']))
 		{
-				if($api!='')
+			if($api!='')
 			{
-				$data['id']=$id;
-				$data['api']=$api;
-				$this->load->model($api.'_Model');
-				$this->load->view('hotel/'.$api.'/hotel_detail',$data);
-			}
-			else
-			{
-				$service = $this->Hotel_Model->get_permanent_details_v3($id);		
-				
-				$data['hotel_details']= $service;
-		
-				if(isset($service) && $service!= '')
+				switch(strtolower($api))
 				{
-			
-		
-				
-				
-						$api_r=array();
-						$api_r1=array();
-						$api = $this->Hotel_Model->api_status_id($this->domain);
-						
-						if($api != '')
-						{
-							for($k=0;$k<count($api);$k++)
-							{	
-							
-									$api_r[]= "'".$api[$k]->api_name."'";
-									$api_r1[]= $api[$k]->api_name;
-							
-							}
-							$api_f = implode(",",$api_r);
-							$api_f1 = implode(",",$api_r1);
+					case 'own':
+						$select = "SELECT  * FROM hotel_search_list WHERE HotelCode = '$id'";
+						$query = $this->db->query($select);
+						if($query->num_rows() == '' ){
+							 $service = '';
 						}
 						else
 						{
-							$api_f="'Nil'";
-							$api_f1='';
+							$service= $query->row();
 						}
-						
-						$data['api_fs'] =$api_f;
-						$data['api'] =$api_f1;
-					
-						$this->load->view('hotel/hotel_detail',$data);
+						/*$this->db->select('*');
+						$this->db->from('asia_hotels_deatil');
+						$this->db->where('HotelId',$id);
+						$query = $this->db->get();
+						if($query->num_rows() == '' )
+						{
+							$servicess='';
+						}
+						else
+						{
+							$servicess= $query->row(); 
+						}*/
+						if($service!='')
+						{
+							$hotel_code = $service->HotelCode;
+							$hotel_name = $service->HotelName;
+							$star = $service->StarRating;
+							$image = $service->FrontPgImage;
+							$data['service']=$service;
+							$data['hotelCode']=$hotel_code;
+							$data['star']=$service->StarRating;
+							$data['phone']=$service->ContactNo ;
+							/*$data['location']=$servicess->location;
+							$data['lat']=$servicess->latitude;
+							$data['long']=$servicess->longitude;*/
+							$data['location'] = '';
+							$data['lat'] = '';
+							$data['long'] = '';
+							$data['hotel_name'] = $service->HotelName;
+							$data['description'] = $service->HotelDesc;
+							$data['address'] = $service->Address;
+							$data['dest'] = $service->City ;
+							$data['result_id']=$id;
+							$data['cur_id'] = $id;
+							if($data['lat'] !='' && $data['long']!='')
+							{
+									$data['nearby_hotel']='';
+							}
+							else
+							{
+								$data['nearby_hotel']='';
+							}
+							$this->load->model('Hotelbeds_Model');
+							$this->load->view('hotel/OwnInventory/hotel_detail',$data);
+						}
+					break;
+					default:
+					$data['id']=$id;
+					$data['api']=$api;
+					$this->load->model($api.'_Model');
+					$this->load->view('hotel/'.$api.'/hotel_detail',$data);
+				}
+			}
+			else
+			{
+				$service = $this->Hotel_Model->get_permanent_details_v3($id);
+				$data['hotel_details']= $service;
+				if(isset($service) && $service!= '')
+				{
+					$api_r=array();
+					$api_r1=array();
+					$api = $this->Hotel_Model->api_status_id($this->domain);
+					if($api != '')
+					{
+						for($k=0;$k<count($api);$k++)
+						{
+							$api_r[]= "'".$api[$k]->api_name."'";
+							$api_r1[]= $api[$k]->api_name;
+						}
+						$api_f = implode(",",$api_r);
+						$api_f1 = implode(",",$api_r1);
+					}
+					else
+					{
+						$api_f="'Nil'";
+						$api_f1='';
+					}
+					$data['api_fs'] =$api_f;
+					$data['api'] =$api_f1;
+					$this->load->view('hotel/hotel_detail',$data);
 				}
 			}
 		}
 		else
 		{
-			
-		$this->load->view('hotel/others/session_expiry');
+			$this->load->view('hotel/others/session_expiry');
 		}
-	
-		
-		
 	}
 	
 	function hotel_booking($result_id,$hotel_id,$status='')

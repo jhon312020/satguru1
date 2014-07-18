@@ -16,10 +16,10 @@ class Home extends CI_Controller {
 	}
 	function index()
 	{
-		 $data['airports'] = '';
+		/* $data['airports'] = '';
 		 $data['imp_airports'] ='';
-		
-         $this->load->view('flight/flight_index', $data);
+         $this->load->view('flight/flight_index', $data); */
+		redirect('home/hotels/', 'refresh');
 	}	
 	function forget_password()
 	{

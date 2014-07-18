@@ -28,8 +28,8 @@
 					<span class="where">
 						<h5>Where</h5><br />
 						<h6>YOUR DESTINATION</h6>
-						<input type="text" name="cityval" id="cityName1" placeholder="&nbsp;&nbsp;ENTER A DESTINATION OR A HOTEL NAME"  />
-						<br  /><span id="dorigin_error" style="color:#F00;"></span>
+						<input type="text" name="cityval" id="cityName1" placeholder="ENTER A DESTINATION OR A HOTEL NAME"  />
+						<br /><span id="dorigin_error" style="color:#F00;"></span>
 								<script type="text/javascript">
 								var options = {
 								script:"<?php echo base_url(); ?>test_hotel.php?json=true&",varname:"input",json:true,callback: function (obj) { document.getElementById('cityName1').value = obj.id; } };
@@ -134,6 +134,42 @@
 							<span class="kids" id="child_age0"></span>
 						</span>
 					</span>
+<div class="mainSearchBox">
+	<div class="boardTypeCtn">
+      <div class="typeCtn"><label>Board Type :</label></div>
+      <ul id="boardTypeList">
+        <li><input id="f_sel_all" name="f_sel_all" onclick="unselect_all_f(this, 'f_b');" type="checkbox" checked="checked" /><label for="f_sel_all">All</label></li>
+        <li><input id="f_board_1" name="f_boardtype[]" onclick="remove_all_select('f_sel_all');" value="RO" type="checkbox" /><label for="f_board_1">Room Only</label></li>
+        <li><input id="f_board_2" name="f_boardtype[]" onclick="remove_all_select('f_sel_all');" value="HB" type="checkbox" /><label for="f_board_2">Half Board</label></li>
+        <li><input id="f_board_3" name="f_boardtype[]" onclick="remove_all_select('f_sel_all');" value="FB" type="checkbox" /><label for="f_board_3">Full Board</label></li>
+        <li><input id="f_board_4" name="f_boardtype[]" onclick="remove_all_select('f_sel_all');" value="BB" type="checkbox" /><label for="f_board_4">Bed and Breakfast</label></li>
+        <li><input id="f_board_5" name="f_boardtype[]" onclick="remove_all_select('f_sel_all');" value="EB" type="checkbox" /><label for="f_board_5">English Breakfast</label></li>
+        <li><input id="f_board_6" name="f_boardtype[]" onclick="remove_all_select('f_sel_all');" value="SC" type="checkbox" /><label for="f_board_6">Self Catering</label></li>
+        <li><input id="f_board_7" name="f_boardtype[]" onclick="remove_all_select('f_sel_all');" value="AI" type="checkbox" /><label for="f_board_7">All Inclusive</label></li>
+        <li><input id="f_board_8" onclick="remove_all_select('f_sel_all');" name="f_boardtype[]" value="UI" type="checkbox" /><label for="f_board_8">Ultra All Inclusive</label></li>
+      </ul>
+    </div>
+    
+    <div class="boardTypeCtn">
+      <div class="typeCtn"><label>Category :</label></div>
+      <ul id="boardTypeList">
+        <li><input id='c_cat_all' name="c_sel_all" onclick="unselect_all_f(this, 'f_c');" type="checkbox" checked="checked" /><label for="f_cat_all">All</label></li>
+        <li><input id="f_cat_1" name="f_category[]" onclick="remove_all_select('c_sel_all');"  value="1" type="checkbox" /><label for="f_cat_1">1 Star</label></li>
+        <li><input id="f_cat_2" name="f_category[]" onclick="remove_all_select('c_sel_all');"  value="2" type="checkbox" /><label for="f_cat_2">2 Star</label></li>
+        <li><input id="f_cat_3" name="f_category[]" onclick="remove_all_select('c_sel_all');"  value="3" type="checkbox" /><label for="f_cat_3">3 Star</label></li>
+        <li><input id="f_cat_4" name="f_category[]" onclick="remove_all_select('c_sel_all');"  value="4" type="checkbox" /><label for="f_cat_4">4 Star</label></li>
+        <li><input id="f_cat_5" name="f_category[]" onclick="remove_all_select('c_sel_all');"  value="5" type="checkbox" /><label for="f_cat_5">5 Star</label></li>
+      </ul>
+    </div>
+    
+        <div class="boardTypeCtn">
+      <div class="typeCtn"><label>Transfer :</label></div>
+      <ul id="boardTypeList">
+        <li><input id="f_transfer" name="f_transfer" type="checkbox" value="1" /><label for="f_transfer">Transfer</label></li>
+      </ul>
+    </div>
+	
+  </div>
 					<div class="clear"></div>
 					</div>
 				</div>

@@ -1335,5 +1335,136 @@ public function __construct()
 			redirect('admin','refresh');
 		}
 	}
+	
+	function editroomprice($id)
+	{
+		if($this->session->userdata('admin_id')!='')
+		{
+			$admin_id = $this->session->userdata('admin_id');
+			$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
+			$data['roomprice'] = $this->Home_Model->getroomprice($id);
+			$data['page_header'] = 'Edit Room Price';
+			$this->load->view('editroomprice',$data);
+		}
+		else
+		{
+			redirect('admin','refresh');
+		}
+	}
+	
+	function addnewprice()
+	{
+		if($this->session->userdata('admin_id')!='')
+		{
+			$ratefromcount=$this->input->post('ratefrom');
+			$ratefrom=$this->input->post('ratefrom');
+			$rateto=$this->input->post('rateto');
+			$Roomcode=$this->input->post('roomid');
+			$contractrate=$this->input->post('contractrate');
+			$roompricemarkup=$this->input->post('roompricemarkup');
+			$weekdayfrom=$this->input->post('weekdayfrom');
+			$weekdaytill=$this->input->post('weekdaytill');
+			$surcharge=$this->input->post('surcharge');
+			$ratefromh=$this->input->post('ratefromh');
+			$ratetosurcharge=$this->input->post('ratetosurcharge');
+			 $hotelid_id=$this->uri->segment(4);
+			 $Roomcode="R".$this->uri->segment(3);
+			 $Roomcode1=$this->uri->segment(3);
+			
+			for($i = 0; $i < count($ratefrom); $i++)  {
+										
+				$this->Home_Model->add_hotelroomprice($hotelid_id,$Roomcode,$ratefrom[$i],$rateto[$i],$contractrate[$i],$roompricemarkup[$i],$weekdayfrom[$i],$weekdaytill[$i],$surcharge[$i]);	
+				}
+
+			for($j = 0; $j < count($ratefromh); $j++)  {
+				
+			$this->Home_Model->add_holidaysurcharge($hotelid_id,$Roomcode,$ratefromh[$j],$ratetosurcharge[$j]);	
+			}
+			
+				redirect('admin/addeditprice/'.$Roomcode1.'/'.$hotelid_id,'refresh');
+			
+			
+		}
+		else
+		{
+			redirect('admin','refresh');
+		}
+	}
+	
+	public function delete_price($id)
+	{
+		if($this->session->userdata('admin_id')!='')
+		{
+			$orgroom_id = $this->uri->segment(5);
+			$hotelid = $this->uri->segment(4);
+			$room_id1=substr($room_id,1);
+			$ext=$orgroom_id."/".$hotelid;
+			$this->Home_Model->delete_price($id);
+			redirect('admin/addeditprice/'.$ext,'refresh');
+			//redirect('admin/managehotel','refresh');
+		}
+		else
+		{
+			redirect('admin','refresh');
+		}
+	}
+	
+	function updateroom($id)
+	{
+		if($this->session->userdata('admin_id')!='')
+		{
+			$id = $this->input->post('id');
+			$RoomName = $this->input->post('RoomName');
+			$roomsize=$this->input->post('roomsize');
+			$beds=$this->input->post('beds');
+			$description=$this->input->post('description');
+			$roomfeature1=$this->input->post('roomfeature');
+			//$AvgPrice = $this->input->post('AvgPrice');
+			//$NormalOccupancy = $this->input->post('NormalOccupancy');
+			$hotelcode = $this->uri->segment(3); 
+			$hotelcode = substr($hotelcode, 1);
+			$extrabed=$this->input->post('extrabed');
+			$this->Home_Model->update_room($RoomName,$roomsize,$beds,$extrabed,$description,$id);
+			
+			$roomcode="R".$id;
+			$sql=mysql_query("delete from hotel_aminities where RoomCode='".$roomcode."'");
+			$hotelcode1="H".$hotelcode;
+			for($k = 0; $k < count($roomfeature1); $k++)  
+			{
+				$this->Home_Model->add_amen($hotelcode1,$roomcode,$roomfeature1[$k],$createdby);
+			}
+		    redirect('admin/edithotel/'.$hotelcode,'refresh');
+			//redirect('admin/managehotel','refresh');
+		}
+		else
+		{
+			redirect('admin','refresh');
+		}
+	}
+	
+	function editprice($id)
+	{
+		if($this->session->userdata('admin_id')!='')
+		{
+			$roomcode=$this->uri->segment(4);
+			$hotelcode=$this->uri->segment(5);
+			$ext=$roomcode."/".$hotelcode;
+			$ratefrom=$this->input->post('ratefrom');
+			$rateto=$this->input->post('rateto');
+			$Roomcode=$this->input->post('roomid');
+			$contractrate=$this->input->post('contractrate');
+			$roompricemarkup=$this->input->post('roompricemarkup');
+			$weekdayfrom=$this->input->post('weekdayfrom');
+			$weekdaytill=$this->input->post('weekdaytill');
+			$surcharge=$this->input->post('surcharge');
+			$this->Home_Model->editroomprice($id,$ratefrom,$rateto,$contractrate,$roompricemarkup,$weekdayfrom,$weekdaytill,$surcharge);	
+			redirect('admin/addeditprice/'.$ext,'refresh'); 
+			
+		}
+		else
+		{
+			redirect('admin','refresh');
+		}
+	}
 	/* End of it JR on July 12th*/
 }?>

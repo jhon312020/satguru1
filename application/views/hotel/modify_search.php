@@ -17,18 +17,54 @@
           <select class="selectbox_modify1">
           <option>Nationality</option>
           </select>
-          </div>-->
-    <div class="padding_top_bottom5" style="margin-top:5px; float:left">
-        <input type="text" name="sd" value="<?php echo date($_SESSION['cin']); ?>" placeholder="Check In" class="search_input_box4" style="font-size:11px; padding-left:5px; margin-right:10px;" id="datepicker" />
+          </div> -->
+    <div class="check" style="margin-top:5px; float:left; margin-left:0px;">
+		<input class="but-eve" name="sd" type="text" id="datepicker" style="width:120px;" value="<?php echo date($_SESSION['cin']); ?>" placeholder="Check In"/>
         <br  /><span id="date_error" style="color:#F00;"></span>
-        <input type="text" name="ed" style="font-size:11px; padding-left:5px;" value="<?php echo date($_SESSION['cout']); ?>" placeholder="Check Out" class="search_input_box4" id="datepicker1" />
+        <input type="text" name="ed" value="<?php echo date($_SESSION['cout']); ?>" placeholder="Check Out" class="but-eve" id="datepicker1" style="margin-top:20px; padding-left:10px;background:none;width:85px;"/>
+				<div class="customselect" style="float:right; margin-top:5px;">
+				Nights:
+						<select class="but-Arr" name="nights" onChange="changeDate();" id="select_nights">
+							<option value="1" selected="">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+							<option value="17">17</option>
+							<option value="18">18</option>
+							<option value="19">19</option>
+							<option value="20">20</option>
+							<option value="21">21</option>
+							<option value="22">22</option>
+							<option value="23">23</option>
+							<option value="24">24</option>
+							<option value="25">25</option>
+							<option value="26">26</option>
+							<option value="27">27</option>
+							<option value="28">28</option>
+							<option value="29">29</option>
+							<option value="30">30</option>
+						</select>
+			</div>
          <br  /><span id="date_error1" style="color:#F00;"></span>
     </div>
     <div class="clear"></div>
-    <div class="padding_top_bottom5">
-        <select  class="search_input_box ui-autocomplete-input"  style="width:90px;" name="room_count" id="room_count">
+	Room:
+    <div class="customselect">
+        <select  class="but-Arr ui-autocomplete-input"  name="room_count" id="room_count">
             <?php for($r=1;$r<=8;$r++){ ?>
-                 <option value="<?php echo $r; ?>">Room: <?php echo $r; ?></option>
+                 <option value="<?php echo $r; ?>"><?php echo $r; ?></option>
             <?php } ?>
         </select>
     </div>
@@ -36,22 +72,26 @@
         <div id="adultchild">
         
         <div class=" fleft" style="width:100%;">
-        <div class="padding_top_bottom5">
+		Adult:
+        <div class="customselect">
             <div>
-                <select name="adult[]" class="search_input_box ui-autocomplete-input"  style="width:90px;"  id="adult_count0">
-                    <option value="1">Adult 1</option>
-                                 <option value="2">Adult 2</option>
-                                  <option value="3">Adult 3</option>
-                                   <option value="4">Adult 4</option>
+                <select name="adult[]" class="but-Arr ui-autocomplete-input"   id="adult_count0">
+                    <option value="1">1</option>
+                                 <option value="2">2</option>
+                                  <option value="3">3</option>
+                                   <option value="4">4</option>
                 </select>
             </div>
 
             <div style="float:left; width: 110px;">
-                <select name="child[]" class="search_input_box ui-autocomplete-input"  style="width:90px;  margin-left:10px;"  id="child_count0">
+			Child:
+			<div class="customselect">
+                <select name="child[]" class="but-Arr ui-autocomplete-input" id="child_count0">
                     <?php for($c=0;$c<=3;$c++){ ?>
-                        <option value="<?php echo $c; ?>" >child: <?php echo $c; ?></option>
+                        <option value="<?php echo $c; ?>" ><?php echo $c; ?></option>
                     <?php } ?>
                 </select>
+			</div>
                 <div id="child_age0">
                
                 </div>
@@ -214,40 +254,27 @@ function highlightDays(date) {
 			beforeShowDay: highlightDays
         });
         
-        $( "#datepicker1" ).datepicker({
+	 	$( "#datepicker1" ).datepicker({
             numberOfMonths: 2,
-           dateFormat: 'yy-mm-dd',
+            dateFormat: 'yy-mm-dd',
             minDate: 1,
-			firstDay: 1
-        });
-        
+			firstDay: 1,
+			showOn:'off'
+        }); 
     });
     
     $('#datepicker').change(function() {
-				var selectedDate1= $("#datepicker").datepicker('getDate');
-			  	var nextdayDate  = dateADD(selectedDate1);
-				var nextDateStr = zeroPad(nextdayDate.getDate(),2)+"-"+zeroPad((nextdayDate.getMonth()+1),2)+"-"+(nextdayDate.getFullYear());
-				$t = nextDateStr;
-				$('#out').html('<input type="text" name="ed" id="datepicker1" class="search_input_box4" value="'+$t+'" style="color:#70a4d1;"/> ');+
-
-         				$(function() {
-							$( "#datepicker1").datepicker({
-								
-								 numberOfMonths: 2,
-								 firstDay: 1,
-								dateFormat: 'yy-mm-dd',
-								buttonImageOnly: true,
-								minDate: $t
-								
-								
-							});
-
-						});
-     
-
+		var n = parseInt($('#select_nights').val());
+		var date2 = $('#datepicker').datepicker('getDate');
+		date2.setDate(date2.getDate()+n);
+		$('#datepicker1').datepicker('setDate', date2);
     });
-    
-    
+	function changeDate() {
+		var n = parseInt($('#select_nights').val());
+		var date2 = $('#datepicker').datepicker('getDate');
+		date2.setDate(date2.getDate()+n);
+		$('#datepicker1').datepicker('setDate', date2);
+	}
 </script>
 <script>
 

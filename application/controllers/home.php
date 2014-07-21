@@ -667,8 +667,6 @@ $this->load->view('hotels/reservation_print', $data);
 	
 	function payment_load($amount,$id)
 	{
-		echo 'comes in';
-		exit;
 		$sess_id = session_id();
 		$_SESSION['customer']['id'] = $id;
 		$_SESSION['customer']['session_id'] =$sess_id;
@@ -683,12 +681,8 @@ $this->load->view('hotels/reservation_print', $data);
 		$_SESSION['customer']['special'] = $this->input->post('special');
 		$_SESSION['customer']['nationality'] = $this->input->post('nationality');
 		$data['amount']=$amount;
-		$this->load->view('hotels/OwnInventory/paypal',$data);
-		
+		$this->load->view('hotel/OwnInventory/paypal',$data);
 	}
-
 }
-
-
 /* End of file welcome.php */
 /* Location: ./application/controllers/welcome.php */

@@ -763,7 +763,7 @@ font-weight: bold"><?php
                     <div class="fleft left20"> &nbsp;Continue Booking</div>
               
                 <?php /* echo base_url() ?>home/payment_load/<?php echo $tota?>/<?php echo $cart_result[0]->id */?>
-                <form method="post" action="<?php echo base_url() ?>home/payment_load/<?php echo $tota ?>/<?php echo $cart_result[0]->id ?>"  name="member_login" class='form-horizontal bbq wizard' id="member_payment">
+                <form method="post" action="<?php echo base_url() ?>index.php/home/payment_load/<?php echo $tota ?>/<?php echo $cart_result[0]->id ?>"  name="member_login" class='form-horizontal bbq wizard' id="member_payment">
                  <?php
 	//echo '<pre/>';
 	//print_r($cart_result);

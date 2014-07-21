@@ -65,7 +65,7 @@
       </div>
       <div style="width: 114px; float: left;">
       <div class="hotel_price_part"> 
-        <span class="text6" style="text-align:center; color: #B31111; font-size:19px;"><strong><?php echo 'SGD '; ?></strong><strong><?php echo $result[$i]->AvgPrice; ?></strong></span> 
+        <span class="text6" style="text-align:center; color: #B31111; font-size:19px;"><strong><?php echo 'SGD '; ?></strong><strong><?php echo $result[$i]->AvgPrice * $_SESSION['room_count']; ?></strong></span> 
         <span class="detail_txt1">  <br/>
     <a class="btnBook_instant " href="<?php echo base_url().$link; ?>">
     View More </a> </span> </div></div>

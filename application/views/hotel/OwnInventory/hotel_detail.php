@@ -1,3 +1,5 @@
+<?php //$this->load->view('home/header_hotel1'); ?>
+<?php $this->load->view('header_footer/header_hotel'); ?>
 <?php 
 	$hotel_details = $this->Hotelbeds_Model->fetch_search_by_id($hotelCode);
 ?>
@@ -78,20 +80,7 @@ top: 0;
         $imageList=explode('|',$img_array);
     }
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
-    <head>
-        
-<meta content="utf-8" http-equiv="encoding">
-
-<meta http-equiv="X-UA-Compatible" content="IE=7;FF=3;OtherUA=4" />
-
-<meta http-equiv="X-UA-Compatible" content="IE=7;FF=3;OtherUA=4">
-        <title>DSS DEMO</title>
-        <!-- CSS -->
-        <!--########### COMMON CSS #############-->    
-        
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/slimbox2.js"></script>
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/slimbox2.css" type="text/css" media="screen" />
         
@@ -103,11 +92,7 @@ top: 0;
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/camera.css" type="text/css" media="screen" />
         <!--########### COMMON CSS #############-->    
         <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
-    </head>
-    <!-- <body onLoad="return load('<?php //echo $hotel_detailss->latitude; ?>','<?php //echo $hotel_detailss->longitude; ?>');"> -->
-    <body>
-<?php //$this->load->view('home/header_hotel1'); ?>
-<?php $this->load->view('header_footer/header_hotel'); ?>
+
 <div class="inner_wrapper" style="margin-left:10%;">
 <div class="padding10 part985">
     <div class="left_part">
@@ -123,11 +108,12 @@ top: 0;
             <span style="width:100px; float:left;"> Checkout Date</span>
             <span style="font-weight:bold; color:#025590;">:&nbsp;<?php echo date('d M Y',strtotime($_SESSION['hotel_search']['cout'])); ?><br /></span>
             <span style="width:100px; float:left;">Adults </span>
-            <span style="font-weight:bold; color:#025590;">:&nbsp;<?php echo $_SESSION['hotel_search']['adult']; ?><br /></span>
+            <span style="font-weight:bold; color:#025590;">:&nbsp;
+			<?php $tot_adults = 0; foreach($_SESSION['hotel_search']['adult'] as $adult) { $tot_adults = $tot_adults + $adult; } echo $tot_adults; ?><br /></span>
             <span style="width:100px; float:left;">Childs</span>
             <span style="font-weight:bold; color:#025590;">:&nbsp;<?php echo $_SESSION['hotel_search']['child_count']; ?><br /></span>
             <span style="width:100px; float:left;">Nights</span>
-            <span style="font-weight:bold; color:#025590;"> :&nbsp;<?php echo $_SESSION['hotel_search']['days'] + 1;?></span>
+            <span style="font-weight:bold; color:#025590;"> :&nbsp;<?php echo $_SESSION['hotel_search']['days'];?></span>
            </ul>
            <div style="clear:both;"></div>
            </li>

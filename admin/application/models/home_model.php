@@ -1,224 +1,240 @@
 <?php 
 class Home_Model extends CI_Model
 {
-
-		function __construct()
-		{
-		
+	function __construct()
+	{
 		parent::__construct();
+	}
+	
+	function admin_login_check_db($username,$passwd)
+	{
 		
-		}
-		function admin_login_check_db($username,$passwd)
+		$this->db->select('*');
+		$this->db->from('admin_new');
+		$this->db->where('email',$username);
+		$this->db->where('password',$passwd);
+		
+		$query=$this->db->get();
+		if($query->num_rows() =='')
 		{
-			
-			$this->db->select('*');
-			$this->db->from('admin_new');
-			$this->db->where('email',$username);
-			$this->db->where('password',$passwd);
-			
-			$query=$this->db->get();
-			if($query->num_rows() ==''){
-				return '';
-			}else{
-				return $query->row();
-			}
-			
+			return '';
 		}
-		function admin_det($admin_id)
+		else
 		{
-			
-			$this->db->select('*');
-			$this->db->from('admin_new');
-			$this->db->where('admin_id',$admin_id);
-			$query=$this->db->get();
-			if($query->num_rows() ==''){
-				return '';
-			}else{
-				return $query->row();
-			}
-			
+			return $query->row();
+		}
+	}
+
+	function admin_det($admin_id)
+	{
+		
+		$this->db->select('*');
+		$this->db->from('admin_new');
+		$this->db->where('admin_id',$admin_id);
+		$query=$this->db->get();
+		if($query->num_rows() =='')
+		{
+			return '';
+		}
+		else
+		{
+			return $query->row();
+		}
+	}
+	
+	function updateprofile($first_name,$last_name,$email_id,$phone,$mobile,$alternate_no,$address,$admin_id)
+	{
+		$data = array('first_name'=>$first_name,'last_name'=>$last_name,'email'=>$email_id,'phone'=>$phone,'mobile'=>$mobile,'alternate_no'=>$alternate_no,'address'=>$address);
+		$this->db->where('admin_id',$admin_id);
+		$this->db->update('admin_new',$data);
+	}
+	
+	function check_password($pwd,$admin_id)
+	{
+		$this->db->select('*');
+		$this->db->from('admin_new');
+		$this->db->where('admin_id',$admin_id);
+		$this->db->where('password',$pwd);
+		$query=$this->db->get();
+		if($query->num_rows() =='')
+		{
+			return '';
+		}
+		else
+		{
+			return $query->row();
+		}
+	}
+	
+	function updatepassword($admin_id,$pwfield)
+	{
+		$data = array('password'=>$pwfield);
+		$this->db->where('admin_id',$admin_id);
+		$this->db->update('admin_new',$data);
+	}
+	
+	function getmarkupdet($val)
+	{
+		$this->db->select('*');
+		$this->db->from('b2c_markup');
+		$this->db->join('api','b2c_markup.api = api.api_id');
+		$this->db->join('country','b2c_markup.country = country.country_id','left');
+		$this->db->where('b2c_markup.module_type',$val);
+		$query=$this->db->get();
+		if($query->num_rows() =='')
+		{
+			return '';
+		}
+		else
+		{
+			return $query->result();
+		}
+	}
+	
+	function getcountry()
+	{
+		$this->db->select('*');
+		$this->db->from('country');
+		$query=$this->db->get();
+		if ($query->num_rows() =='')
+		{
+			return '';
+		}
+		else
+		{
+			return $query->result();
+		}
+	}
+	function getcountry_v1()
+	{
+		$this->db->select('Global_Countryname');
+		$this->db->from('api_permanent_city');
+		$this->db->group_by('Global_Countryname');
+		$query=$this->db->get();
+		if($query->num_rows() =='')
+		{
+			return '';
+		}
+		else
+		{
+			return $query->result();
+		}
+	}
+	
+	function getapidetails($module_type)
+	{
+		$this->db->select('*');
+		$this->db->from('api');
+		$this->db->where('module_type',$module_type);
+		$query=$this->db->get();
+		if ($query->num_rows() =='')
+		{
+			return '';
+		}
+		else
+		{
+			return $query->result();
 		}
 		
-		function updateprofile($first_name,$last_name,$email_id,$phone,$mobile,$alternate_no,$address,$admin_id)
-		{
-			$data = array('first_name'=>$first_name,'last_name'=>$last_name,'email'=>$email_id,'phone'=>$phone,'mobile'=>$mobile,'alternate_no'=>$alternate_no,'address'=>$address);
-			$this->db->where('admin_id',$admin_id);
-			$this->db->update('admin_new',$data);
-		}
-		
-		function check_password($pwd,$admin_id)
-		{
-			$this->db->select('*');
-			$this->db->from('admin_new');
-			$this->db->where('admin_id',$admin_id);
-			$this->db->where('password',$pwd);
-			$query=$this->db->get();
-			if($query->num_rows() ==''){
-				return '';
-			}else{
-				return $query->row();
-			}
-		}
-		
-		function updatepassword($admin_id,$pwfield)
-		{
-			$data = array('password'=>$pwfield);
-			$this->db->where('admin_id',$admin_id);
-			$this->db->update('admin_new',$data);
-		}
-		
-		function getmarkupdet($val)
-		{
-			$this->db->select('*');
-			$this->db->from('b2c_markup');
-			$this->db->join('api','b2c_markup.api = api.api_id');
-			$this->db->join('country','b2c_markup.country = country.country_id','left');
-			$this->db->where('b2c_markup.module_type',$val);
-			
-			$query=$this->db->get();
-			if($query->num_rows() ==''){
-				return '';
-			}else{
-				return $query->result();
-			}
-		}
-		
-		function getcountry()
-		{
-			$this->db->select('*');
-			$this->db->from('country');
-			$query=$this->db->get();
-			if($query->num_rows() ==''){
-				return '';
-			}else{
-				return $query->result();
-			}
-		}
-		function getcountry_v1()
-		{
-			$this->db->select('Global_Countryname');
-			$this->db->from('api_permanent_city');
-			$this->db->group_by('Global_Countryname');
-			$query=$this->db->get();
-			if($query->num_rows() ==''){
-				return '';
-			}else{
-				return $query->result();
-			}
-		}
-		
-		function getapidetails($module_type)
-		{
-			$this->db->select('*');
-			$this->db->from('api');
-			$this->db->where('module_type',$module_type);
-			$query=$this->db->get();
-			if($query->num_rows() ==''){
-				return '';
-			}else{
-				return $query->result();
-			}
-			
-		}
-		
-		  public function get_country_list()
-   	{
-   
+	}
+	
+	public function get_country_list()
+	{
 		$this->db->select('*')
 		->from('country');
 		$query = $this->db->get();
-
-      if ( $query->num_rows > 0 ) {
-      
-         return $query->result();
-      }
-      return false;
-   }
-		function currencylist()
+		if ($query->num_rows > 0 ) 
 		{
-			$this->db->select('*');
-			$this->db->from('currency_converter');
-			$query=$this->db->get();
-			if($query->num_rows() ==''){
-				return '';
-			}else{
-				return $query->result();
-			}
+			return $query->result();
+		}
+		return false;
+	}
+	
+	function currencylist()
+	{
+		$this->db->select('*');
+		$this->db->from('currency_converter');
+		$query=$this->db->get();
+		if($query->num_rows() ==''){
+			return '';
+		}else{
+			return $query->result();
+		}
+	}
+	
+	function currencydet($id)
+	{
+		$this->db->select('*');
+		$this->db->from('currency_converter');
+		$this->db->where('cur_id',$id);
+		$query=$this->db->get();
+		if($query->num_rows() ==''){
+			return '';
+		}else{
+			return $query->row();
+		}
+	}
+	
+	function updatecurrency($id,$value)
+	{
+		$data = array('value'=>$value);
+		$this->db->where('cur_id',$id);
+		$this->db->update('currency_converter',$data);
+	}
+	
+	function updatecurrencystatus($id,$status)
+	{
+		$data = array('status'=>$status);
+		$this->db->where('cur_id',$id);
+		$this->db->update('currency_converter',$data);
+	}
+	
+	function delete_currency($id)
+	{
+		$this->db->where('cur_id',$id);
+		$this->db->delete('currency_converter');
+	}
+	
+	function get_api_list()
+	{
+		
+			$this->db->select('*')
+			->from('api');
+			$query = $this->db->get();
+	
+		  if ( $query->num_rows > 0 ) {
+		  
+			 return $query->result();
+		  }
+		  return false;
+	}
+	
+	function get_api_det($id)
+	{
+		$this->db->select('*');
+		$this->db->from('api');
+		$this->db->where('api_id',$id);
+		$query=$this->db->get();
+		if($query->num_rows() ==''){
+			return '';
+		}else{
+			return $query->row();
 		}
 		
-		function currencydet($id)
-		{
-			$this->db->select('*');
-			$this->db->from('currency_converter');
-			$this->db->where('cur_id',$id);
-			$query=$this->db->get();
-			if($query->num_rows() ==''){
-				return '';
-			}else{
-				return $query->row();
-			}
+	}
+	function get_api_det_v1($id)
+	{
+		$this->db->select('*');
+		$this->db->from('api_domian_status');
+		$this->db->where('api_id',$id);
+		$query=$this->db->get();
+		if($query->num_rows() ==''){
+			return '';
+		}else{
+			return $query->row();
 		}
 		
-		function updatecurrency($id,$value)
-		{
-			$data = array('value'=>$value);
-			$this->db->where('cur_id',$id);
-			$this->db->update('currency_converter',$data);
-		}
-		
-		function updatecurrencystatus($id,$status)
-		{
-			$data = array('status'=>$status);
-			$this->db->where('cur_id',$id);
-			$this->db->update('currency_converter',$data);
-		}
-		
-		function delete_currency($id)
-		{
-			$this->db->where('cur_id',$id);
-			$this->db->delete('currency_converter');
-		}
-		
-		function get_api_list()
-		{
-			
-				$this->db->select('*')
-				->from('api');
-				$query = $this->db->get();
-		
-			  if ( $query->num_rows > 0 ) {
-			  
-				 return $query->result();
-			  }
-			  return false;
-		}
-		
-		function get_api_det($id)
-		{
-			$this->db->select('*');
-			$this->db->from('api');
-			$this->db->where('api_id',$id);
-			$query=$this->db->get();
-			if($query->num_rows() ==''){
-				return '';
-			}else{
-				return $query->row();
-			}
-			
-		}
-		function get_api_det_v1($id)
-		{
-			$this->db->select('*');
-			$this->db->from('api_domian_status');
-			$this->db->where('api_id',$id);
-			$query=$this->db->get();
-			if($query->num_rows() ==''){
-				return '';
-			}else{
-				return $query->row();
-			}
-			
-		}
+	}
 
 	/* Added by JR on July 10th */
 	function gethotel()
@@ -720,6 +736,43 @@ class Home_Model extends CI_Model
 	{
 		$data = array('HotelCode'=>$hotelid_id1,'Roomcode'=>$Roomcode,'upgradefrom'=>$upgradefrom,'upgradeto'=>$upgradeto,'promo'=>$promo);
 		$this->db->insert('hotel_priceserviceupgrade',$data);
+		
+	}
+
+	function getroomprice($id)
+	{
+		$this->db->select('*');
+		$this->db->from('hotel_room_price');
+		$this->db->where('id',$id);
+		$query=$this->db->get();
+		if($query->num_rows() =='')
+		{
+			return '';
+		}
+		else
+		{
+			return $query->row();
+		}
+	}
+	
+	public function delete_price($id) 
+	{
+		$this->db->where('id',$id);
+		$this->db->delete('hotel_room_price');
+	}
+	
+	function update_room($RoomName,$roomsize,$beds,$extrabed,$description,$id)
+	{
+		$data = array('RoomName'=>$RoomName,'roomsize'=>$roomsize,'beds'=>$beds,'extrabed'=>$extrabed,'description'=>$description);
+		$this->db->where('id',$id);
+		$this->db->update('hotel_room_list',$data);
+	}
+	
+	function editroomprice($id,$ratefrom,$rateto,$contractrate,$roompricemarkup,$weekdayfrom,$weekdaytill,$surcharge)
+	{
+		$data = array('ratefrom'=>$ratefrom,'rateto'=>$rateto,'contractrate'=>$contractrate,'roompricemarkup'=>$roompricemarkup,'weekdayfrom'=>$weekdayfrom,'weekdaytill'=>$weekdaytill,'surcharge'=>$surcharge);
+		$this->db->where('id',$id);
+			$this->db->update('hotel_room_price',$data);
 		
 	}
 	/* End of it */

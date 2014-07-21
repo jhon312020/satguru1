@@ -40,6 +40,7 @@
 						<h5>When</h5><br />
 						<h6>CHECK IN</h6>
 						<input class="but-eve" name="sd" type="text" id="datepicker" style="width:120px;"/>
+						<br  /><span id="date_error" style="color:#F00;"></span>
 					</span>
 					<span class="check">
 						<h5>&nbsp;</h5><br />
@@ -153,7 +154,7 @@
     <div class="boardTypeCtn">
       <div class="typeCtn"><label>Category :</label></div>
       <ul id="boardTypeList">
-        <li><input id='c_cat_all' name="c_sel_all" onclick="unselect_all_f(this, 'f_c');" type="checkbox" checked="checked" /><label for="f_cat_all">All</label></li>
+        <li><input id='c_sel_all' name="c_sel_all" onclick="unselect_all_f(this, 'f_c');" type="checkbox" checked="checked" /><label for="f_cat_all">All</label></li>
         <li><input id="f_cat_1" name="f_category[]" onclick="remove_all_select('c_sel_all');"  value="1" type="checkbox" /><label for="f_cat_1">1 Star</label></li>
         <li><input id="f_cat_2" name="f_category[]" onclick="remove_all_select('c_sel_all');"  value="2" type="checkbox" /><label for="f_cat_2">2 Star</label></li>
         <li><input id="f_cat_3" name="f_category[]" onclick="remove_all_select('c_sel_all');"  value="3" type="checkbox" /><label for="f_cat_3">3 Star</label></li>
@@ -514,5 +515,29 @@ function highlightDays(date) {
 		  //document.getElementById("ddestination_error").innerHTML = "";
 		 // document.flight_search.submit();
 	  }
+	}
+	
+	function select_all_f(theElement, obj) {
+		var theForm = theElement.form, z = 0;
+		
+		for(z=0; z<theForm.length;z++){
+		  if(theForm[z].type == 'checkbox' && theForm[z].name.substr(0, 3)==obj){
+			theForm[z].checked = theElement.checked;
+		  }
+		}
+	}
+	
+	function unselect_all_f(theElement, obj) {
+		var theForm = theElement.form, z = 0;
+		
+		for(z=0; z<theForm.length;z++){
+		  if(theForm[z].type == 'checkbox' && theForm[z].name.substr(0, 3)==obj){
+			theForm[z].checked = theElement.unchecked;
+		  }
+		}
+	}
+	
+	function remove_all_select(type){
+		document.getElementById(type).checked = false;
 	}
 </script>

@@ -2105,8 +2105,43 @@ function bookingdetail_sendmsg()
 
 								$domaindetail = $this->Hotel_Model->get_domain_detail($this->domain);
 
-								return $domaindetail;	
+								return $domaindetail;
 
-					}	
- 	
+					}
+
+	function bookingv($result_id)
+	{
+		$this->load->model('Hotelbeds_Model');
+		$this->load->model('Hotels_Model');
+		//print_r($_SESSION);
+		$data['room'] = $room = $result_id;
+		$ses_id = $_SESSION['hotel_search']['session_id'];
+		$data['cart_result'] = $this->Hotelbeds_Model->fetch_cart_search_result_db_id1($result_id);
+		//print_r($data);
+		//$data['room_info'] = $this->Hotelbeds_Model->fetch_cart_search_result_db_id_v1($ses_id,$result_id);
+		$cart_total_amount = $this->Hotelbeds_Model->fetch_cart_search_result_db_total_amount_id($ses_id,$result_id);
+		//print_r($data['cart_result']);exit;
+		$data['cart_total_amount'] = $cart_total_amount->total_cost;
+		$data['nights'] = $_SESSION['days'];
+		$data['adult'] = $_SESSION['hotel_search']['adult_count'];
+		$data['child'] = $_SESSION['hotel_search']['child_count'];
+		$data['city'] = $_SESSION['hotel_search']['city'];
+		$cinval = explode("-",$_SESSION['hotel_search']['org_cin']);
+		$cin  = $cinval[2].'-'.$cinval[0].'-'.$cinval[1];
+		$coutval = explode("-",$_SESSION['hotel_search']['org_cout']);
+		$cout  = $coutval[2].'-'.$coutval[0].'-'.$coutval[1];
+		$data['cin'] = date("d M, Y ",strtotime($cin));
+		$data['cout'] = date("d M, Y ",strtotime($cout));
+		$data['total_rooms']=($_SESSION['hotel_search']['room_count'] * count($data['cart_result']));
+		/*if($this->session->userdata('b2c_logged_in'))
+		{
+		$user_data = $this->Account_Model->get_member_info($this->session->userdata('b2c_id'));*/
+		$data['cancellation_till_date'] = $cancellation_till_date = $data['cart_result'][0]->CancellationPeriod;
+		//print_r($data['cancellation_till_date']);exit;
+		$cur_date = time();
+		$c_date = strtotime($cancellation_till_date);
+		$datediff = (($c_date - $cur_date)/(60*60*24));
+		$data['cancelleation_till_days'] = number_format($datediff);
+		$this->load->view('hotel/OwnInventory/booking', $data);
+	}
 }

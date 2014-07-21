@@ -8,8 +8,9 @@
 	$coutval = explode("/",$_SESSION['hotel_search']['cout']);
 	$cout  = $coutval[2].'-'.$coutval[0].'-'.$coutval[1];
 	$adult = $_SESSION['hotel_search']['adult'];
+	$link = $base_url.'/index.php/hotel/bookingv/';
 	$hotelRoomResult = mysql_query("SELECT * FROM  hotel_room_list WHERE HotelCode = '$hotelIds'and status = '1' GROUP BY RoomName");
-	$hotelRoomhotelRoomRowCount = mysql_num_rows($hotelRoomResult);
+	$hotelRoomRowCount = mysql_num_rows($hotelRoomResult);
 	while ($hotelRoomRow = mysql_fetch_array($hotelRoomResult))
 	{
 		if(isset($hotelRoomRowCount) > 0)
@@ -39,7 +40,7 @@
 						</div>
 					&nbsp;<div class="hotel_details_room_total_part1">'. $hotelRoomRow['AvgPrice'].' '.$hotelRoomRow['Currency'].'</div>
 					<div class="hotel_details_room_book_button" align="center">
-						<span class="font_size12"><a href=" /satguru/hotels/book/'.$hotelRoomRow['id'].'" class="booking_button">Book</a></span>
+						<span class="font_size12"><a href="'.$link.$hotelRoomRow['id'].'" class="booking_button">Book</a></span>
 					</div>
 					<div class="clear"></div>
 					<br></br></br>

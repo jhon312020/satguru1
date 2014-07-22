@@ -4,7 +4,7 @@
 	$hotel_details = $this->Hotelbeds_Model->fetch_search_by_id($hotelCode);
 	$latitude = '';
 	$longitude = '';
-	print_r($hotel_details);
+	//print_r($hotel_details);
 	if ($hotel_details && $hotel_details->geo_coordinates)
 	{
 		list($latitude, $longitude) = explode(',', $hotel_details->geo_coordinates);

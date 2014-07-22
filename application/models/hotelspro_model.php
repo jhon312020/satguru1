@@ -124,7 +124,12 @@ class Hotelspro_Model extends CI_Model {
 		}
 	
 	  $filters = array();
-	  $filters[] = array("filterType" => "resultLimit", "filterValue" => "10");
+	  // Added and commented by JR for adding filter type on 22-July-2014
+	  //$filters[] = array("filterType" => "resultLimit", "filterValue" => "10");
+	if (isset($_SESSION['f_category']))
+	{
+		$filters[] = array("filterType" => "hotelStar", "filterValue" => implode(',', $_SESSION['f_category']));
+	}
 	  
 	  $explode = explode('-',$_SESSION['cin']); 	        	 
 	  $cin = $explode[2].'-'.$explode[0].'-'.$explode[1]; 
@@ -139,7 +144,9 @@ class Hotelspro_Model extends CI_Model {
 		
 		 $client = new SoapClient($this->post_url, array('trace' => 1));
 		  try {
-			    $checkAvailability = $client->getAvailableHotel($this->client_id, $this->city_code, $this->cin, $this->cout, "USA", "US", "false", $this->room_combination );
+			   // Added and commented by JR for adding filter type on 22-July-2014
+			    //$checkAvailability = $client->getAvailableHotel($this->client_id, $this->city_code, $this->cin, $this->cout, "USA", "US", "false", $this->room_combination );
+			    $checkAvailability = $client->getAvailableHotel($this->client_id, $this->city_code, $this->cin, $this->cout, "USA", "US", "false", $this->room_combination, $filters );
   }
   catch (SoapFault $exception) {
       $xml_error =  $exception->getMessage();

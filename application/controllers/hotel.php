@@ -76,6 +76,16 @@ class Hotel extends CI_Controller {
 		{
 			$_SESSION['ed'] = $this->input->post('ed');
 		}
+		// Added by JR for adding filter type on 22-July-2014
+		if (isset($_POST['f_category']))
+		{
+			$_SESSION['f_category'] = $_POST['f_category'];
+		}
+		else
+		{
+			unset($_SESSION['f_category']);
+		}
+		/* end of it 22-July-2014*/
 		$this->load->model('Hotels_Model');
 		$sess_id=session_id();
 		$cityName = explode(",",$_SESSION['city_val']);

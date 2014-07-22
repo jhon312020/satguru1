@@ -2,6 +2,13 @@
 <?php $this->load->view('header_footer/header_hotel'); ?>
 <?php 
 	$hotel_details = $this->Hotelbeds_Model->fetch_search_by_id($hotelCode);
+	$latitude = '';
+	$longitude = '';
+	print_r($hotel_details);
+	if ($hotel_details && $hotel_details->geo_coordinates)
+	{
+		list($latitude, $longitude) = explode(',', $hotel_details->geo_coordinates);
+	}
 ?>
 <script type="text/javascript" src="<?php echo base_url()?>assets/Validation/js/jquery.validationEngine.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>assets/Validation/js/languages/jquery.validationEngine-en.js"></script>
@@ -685,8 +692,8 @@ top: 0;
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script>
 	
-	var center_lat = "<?php //echo $hotel_detailss->latitude; ?>";
-	var center_lng = "<?php //echo $hotel_detailss->longitude; ?>";
+	var center_lat = "<?php echo $latitude; ?>";
+	var center_lng = "<?php echo $longitude; ?>";
 	function initialize() {
 		
   	var mapOptions = {
@@ -697,14 +704,21 @@ top: 0;
 
   var map = new google.maps.Map(document.getElementById('map-canvas'),
                                 mapOptions);
-
-  var image = '<?php echo base_url(); ?>assets/images/map_icon.png';
+  var contentString = '<table width="350" cellspacing="5" cellpadding=5><tr><td  width="100" ><img src="<?php echo $hotel_details->FrontPgImage; ?>" width="100" height="100"></td><td align="left"  width="250" ><span style="font-size:14px;color:red"><?php echo $hotel_details->HotelName; ?></span><br><?php echo $hotel_details->Address ; ?><br /><?php echo $hotel_details->Location; ?></td></tr></table>';
+  
+  var infowindow = new google.maps.InfoWindow({
+      content: contentString
+  });
+  var image = '<?php echo base_url(); ?>assets/images/hotel-icon-50x50-grey.png';
   var myLatLng = new google.maps.LatLng(center_lat, center_lng);
-  var beachMarker = new google.maps.Marker({
+  var marker = new google.maps.Marker({
       position: myLatLng,
       map: map,
-      icon: image
-	 
+      icon: image,
+      title: '<?php echo $hotel_details->HotelName; ?>'
+  });
+   google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map,marker);
   });
 }
   google.maps.event.addDomListener(window, 'load', initialize);

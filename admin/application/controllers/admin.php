@@ -269,6 +269,18 @@ public function __construct()
 			$avarageprice = $this->input->post('avarageprice');
 			$geo = $this->input->post('geo');
 			
+			/* Added by JR on 22-July-2014 for lat and long */
+			//$geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address=573/1,+Jangli+Maharaj+Road,+Deccan+Gymkhana,+Pune,+Maharashtra,+India&sensor=false');
+			$geo_info = $address.', '. $city.', '.$country;
+			$geo_info = str_replace(' ', '+', $geo_info).'&sensor=false';
+			$geocode = @file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$geo_info");
+			$geoCordinates = '';
+			if ($geocode)
+			{
+				$output= json_decode($geocode);
+				$geoCordinates = $output->results[0]->geometry->location->lat.','.$output->results[0]->geometry->location->lng;
+			}
+			/* End of lat and long 22-July-2014 */
 			
 			$contractfrom = $this->input->post('contractfrom');
 			$contractto = $this->input->post('contractto');
@@ -312,7 +324,7 @@ public function __construct()
 				 $sports='';
 			}
 				
-			$this->Home_Model->add_hotel($left_ban2,$country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo);
+			$this->Home_Model->add_hotel($left_ban2,$country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo, $geoCordinates);
 			$hotelid_id = $this->db->insert_id();
 			$hotelcode="H".$hotelid_id;
 			$this->Home_Model->add_hotelcode($hotelcode,$hotelid_id);
@@ -395,20 +407,20 @@ public function __construct()
 			$redirect = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 			$redirectimage=dirname(dirname(dirname(dirname($redirect))));
 			$redirectupload=$redirectimage."/banner_images/";
-			if($_FILES['uploadimage']['name'] !='')
+			if ($_FILES['uploadimage']['name'] !='')
 			{		
 				$rd = "hotel".rand(10,1000);
 				$file=$rd.$_FILES['uploadimage']['name'];
 				copy($_FILES['uploadimage']['tmp_name'],"banner_images/".$file);
 				$left_ban1=$file;	
 				$left_ban2=$redirectupload.$left_ban1;
-			} else
-			{
-				$left_ban1 = $this->input->post('uploadimage1');	
 			}
-					
+			else
+			{
+				$left_ban1 = $this->input->post('uploadimage1');
+			}
 			 $id = $this->input->post('id');
-			 $hotelcode="H". $id;			
+			 $hotelcode="H". $id;
 			//echo $left_ban1 = $this->input->post('uploadimage');
 			$country = $this->input->post('country');
 			$city = $this->input->post('city');
@@ -433,6 +445,19 @@ public function __construct()
 			$extranetnumber = $this->input->post('extranetnumber');
 			$extranetemail = $this->input->post('extranetemail');
 			$hoteldescmore = $this->input->post('hoteldescmore');
+			/* Added by JR on 22-July-2014 for lat and long */
+			//$geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address=573/1,+Jangli+Maharaj+Road,+Deccan+Gymkhana,+Pune,+Maharashtra,+India&sensor=false');
+			$geo_info = $address.', '. $city.', '.$country;
+			$geo_info = str_replace(' ', '+', $geo_info).'&sensor=false';
+			$geocode = @file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$geo_info");
+			$geoCordinates = '';
+			if ($geocode)
+			{
+				$output= json_decode($geocode);
+				$geoCordinates = $output->results[0]->geometry->location->lat.' , '.$output->results[0]->geometry->location->lng;
+			}
+			/* End of lat and long 22-July-2014 */
+			//exit;
 			/*$hotelfeature1 = $this->input->post('hotelfeature');
 		
 			$flag=0;
@@ -460,7 +485,7 @@ public function __construct()
 			{
 				 $sports='';
 			}
-			$this->Home_Model->edit_hotel($country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo,$id);
+			$this->Home_Model->edit_hotel($country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo,$id, $geoCordinates);
 			
 			$facility = $this->input->post('facility');
 			$sql=mysql_query("delete from  hotel_facilities where HotelCode='".$hotelcode."'");

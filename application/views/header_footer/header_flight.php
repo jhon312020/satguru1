@@ -141,7 +141,7 @@ if(!$this->session->userdata('b2b_logged_in')) {
 	</div>
 	<div class="logo">
 		<div class="logo-img">
-			<h1><img src="<?php echo base_url(); ?>assets/images/images/logo.jpg" /></h1>
+			<h1><a href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>assets/images/images/logo.jpg" /></a></h1>
 		</div>
 	
 		<div class="mainmenu">

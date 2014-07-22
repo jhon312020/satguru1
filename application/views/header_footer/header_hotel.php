@@ -71,7 +71,7 @@ window.onload=function(){
             </div>
             <div class="logo">
             	<div class="logo-img">
-                	<h1><img src="<?php echo base_url(); ?>assets/new_css/images/logo.jpg" /></h1>
+                	<h1><a href="<?php echo base_url(); ?>"> <img src="<?php echo base_url(); ?>assets/new_css/images/logo.jpg" /></img></a></h1>
                 </div>
 			
 				<div class="mainmenu">

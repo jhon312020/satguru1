@@ -129,9 +129,9 @@ top: 0;
 								<?php //echo date('M d, Y',strtotime('Y-m-d',$cin2)); ?>
                                 <?php echo date('d M Y',strtotime($_SESSION['hotel_search']['cin'])); ?><br /></span>
                                <span style="width:100px; float:left;"> Checkout Date</span> <span style="font-weight:bold; color:#025590;">:&nbsp;<?php echo date('d M Y',strtotime($_SESSION['hotel_search']['cout'])); ?><br /></span>
-                                <span style="width:100px; float:left;">Adults </span><span style="font-weight:bold; color:#025590;">:&nbsp;<?php echo $_SESSION['hotel_search']['adult']; ?><br /></span>
+                                <span style="width:100px; float:left;">Adults </span><span style="font-weight:bold; color:#025590;">:&nbsp;<?php $adults_count = 0; foreach($_SESSION['hotel_search']['adult'] as $adults) { $adults_count = $adults_count + $adults; } echo $adults_count; ?><br /></span>
                                 <span style="width:100px; float:left;">Childs</span><span style="font-weight:bold; color:#025590;">:&nbsp;<?php echo $_SESSION['hotel_search']['child_count']; ?><br /></span>
-                                <span style="width:100px; float:left;">Nights</span> <span style="font-weight:bold; color:#025590;"> :&nbsp;<?php echo $_SESSION['hotel_search']['days'] + 1;?></span>
+                                <span style="width:100px; float:left;">Nights</span> <span style="font-weight:bold; color:#025590;"> :&nbsp;<?php echo $_SESSION['hotel_search']['days'];?></span>
                             </ul>
                             <div style="clear:both;"></div>
                         </li>
@@ -294,7 +294,7 @@ top: 0;
                    <strong style="color:red;">Date From :  </strong><strong><?php echo $_SESSION['hotel_search']['cin']?></strong></br>
                     <strong style="color:red;">Date To :  </strong><strong><?php echo $_SESSION['hotel_search']['cout']?></strong></br>
 					<strong style="color:red;">Total Days :  </strong><strong><?php echo $_SESSION['hotel_search']['days']?></strong></br>
-                         <strong style="color:red;">Total Adult :  </strong><strong><?php  echo $_SESSION['hotel_search']['adult']?></strong></br>
+                         <strong style="color:red;">Total Adult :  </strong><strong><?php $adults_count = 0; foreach($_SESSION['hotel_search']['adult'] as $adults) { $adults_count = $adults_count + $adults; } echo $adults_count; ?></strong></br>
                     <div class="clr"></div>
                 </div>
                         <div class="clr_space"></div>

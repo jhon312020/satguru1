@@ -207,9 +207,6 @@ top: 0;
 			  $timestamp_end = strtotime($_SESSION['hotel_search']['cout']);
 			  $difference = abs($timestamp_end - $timestamp_start);
 			  $days = floor($difference/(60*60*24));
-			  
-			  
-			 
 
 		   /*}
 		   else
@@ -721,6 +718,7 @@ font-weight: bold;">      Extra Bed For Adult:</span><span id="txtHint3"></span>
                      
                      <input type="hidden" name="amountlunch" id="amountlunch" value=""><input type="hidden" name="amountdinner" id="amountdinner" value=""><input type="hidden" name="bedchild" id="bedchild" value=""><input type="hidden" name="bedadult" id="bedadult" value="">
 <div class="prc_bg"> 
+<form method="post" action="<?php echo base_url() ?>index.php/home/payment_load/<?php echo $tota ?>/<?php echo $cart_result[0]->id ?>"  name="member_login" class='form-horizontal bbq wizard' id="member_payment">
     <span style="color:red;font-size: 11px;
 font-weight: bold;" id="test">Total Price  :  </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#333;font-size: 11px;
 font-weight: bold"><?php if($amount!='') {
@@ -763,7 +761,7 @@ font-weight: bold"><?php
                     <div class="fleft left20"> &nbsp;Continue Booking</div>
               
                 <?php /* echo base_url() ?>home/payment_load/<?php echo $tota?>/<?php echo $cart_result[0]->id */?>
-                <form method="post" action="<?php echo base_url() ?>index.php/home/payment_load/<?php echo $tota ?>/<?php echo $cart_result[0]->id ?>"  name="member_login" class='form-horizontal bbq wizard' id="member_payment">
+                
                  <?php
 	//echo '<pre/>';
 	//print_r($cart_result);

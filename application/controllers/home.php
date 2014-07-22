@@ -680,7 +680,8 @@ $this->load->view('hotels/reservation_print', $data);
 		$_SESSION['customer']['address'] = $this->input->post('address');
 		$_SESSION['customer']['special'] = $this->input->post('special');
 		$_SESSION['customer']['nationality'] = $this->input->post('nationality');
-		$data['amount']=$amount;
+		//$data['amount']=$amount;
+		$data['amount']=$this->input->post('totalamount');
 		$this->load->view('hotel/OwnInventory/paypal',$data);
 	}
 }

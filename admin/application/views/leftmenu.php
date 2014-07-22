@@ -316,4 +316,23 @@ function update_currency()
 					</li>-->
 				</ul>
 			</div>
+			<div class="subnav">
+				<div class="subnav-title">
+					<a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span>Own Inventory</span></a>
+				</div>
+				<ul class="subnav-menu">
+					<li class='dropdown'>
+						<a href="#" data-toggle="dropdown">Manage Hotels</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="<?php echo WEB_URL_ADMIN ?>admin/managehotel">Add Hotel</a>
+							</li>
+							<li>
+								<a href="<?php echo WEB_URL_ADMIN ?>admin/viewhotel">Manage Hotel</a>
+							</li>
+						</ul>
+					</li>
+
+				</ul>
+			</div>
 		</div>

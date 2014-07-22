@@ -1,4 +1,4 @@
-<?php $amount = '';  $totalbreak = ''; $this->load->view('header_footer/header_hotel'); ?>
+<?php $amount = '';  $totalbreak = ''; $totalam = ''; $this->load->view('header_footer/header_hotel'); ?>
 <div id="wrapper">
         <!-- CSS -->
         <!--########### COMMON CSS #############-->    

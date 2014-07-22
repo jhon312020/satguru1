@@ -2120,7 +2120,9 @@ function bookingdetail_sendmsg()
 		//print_r($data);
 		//$data['room_info'] = $this->Hotelbeds_Model->fetch_cart_search_result_db_id_v1($ses_id,$result_id);
 		$cart_total_amount = $this->Hotelbeds_Model->fetch_cart_search_result_db_total_amount_id($ses_id,$result_id);
-		//print_r($data['cart_result']);exit;
+		//print_r($data['cart_result']);
+		//print_r($cart_total_amount);
+		//exit;
 		$data['cart_total_amount'] = $cart_total_amount->total_cost;
 		$data['nights'] = $_SESSION['days'];
 		$data['adult'] = $_SESSION['hotel_search']['adult_count'];

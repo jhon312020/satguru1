@@ -234,6 +234,7 @@
     }
    var holydays = ['01/01/2014','01/20/2014','02/17/2014','05/26/2014','07/04/2014','09/01/2014','10/13/2014','11/11/2014','11/27/2014','12/25/2014'];
 	var tips  = ['New Year','Martin Luther King Day','Presidents Day (Washington Birthday)','Memorial Day','Independence Day','Labor Day','Columbus Day','Veterans Day','','Christmas'];      
+	
 function highlightDays(date) {
    
     for (var i = 0; i < holydays.length; i++) {
@@ -244,6 +245,9 @@ function highlightDays(date) {
     return [true, ''];
 
 }
+</script>
+
+<script type="text/javascript">
     $(function() {
         $( "#datepicker" ).datepicker({
             numberOfMonths: 2,

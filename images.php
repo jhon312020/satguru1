@@ -1,6 +1,6 @@
-<script type="text/javascript" src="http://localhost/satguru1/assets/js/jquery_006.js"></script>
 <script type="text/javascript" src="http://localhost/satguru1/assets/js/slimbox2.js"></script>
 <link rel="stylesheet" href="http://localhost/satguru1/assets/css/slimbox2.css" type="text/css" media="screen">
+
 <?php 
 	session_start();
 	error_reporting(0);

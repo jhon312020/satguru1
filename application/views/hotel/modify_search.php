@@ -169,12 +169,12 @@
         $('#tabs').smartTab({autoProgress: false, stopOnFocus: true, transitionEffect: 'vSlide'});
     });
     </script><!-- Home Slider Javascript END-->
-    <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.nivo.slider.js"></script>
+    <!-- <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.nivo.slider.js"></script>
     <script type="text/javascript">
         $(window).load(function() {
             $('#slider').nivoSlider({effect:'slideInRight'});
         });
-    </script>
+    </script> -->
     
     <script type="text/javascript">
         

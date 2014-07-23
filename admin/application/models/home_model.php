@@ -265,9 +265,9 @@ class Home_Model extends CI_Model
 		}
 	}
 
-	function add_hotel($left_ban1,$country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$createdby,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo,$geoCordinates=null)
+	function add_hotel($left_ban1,$country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$createdby,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo,$geoCoordinates=null)
 	{
-		$data = array('FrontPgImage'=>$left_ban1,'Country'=>$country,'City'=>$city,'HotelName'=>$hotelname,'StarRating'=>$starrating,'Address'=>$address,'PostalCode'=>$postalcode,'ContactNo'=>$contactno,'FaxNo'=>$faxno,'checkintime'=>$checkintime,'checkouttime'=>$checkouttime,'HotelDesc'=>$hoteldesc,'AvgPrice'=>$avarageprice,'createdby'=>'admin','contractfrom'=>$contractfrom,'contractto'=>$contractto,'directorsales'=>$directorsales,'salespersonname'=>$salespersonname,'salesno'=>$salesno,'salesemail'=>$salesemail,'extranetpersonname'=>$extranetpersonname,'extranetnumber'=>$extranetnumber,'extranetemail'=>$extranetemail,'hoteldescmore'=>$hoteldescmore,'internetfacility'=>$internetfacility,'carparking'=>$carparking,'sports'=>$sports,'status'=>'1','geo'=>$geo, 'geo_coordinates'=>$geoCordinates);
+		$data = array('FrontPgImage'=>$left_ban1,'Country'=>$country,'City'=>$city,'HotelName'=>$hotelname,'StarRating'=>$starrating,'Address'=>$address,'PostalCode'=>$postalcode,'ContactNo'=>$contactno,'FaxNo'=>$faxno,'checkintime'=>$checkintime,'checkouttime'=>$checkouttime,'HotelDesc'=>$hoteldesc,'AvgPrice'=>$avarageprice,'createdby'=>'admin','contractfrom'=>$contractfrom,'contractto'=>$contractto,'directorsales'=>$directorsales,'salespersonname'=>$salespersonname,'salesno'=>$salesno,'salesemail'=>$salesemail,'extranetpersonname'=>$extranetpersonname,'extranetnumber'=>$extranetnumber,'extranetemail'=>$extranetemail,'hoteldescmore'=>$hoteldescmore,'internetfacility'=>$internetfacility,'carparking'=>$carparking,'sports'=>$sports,'status'=>'1','geo'=>$geo, 'geo_coordinates'=>$geoCoordinates);
 		$this->db->insert('hotel_search_list',$data);
 		return $this->db->insert_id();
 	}
@@ -680,14 +680,14 @@ class Home_Model extends CI_Model
 		$this->db->update('hotel_search_list' , array('status' => $status));
 	}
 	
-	function edit_hotel($country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo,$id, $geoCordinates = null)
+	function edit_hotel($country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo,$id, $geoCoordinates = null)
 	{
-		$data = array('Country'=>$country,'City'=>$city,'HotelName'=>$hotelname,'StarRating'=>$starrating,'Address'=>$address,'PostalCode'=>$postalcode,'ContactNo'=>$contactno,'FaxNo'=>$faxno,'checkintime'=>$checkintime,'checkouttime'=>$checkouttime,'HotelDesc'=>$hoteldesc,'AvgPrice'=>$avarageprice,'createdby'=>'admin','contractfrom'=>$contractfrom,'contractto'=>$contractto,'directorsales'=>$directorsales,'salespersonname'=>$salespersonname,'salesno'=>$salesno,'salesemail'=>$salesemail,'extranetpersonname'=>$extranetpersonname,'extranetnumber'=>$extranetnumber,'extranetemail'=>$extranetemail,'hoteldescmore'=>$hoteldescmore,'internetfacility'=>$internetfacility,'carparking'=>$carparking,'sports'=>$sports,'status'=>'1','geo'=>$geo, 'geo_coordinates'=>$geoCordinates);
+		$data = array('Country'=>$country,'City'=>$city,'HotelName'=>$hotelname,'StarRating'=>$starrating,'Address'=>$address,'PostalCode'=>$postalcode,'ContactNo'=>$contactno,'FaxNo'=>$faxno,'checkintime'=>$checkintime,'checkouttime'=>$checkouttime,'HotelDesc'=>$hoteldesc,'AvgPrice'=>$avarageprice,'createdby'=>'admin','contractfrom'=>$contractfrom,'contractto'=>$contractto,'directorsales'=>$directorsales,'salespersonname'=>$salespersonname,'salesno'=>$salesno,'salesemail'=>$salesemail,'extranetpersonname'=>$extranetpersonname,'extranetnumber'=>$extranetnumber,'extranetemail'=>$extranetemail,'hoteldescmore'=>$hoteldescmore,'internetfacility'=>$internetfacility,'carparking'=>$carparking,'sports'=>$sports,'status'=>'1','geo'=>$geo, 'geo_coordinates'=>$geoCoordinates);
 		$this->db->where('hotel_id',$id);
 		$this->db->update('hotel_search_list',$data);
 	}
 	
-	function add_facility($hotelid_id,$facility,$createdby)
+	function add_facility($hotelid_id, $facility)
 	{
 		$data = array('HotelCode'=>$hotelid_id,'Facility'=>$facility,'createdby'=>'admin');
 		$this->db->insert('hotel_facilities',$data);

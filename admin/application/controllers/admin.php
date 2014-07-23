@@ -449,7 +449,9 @@ public function __construct()
 			//$geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address=573/1,+Jangli+Maharaj+Road,+Deccan+Gymkhana,+Pune,+Maharashtra,+India&sensor=false');
 			$geo_info = $address.', '. $city.', '.$country;
 			$geo_info = str_replace(' ', '+', $geo_info).'&sensor=false';
-			$geocode = @file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$geo_info");
+			$geocode = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$geo_info");
+			//print_r($geocode);
+			//exit;
 			$geoCordinates = '';
 			if ($geocode)
 			{

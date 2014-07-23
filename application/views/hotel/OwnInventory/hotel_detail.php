@@ -196,11 +196,16 @@ top: 0;
                         <?php echo $hotel_details->StarRating; ?> Hotel
                     </div>
                         <div class="text12" style="color:#08427e;"><?php echo $hotel_details->HotelName; ?></div>
-                        <div style="color:#535353; font-size:11px;"><?php echo $hotel_details->Location; ?> </div>
+                        
+                        <div style="color:#535353; font-size:11px;">
+							<?php 
+							echo $hotel_details->Address;
+							echo $hotel_details->Location; 
+                        ?> </div>
                         <div class="stars<?php echo $starRating; ?>"></div>
                         <div class="clr_space"></div>
                         <div style="width:444px; float:left; color:#333; font-size:11px; line-height:15px;  margin-top:-7px; margin-bottom:-7px;">
-                    <p><b><?php echo preg_replace("/[^a-z0-9_-]/i", " ", $hotel_details->HotelDesc); ?></b> <br><?php echo preg_replace("/[^a-z0-9_-]/i", " ",  substr($hotel_details->HotelDesc,0,200)); ?></p><div class="clr"></div>
+                    <p><!-- <b><?php //echo preg_replace("/[^a-z0-9_-]/i", " ", $hotel_details->HotelDesc); ?></b> <br> --><?php echo preg_replace("/[^a-z0-9_-]/i", " ",  substr($hotel_details->HotelDesc,0,200)); ?></p><div class="clr"></div>
                 </div>
                         <div class="clr_space"></div>
                         <?php  

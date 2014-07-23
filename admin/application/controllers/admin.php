@@ -274,14 +274,13 @@ public function __construct()
 			$geo_info = $address.', '. $city.', '.$country;
 			$geo_info = str_replace(' ', '+', $geo_info).'&sensor=false';
 			$geocode = @file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$geo_info");
-			$geoCordinates = '';
+			$geoCoordinates = '';
 			if ($geocode)
 			{
-				$output= json_decode($geocode);
-				$geoCordinates = $output->results[0]->geometry->location->lat.','.$output->results[0]->geometry->location->lng;
+				$output = json_decode($geocode);
+				$geoCoordinates = $output->results[0]->geometry->location->lat.','.$output->results[0]->geometry->location->lng;
 			}
 			/* End of lat and long 22-July-2014 */
-			
 			$contractfrom = $this->input->post('contractfrom');
 			$contractto = $this->input->post('contractto');
 			//$contractfrom = explode('/',$contractfrom);
@@ -324,7 +323,7 @@ public function __construct()
 				 $sports='';
 			}
 				
-			$this->Home_Model->add_hotel($left_ban2,$country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo, $geoCordinates);
+			$this->Home_Model->add_hotel($left_ban2,$country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo, $geoCoordinates);
 			$hotelid_id = $this->db->insert_id();
 			$hotelcode="H".$hotelid_id;
 			$this->Home_Model->add_hotelcode($hotelcode,$hotelid_id);
@@ -449,14 +448,14 @@ public function __construct()
 			//$geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address=573/1,+Jangli+Maharaj+Road,+Deccan+Gymkhana,+Pune,+Maharashtra,+India&sensor=false');
 			$geo_info = $address.', '. $city.', '.$country;
 			$geo_info = str_replace(' ', '+', $geo_info).'&sensor=false';
-			$geocode = file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$geo_info");
+			$geocode = @file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$geo_info");
 			//print_r($geocode);
 			//exit;
-			$geoCordinates = '';
+			$geoCoordinates = '';
 			if ($geocode)
 			{
-				$output= json_decode($geocode);
-				$geoCordinates = $output->results[0]->geometry->location->lat.' , '.$output->results[0]->geometry->location->lng;
+				$output = json_decode($geocode);
+				$geoCoordinates = $output->results[0]->geometry->location->lat.','.$output->results[0]->geometry->location->lng;
 			}
 			/* End of lat and long 22-July-2014 */
 			//exit;
@@ -487,7 +486,7 @@ public function __construct()
 			{
 				 $sports='';
 			}
-			$this->Home_Model->edit_hotel($country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo,$id, $geoCordinates);
+			$this->Home_Model->edit_hotel($country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo,$id, $geoCoordinates);
 			
 			$facility = $this->input->post('facility');
 			$sql=mysql_query("delete from  hotel_facilities where HotelCode='".$hotelcode."'");
@@ -639,10 +638,10 @@ public function __construct()
 		if($this->session->userdata('admin_id')!='')
 		{
 			
-			$addid=$this->input->post('addid');
+			$addid = $this->input->post('addid');
+			$hotelid_id1 = $this->uri->segment(3);
 			if($addid!='1'){
 			  $saveadd=$this->input->post('saveadd');
-			  $hotelid_id1=$this->uri->segment(3);
 			  $currency=$this->input->post('currency');
 			  $dmarkprice=$this->input->post('dmarkprice');
 			  $dmarkbed=$this->input->post('dmarkbed');

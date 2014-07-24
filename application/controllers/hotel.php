@@ -2,21 +2,18 @@
 
 class Hotel extends CI_Controller {
 	private $ses_id;
-	public $base_currency = "SGD";
+	public $base_currency = 'SGD';
 	public $domain;
-	
+
 	function __construct()
 	{
-		
 		parent::__construct();
-		$this->domain = "DSS";
-		
+		$this->domain = 'DSS';
 		$this->load->model('Hotel_Model');
 		$this->load->model('Api_Model');
 		$this->load->model('Account_Model');
-
-
 	}
+
 	function search($city_value='')
 	{
 		$this->load->model('Hotelbeds_Model');
@@ -87,41 +84,41 @@ class Hotel extends CI_Controller {
 		}
 		/* end of it 22-July-2014*/
 		$this->load->model('Hotels_Model');
-		$sess_id=session_id();
+		$sess_id = session_id();
 		$cityName = explode(",",$_SESSION['city_val']);
-		$adultCount= array_slice($_SESSION['adult'], 0, $_SESSION['room_count']);
-		$childCount= array_slice($_SESSION['child'], 0, $_SESSION['room_count']);
+		$adultCount = array_slice($_SESSION['adult'], 0, $_SESSION['room_count']);
+		$childCount = array_slice($_SESSION['child'], 0, $_SESSION['room_count']);
 		$destId=$this->Hotels_Model->getDestinationCodeOnName($cityName);
-	//echo '<pre>';print_r($destId);exit;
-		$_SESSION['hotel_search']['full_city']=$_SESSION['city_val'];
+		//echo '<pre>';print_r($destId);exit;
+		$_SESSION['hotel_search']['full_city'] = $_SESSION['city_val'];
 		$_SESSION['hotel_search']['country'] = trim($cityName[1]);
 		$_SESSION['hotel_search']['city'] = $cityName[0];
 		if ($destId)
 		{
-			$_SESSION['hotel_search']['dest_code']=$destId->city_code;
-			$_SESSION['hotel_search']['count_code']=$destId->countrycode;
+			$_SESSION['hotel_search']['dest_code'] = $destId->city_code;
+			$_SESSION['hotel_search']['count_code'] = $destId->countrycode;
 		}
 		else
 		{
 			$_SESSION['hotel_search']['dest_code'] = '';
-			$_SESSION['hotel_search']['count_code']= '';
+			$_SESSION['hotel_search']['count_code'] = '';
 		}
 		//echo $_SESSION['hotel_search']['dest_code'];exit;
-		$_SESSION['hotel_search']['room_count']= $_SESSION['room_count'];
-		$_SESSION['hotel_search']['adult']= $_SESSION['adult'];
-		$_SESSION['hotel_search']['child']= $childCount;
-		$_SESSION['hotel_search']['adult_count']= $_SESSION['adult'];
+		$_SESSION['hotel_search']['room_count'] = $_SESSION['room_count'];
+		$_SESSION['hotel_search']['adult'] = $_SESSION['adult'];
+		$_SESSION['hotel_search']['child'] = $childCount;
+		$_SESSION['hotel_search']['adult_count'] = $_SESSION['adult'];
 		//$_SESSION['hotel_search']['adult_count']= array_sum($adultCount);
-		$_SESSION['hotel_search']['child_count']= array_sum($childCount);
-		$_SESSION['hotel_search']['sess_id']=session_id();
-		$_SESSION['hotel_search']['child_age']=$_SESSION['child_age'];
+		$_SESSION['hotel_search']['child_count'] = array_sum($childCount);
+		$_SESSION['hotel_search']['sess_id'] = session_id();
+		$_SESSION['hotel_search']['child_age'] = $_SESSION['child_age'];
 		$cin_val = explode("-",$_SESSION['sd']);
 		$cout_val = explode("-",$_SESSION['ed']);
-		$_SESSION['hotel_search']['org_cin']=$_SESSION['sd'];
-		$_SESSION['hotel_search']['org_cout']=$_SESSION['ed'];
-		$_SESSION['hotel_search']['cin']= $cin_val[1].'/'.$cin_val[2].'/'.$cin_val[0];
-		$_SESSION['hotel_search']['cout']= $cout_val[1].'/'.$cout_val[2].'/'.$cout_val[0];
-		$_SESSION['hotel_search']['session_id']=$sess_id;
+		$_SESSION['hotel_search']['org_cin'] = $_SESSION['sd'];
+		$_SESSION['hotel_search']['org_cout'] = $_SESSION['ed'];
+		$_SESSION['hotel_search']['cin'] = $cin_val[1].'/'.$cin_val[2].'/'.$cin_val[0];
+		$_SESSION['hotel_search']['cout'] = $cout_val[1].'/'.$cout_val[2].'/'.$cout_val[0];
+		$_SESSION['hotel_search']['session_id'] = $sess_id;
 		$diff =  abs(strtotime($cout_val[0].'-'.$cout_val[1].'-'.$cout_val[2])- strtotime($cin_val[0].'-'.$cin_val[1].'-'.$cin_val[2]) );
 		$sec   = $diff % 60;
 		$diff  = intval($diff / 60);
@@ -135,7 +132,7 @@ class Hotel extends CI_Controller {
 		//print_r($_POST);exit;
 		$result = $this->Hotelbeds_Model->fetch_search_result_all_id_all($_SESSION['hotel_search']['session_id']);
 		unset($_SESSION['hotel_xml_data']);
-		$_SESSION['hotel_xml_data']=array();
+		$_SESSION['hotel_xml_data'] = array();
 		if ($result)
 		{
 			$_SESSION['hotel_xml_data'] = $result;
@@ -154,28 +151,28 @@ class Hotel extends CI_Controller {
 			}
 			else
 			{
-				$api_r=array();
-				$api_r1=array();
+				$api_r = array();
+				$api_r1 = array();
 				$api = $this->Hotel_Model->api_status_id($this->domain);
 				if($api != '')
 				{
 					for($k=0;$k<count($api);$k++)
 					{
-						$api_r[]= "'".$api[$k]->api_name."'";
-						$api_r1[]= $api[$k]->api_name;
+						$api_r[] = "'".$api[$k]->api_name."'";
+						$api_r1[] = $api[$k]->api_name;
 					}
 					$api_f = implode(",",$api_r);
 					$api_f1 = implode(",",$api_r1);
 				}
 				else
 				{
-					$api_f="'Nil'";
-					$api_f1='';
+					$api_f = "'Nil'";
+					$api_f1 = '';
 				}
 				$data['api_fs'] =$api_f;
 				$data['api'] =$api_f1;
 				//echo '<pre/>';
-				//print_r($data);exit;	
+				//print_r($data);exit;
 				$data['result'] = '';
 				$data['min_val'] =0;
 				$data['max_val'] =0;
@@ -215,7 +212,6 @@ class Hotel extends CI_Controller {
 				{	
 					$_SESSION['city']  = $city_code_v->Global_City;
 					$_SESSION['city_code']  =  $city_code_v->Global_Citycode;
-					
 					$_SESSION['cin']  = $_POST['sd'];
 					$_SESSION['cout']  = $_POST['ed'];
 					$_SESSION['hotel_name']  = '';
@@ -241,7 +237,7 @@ class Hotel extends CI_Controller {
 					if(isset($_SESSION['set_basic_session']))
 					{
 						
-						$data['set_basic_session'] =  $_SESSION['set_basic_session'];
+						$data['set_basic_session'] = $_SESSION['set_basic_session'];
 						
 						/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   delete data's ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 						if(isset($_SESSION['session_data_id']))
@@ -251,27 +247,25 @@ class Hotel extends CI_Controller {
 						}
 						/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  delete data's ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 							
-						$_SESSION['session_data_id']='';
-						$_SESSION['session_data_id']=session_id();
-						$this->ses_id= $_SESSION['session_data_id'];
-						$data['ses_id']=$_SESSION['session_data_id'];
+						$_SESSION['session_data_id'] = '';
+						$_SESSION['session_data_id'] = session_id();
+						$this->ses_id = $_SESSION['session_data_id'];
+						$data['ses_id'] = $_SESSION['session_data_id'];
 						//api
 					}
 					else
 					{
 						$data['set_basic_session'] ='0';
 					}
-					$api_r=array();
-					$api_r1=array();
+					$api_r = array();
+					$api_r1 = array();
 					$api = $this->Hotel_Model->api_status_id($this->domain);
 					if($api != '')
 					{
 						for($k=0;$k<count($api);$k++)
-						{	
-						
-								$api_r[]= "'".$api[$k]->api_name."'";
-								$api_r1[]= $api[$k]->api_name;
-						
+						{
+							$api_r[]= "'".$api[$k]->api_name."'";
+							$api_r1[]= $api[$k]->api_name;
 						}
 						$api_f = implode(",",$api_r);
 						$api_f1 = implode(",",$api_r1);
@@ -284,16 +278,15 @@ class Hotel extends CI_Controller {
 					$data['api_fs'] =$api_f;
 					$data['api'] =$api_f1;
 					$data['result'] = '';
-					$data['min_val'] =0;
-					$data['max_val'] =0;
-					$data['tot_rec'] =0;
+					$data['min_val'] = 0;
+					$data['max_val'] = 0;
+					$data['tot_rec'] = 0;
 					$this->load->view('hotel/search_result',$data);
 				}
 				else
 				{
 					$data['error']='';
 					$data['error_header']='';
-					
 					$this->load->view('hotel/others/error',$data);
 				}
 			}
@@ -611,13 +604,11 @@ class Hotel extends CI_Controller {
             }
 
         }*/
-
-	
 		
 		//Hotel mapping start
 		foreach($result as $key => $value)
 		{
-			$temp[] = $value['mapped_id'];			
+			$temp[] = $value['mapped_id'];
 		}
 		
 		if(!empty($temp))
@@ -626,17 +617,20 @@ class Hotel extends CI_Controller {
 			foreach(array_count_values($temp) as $val => $c)
 			{
 				if($c > 1 && $val != 0) 
-				{								
+				{
 					$dups[] = $val;
 				}
 			}
-		
+			/*print_r($temp);
+			print_r(array_count_values($temp));
+			print_r($result);
+			exit;*/
 			foreach($result as $key => $value)
 			{
 				if(in_array($value['mapped_id'],$dups))
 				{
-					$response = $this->hotel_min_max_price($value['mapped_id'],$result1);
-					if($value['total_cost'] != $response['min_price'])				
+					$response = $this->hotel_min_max_price($value['mapped_id'], $result1);
+					if($value['total_cost'] != $response['min_price'])
 					{
 						unset($result[$key]);
 					}
@@ -658,7 +652,7 @@ class Hotel extends CI_Controller {
         if ($_SESSION['hotel_xml_data'])
         {
 			$data['own_inventory'] = $_SESSION['hotel_xml_data'];
-			$data['own_inventory'] = $this->load->view('hotel/search_result_ajax_own_inventory', $data, true);
+			$data['own_inventory'] = $this->load->view('hotel/OwnInventory/search_result_ajax', $data, true);
 		}
 		else
 		{
@@ -672,7 +666,11 @@ class Hotel extends CI_Controller {
 		$last = count($data['result_data'])-1;
 		
 		$numbers = array_map(array('hotel','get_price_values'), $data['result_data']);
-		  
+		$own_price =  array_map(array('hotel','get_price_values_own'), $_SESSION['hotel_xml_data']);
+		if ($own_price)
+		{
+			$numbers = array_merge($numbers, $own_price);
+		}
 		//$min_val = min($numbers);
 		//$max_val =  max($numbers);
 		$min_val = $numbers?min($numbers):0;
@@ -2155,5 +2153,10 @@ function bookingdetail_sendmsg()
 		$datediff = (($c_date - $cur_date)/(60*60*24));
 		$data['cancelleation_till_days'] = number_format($datediff);
 		$this->load->view('hotel/OwnInventory/booking', $data);
+	}
+	
+	function get_price_values_own($details)
+	{
+		return $details->AvgPrice;
 	}
 }

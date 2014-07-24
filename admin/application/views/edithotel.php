@@ -154,7 +154,24 @@ function airlinname_empty(val)
 									<div class="control-group">
 										<label for="textfield" class="control-label">Star Rating</label>
 										<div class="controls">
-											<input type="text" name="starrating" id="starrating" class="input-xlarge" data-rule-required="true" data-rule-minlength="" value="<?php if($hotel->StarRating != '') { echo $hotel->StarRating; } ?>"/>
+											<!-- <input type="text" name="starrating" id="starrating" class="input-xlarge" data-rule-required="true" data-rule-minlength="" value="<?php if($hotel->StarRating != '') { echo $hotel->StarRating; } ?>"/> -->
+											
+											<select name = 'starrating' id = 'starrating'>
+												<?php 
+												$star_rating = array(5,4,3,2,1);
+												foreach($star_rating as $rating) 
+												{
+													if ($rating == $hotel->StarRating)
+													{
+														echo "<option value='$rating' selected='selected'>$rating stars</option>";
+													}
+													else
+													{
+														echo "<option value=$rating>$rating stars</option>";
+													}
+												}
+												?>
+											</select> 
 										</div>
 									</div>
                                      <div class="control-group">

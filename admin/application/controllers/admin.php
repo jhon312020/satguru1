@@ -1,200 +1,169 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 session_start();
-class Admin extends CI_Controller {
-
-public function __construct()
-   {
-	parent::__construct();
-	$this->load->model('Home_Model');
-	$this->load->model('Admin_Model');
-	
-	  $this->check_isvalidated();	
-	  
-	$this->output->set_header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
-	$this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
-	$this->output->set_header('Pragma: no-cache');
-	$this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+class Admin extends CI_Controller 
+{
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('Home_Model');
+		$this->load->model('Admin_Model');
+		$this->check_isvalidated();	
+		$this->output->set_header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
+		$this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+		$this->output->set_header('Pragma: no-cache');
+		$this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 	}
-	
-	 private function check_isvalidated(){
-		
-		if(! $this->session->userdata('admin_logged_in') && !$this->session->userdata('admin_id'))
-	   {
-		       redirect('login/index');
-       }
-		
-		
-		
-    }
+
+	private function check_isvalidated()
+	{
+		if (!$this->session->userdata('admin_logged_in') && !$this->session->userdata('admin_id'))
+		{
+			redirect('login/index');
+		}
+	}
+
 	function admin_dashboard()
 	{
-			 
-			$admin_id = $this->session->userdata('admin_id');
-			$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
-			$this->load->view('index',$data);
-			
-		
-		
+		$admin_id = $this->session->userdata('admin_id');
+		$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
+		$this->load->view('index',$data);
 	}
+
 	function myprofile()
 	{
-		 
-			$admin_id = $this->session->userdata('admin_id');
-			$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
-			$this->load->view('admin/myprofile',$data);
-			
-	
+		$admin_id = $this->session->userdata('admin_id');
+		$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
+		$this->load->view('admin/myprofile',$data);
 	}
+
 	function editprofile()
 	{
-		 
-			$admin_id = $this->session->userdata('admin_id');
-			$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
-			$this->load->view('admin/editprofile',$data);
-			
-		
+		$admin_id = $this->session->userdata('admin_id');
+		$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
+		$this->load->view('admin/editprofile',$data);
 	}
+
 	function updateprofile()
 	{
-			 
-			$admin_id = $this->session->userdata('admin_id');
-			$first_name = $this->input->post('first_name');
-			$last_name = $this->input->post('last_name');
-			$email_id = $this->input->post('email_id');
-			//$pwfield = $this->input->post('pwfield');
-			$phone = $this->input->post('phone');
-			$mobile = $this->input->post('mobile');
-			$alternate_no = $this->input->post('alternate_no');
-			$address = $this->input->post('address');
-			$this->Home_Model->updateprofile($first_name,$last_name,$email_id,$phone,$mobile,$alternate_no,$address,$admin_id);
-			redirect('admin/editprofile','refresh');
-		
+		$admin_id = $this->session->userdata('admin_id');
+		$first_name = $this->input->post('first_name');
+		$last_name = $this->input->post('last_name');
+		$email_id = $this->input->post('email_id');
+		//$pwfield = $this->input->post('pwfield');
+		$phone = $this->input->post('phone');
+		$mobile = $this->input->post('mobile');
+		$alternate_no = $this->input->post('alternate_no');
+		$address = $this->input->post('address');
+		$this->Home_Model->updateprofile($first_name,$last_name,$email_id,$phone,$mobile,$alternate_no,$address,$admin_id);
+		redirect('admin/editprofile','refresh');
 	}
+
 	function changepassword($flag='')
 	{
-		
-			$admin_id = $this->session->userdata('admin_id');
-			$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
-			if($flag ==1)
-			{
-				$data['upd'] = "Password Has Been Changed Succesfully.";
-			}
-			else
-			{
-				$data['upd'] = '';
-			}
-			$this->load->view('admin/changepassword',$data);
-		
+		$admin_id = $this->session->userdata('admin_id');
+		$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
+		if($flag ==1)
+		{
+			$data['upd'] = "Password Has Been Changed Succesfully.";
+		}
+		else
+		{
+			$data['upd'] = '';
+		}
+		$this->load->view('admin/changepassword',$data);
 	}
+
 	function check_password()
 	{
-		
-			$admin_id = $this->session->userdata('admin_id');
-			$pwd = $this->input->post('pwd');
-			$res = $this->Home_Model->check_password($pwd,$admin_id);
-			if($res != '')
-			{
-			}
-			else
-			{
-				echo "Current Password Not Correct!";
-				//echo $res->password;
-			}
-		
+		$admin_id = $this->session->userdata('admin_id');
+		$pwd = $this->input->post('pwd');
+		$res = $this->Home_Model->check_password($pwd,$admin_id);
+		if($res != '')
+		{
+		}
+		else
+		{
+			echo "Current Password Not Correct!";
+			//echo $res->password;
+		}
 	}
+
 	function updatepassword()
 	{
-		
-			$admin_id = $this->session->userdata('admin_id');
-			$pwfield = $this->input->post('pwfield');
-			$this->Home_Model->updatepassword($admin_id,$pwfield);
-			redirect('admin/changepassword/1','refresh');
-		
+		$admin_id = $this->session->userdata('admin_id');
+		$pwfield = $this->input->post('pwfield');
+		$this->Home_Model->updatepassword($admin_id,$pwfield);
+		redirect('admin/changepassword/1','refresh');
 	}
-	
-	
-	
+
 	function currencyconverter()
 	{
-		
-			$admin_id = $this->session->userdata('admin_id');
-			$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
-			$data['cur_list'] = $this->Home_Model->currencylist();
-			$data['page_header'] = 'Currency List';
-			$this->load->view('setting/currencylist',$data);
-		
+		$admin_id = $this->session->userdata('admin_id');
+		$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
+		$data['cur_list'] = $this->Home_Model->currencylist();
+		$data['page_header'] = 'Currency List';
+		$this->load->view('setting/currencylist',$data);
 	}
-	
+
 	function editcur($id)
 	{
-		
-			$admin_id = $this->session->userdata('admin_id');
-			$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
-			$data['cur_det'] = $this->Home_Model->currencydet($id);
-			$data['id'] = $id;
-			$data['page_header'] = 'Edit Currency';
-			$this->load->view('setting/editcur',$data);
-		
+		$admin_id = $this->session->userdata('admin_id');
+		$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
+		$data['cur_det'] = $this->Home_Model->currencydet($id);
+		$data['id'] = $id;
+		$data['page_header'] = 'Edit Currency';
+		$this->load->view('setting/editcur',$data);
 	}
-	
+
 	function updatecurrency($id)
 	{
-		
-			$value = $this->input->post('value');
-			$this->Home_Model->updatecurrency($id,$value);
-			redirect('admin/currencyconverter','refresh');
-		
+		$value = $this->input->post('value');
+		$this->Home_Model->updatecurrency($id,$value);
+		redirect('admin/currencyconverter','refresh');
 	}
-	
+
 	function deletecur($id)
 	{
-		
-			$curdet = $this->Home_Model->currencydet($id);
-			if($curdet->status ==0)
-			{
-				$status = 2;
-			}
-			else
-			{
-				$status = 0;
-			}
-			$this->Home_Model->delete_currency($id,$status);
-			redirect('admin/currencyconverter','refresh');
-		
+		$curdet = $this->Home_Model->currencydet($id);
+		if($curdet->status ==0)
+		{
+			$status = 2;
+		}
+		else
+		{
+			$status = 0;
+		}
+		$this->Home_Model->delete_currency($id,$status);
+		redirect('admin/currencyconverter','refresh');
 	}
-	
+
 	function apimanagement()
 	{
-		
-			$admin_id = $this->session->userdata('admin_id');
-			$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
-			$data['api'] = $this->Home_Model->get_api_list();
-			$this->load->view('setting/apimanagement',$data);
-		
+		$admin_id = $this->session->userdata('admin_id');
+		$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
+		$data['api'] = $this->Home_Model->get_api_list();
+		$this->load->view('setting/apimanagement',$data);
 	}
+
 	function updateapistatus($api_id,$status)
 	{
-			$data = array('status'=>$status);
-			$this->db->where('api_id',$api_id);
-			$this->db->update('api_domian_status',$data);
-			
-			
-			//$this->db->last_query();exit;
-		
-			redirect('admin/apimanagement','refresh');
-		
+		$data = array('status'=>$status);
+		$this->db->where('api_id',$api_id);
+		$this->db->update('api_domian_status',$data);
+		//$this->db->last_query();exit;
+		redirect('admin/apimanagement','refresh');
 	}
+
 	function editapi($id)
 	{
-		
-			$admin_id = $this->session->userdata('admin_id');
-			$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
-			$data['apidet'] = $this->Home_Model->get_api_det($id);
-			$data['id'] = $id;
-			
-			$this->load->view('setting/editapi',$data);
-		
+		$admin_id = $this->session->userdata('admin_id');
+		$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
+		$data['apidet'] = $this->Home_Model->get_api_det($id);
+		$data['id'] = $id;
+		$this->load->view('setting/editapi',$data);
 	}
+
 	function updateapi($id)
 	{
 		if($_POST['api_name']='Asiantravel')

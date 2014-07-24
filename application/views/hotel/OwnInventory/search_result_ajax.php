@@ -14,20 +14,20 @@
             
             $currency = 'SGD';
             
-            if($result[$i]->StarRating=='4 stars'){
+            if($result[$i]->StarRating=='4'){
 				$starimage='assets/images/dummy/star-active4.png';
                 $starRating=4;}
-            if($result[$i]->StarRating=='3 stars'){
+            if($result[$i]->StarRating=='3'){
                
                 $starimage='assets/images/dummy/star-active3.png';
 				 $starRating=3;}
-            if($result[$i]->StarRating=='2 stars'){
+            if($result[$i]->StarRating=='2'){
 				$starimage='assets/images/dummy/star-active2.png';
                 $starRating=2;}
-            if($result[$i]->StarRating=='1 stars'){
+            if($result[$i]->StarRating=='1'){
 				$starimage='assets/images/dummy/star-active1.png';
                 $starRating=1;}
-            if($result[$i]->StarRating=='5 stars'){
+            if($result[$i]->StarRating=='5'){
 				$starimage='assets/images/dummy/star.png';
                 $starRating=5;}
 				if($result[$i]->AvgPrice==''){

@@ -72,16 +72,16 @@ top: 0;
 
 </style>
 <?php 
-    if($hotel_details->StarRating=='1 stars')
+    /*if($hotel_details->StarRating=='1')
         $starRating=1;
-    if($hotel_details->StarRating=='2 stars')
+    if($hotel_details->StarRating=='2')
         $starRating=2;
-    if($hotel_details->StarRating=='3 stars')
+    if($hotel_details->StarRating=='3')
         $starRating=3;
-    if($hotel_details->StarRating=='4 stars')
+    if($hotel_details->StarRating=='4')
         $starRating=4;
-    if($hotel_details->StarRating=='5 stars')
-        $starRating=5;
+    if($hotel_details->StarRating=='5')
+        $starRating=5;*/
     
     if(isset($img_array))
     {
@@ -181,20 +181,20 @@ top: 0;
                     <div class="hotel_image"><img src="<?php echo $hotel_details->FrontPgImage; ?>" width="140" height="140" /></div>
                     <div class="hotel_text_detail" style="width:552px;">
                     <div class="trip_rating_part" align="center">
-                        <?php if($hotel_details->StarRating=='5 stars'){ ?>
+                        <?php if($hotel_details->StarRating=='5'){ ?>
                         <div class="trip_rating_one"></div>
-                        <?php }else if($hotel_details->StarRating=='2 stars'){ ?>
+                        <?php }else if($hotel_details->StarRating == '2'){ ?>
                         <div class="trip_rating_two"></div>
-                        <?php }else if($hotel_details->StarRating=='3 stars'){ ?>
+                        <?php }else if($hotel_details->StarRating == '3'){ ?>
                         <div class="trip_rating_three"></div>
-                        <?php }else if($hotel_details->StarRating=='4 stars'){ ?>
+                        <?php }else if($hotel_details->StarRating == '4'){ ?>
                         <div class="trip_rating_four"></div>
-                        <?php }else if($hotel_details->StarRating=='5 stars'){ ?>
+                        <?php }else if($hotel_details->StarRating == '5'){ ?>
                         <div class="trip_rating_five"></div>
                         <?php }else{ ?>
                         <div class="trip_rating1"></div>
                         <?php } ?>
-                        <?php echo $hotel_details->StarRating; ?> Hotel
+                        <?php echo $hotel_details->StarRating; ?> stars Hotel
                     </div>
                         <div class="text12" style="color:#08427e;"><?php echo $hotel_details->HotelName; ?></div>
                         
@@ -203,7 +203,7 @@ top: 0;
 							echo $hotel_details->Address;
 							echo $hotel_details->Location; 
                         ?> </div>
-                        <div class="stars<?php echo $starRating; ?>"></div>
+                        <div class="stars<?php echo $hotel_details->StarRating; ?>"></div>
                         <div class="clr_space"></div>
                         <div style="width:444px; float:left; color:#333; font-size:11px; line-height:15px;  margin-top:-7px; margin-bottom:-7px;">
                     <p><!-- <b><?php //echo preg_replace("/[^a-z0-9_-]/i", " ", $hotel_details->HotelDesc); ?></b> <br> --><?php echo preg_replace("/[^a-z0-9_-]/i", " ",  substr($hotel_details->HotelDesc,0,200)); ?></p><div class="clr"></div>

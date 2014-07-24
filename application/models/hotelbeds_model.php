@@ -17,25 +17,25 @@ if (!defined('BASEPATH'))
 
 class Hotelbeds_Model extends CI_Model {
 	
-    function __construct()
-    {
-        parent::__construct();
-    }
+	function __construct()
+	{
+		parent::__construct();
+	}
 
-    public function getApiAuthDetails($api)
-    {
-        $this->db->select('*');
-        $this->db->from('apimanagement');
-        $this->db->where('apiname', $api);
-        $query = $this->db->get();
-        if($query->num_rows() == 0 )
-        {
-           return '';
-        }
-        else
-        {
-           return $query->row();
-        }
+	public function getApiAuthDetails($api)
+	{
+		$this->db->select('*');
+		$this->db->from('apimanagement');
+		$this->db->where('apiname', $api);
+		$query = $this->db->get();
+		if($query->num_rows() == 0 )
+		{
+			return '';
+		}
+		else
+		{
+			return $query->row();
+		}
     }
     function fetch_search_by_id($id){
 		$see=$_SESSION['hotel_search']['session_id'];
@@ -120,7 +120,7 @@ function fetch_ficilities($hotelCode){
 					return '';
 	}
 }
-    	function fetch_search_result_all_id_all($id)
+    function fetch_search_result_all_id_all($id)
 	{
 		//AND hotelid_t != '0'
 			//$select = "SELECT  * FROM  asia_hotel_search_list WHERE  session_id = '$id' or session_id='' and status='1' GROUP BY HotelName";
@@ -135,23 +135,22 @@ function fetch_ficilities($hotelCode){
 		  $ed = $_SESSION['hotel_search']['org_cin'];
 		  $sd = $_SESSION['hotel_search']['org_cout'];
 		  // Added by JR for star filter on 22-July-2014
-		  /*$hotel_star = '';
-		  if (isset($_SESSION['f_category']))
-		  {
-			  $hotel_star = implode(',', $_SESSION['f_category']));
-		  }
+        $hotel_star = '';
+        if (isset($_SESSION['f_category']))
+        {
+            $hotel_star = implode(',', $_SESSION['f_category']);
+        }
 			//$select = "SELECT  * FROM  hotel_search_list WHERE  status='1' AND COUNTRY='".$_SESSION['hotel_search']['country']."' GROUP BY HotelName";
-			
 			$select = "SELECT  * FROM  hotel_search_list WHERE  status='1' AND COUNTRY='".$_SESSION['hotel_search']['country']."' AND contractfrom <='".$ed."' AND contractto >= '".$sd."'";
 			if ($hotel_star)
 			{
-				$select .= " AND ";
+				$select .= " AND StarRating in ($hotel_star)";
 			}
-			$select .= " GROUP BY HotelName";*/
+			$select .= " GROUP BY HotelName";
 			//End of 22-July-2014
 			//$select = "SELECT  * FROM  hotel_search_list WHERE  status='1' AND COUNTRY='".$_SESSION['hotel_search']['country']."' GROUP BY HotelName";
 			
-			$select = "SELECT  * FROM  hotel_search_list WHERE  status='1' AND COUNTRY='".$_SESSION['hotel_search']['country']."' AND contractfrom <='".$ed."' AND contractto >= '".$sd."' GROUP BY HotelName";
+			//$select = "SELECT  * FROM  hotel_search_list WHERE  status='1' AND COUNTRY='".$_SESSION['hotel_search']['country']."' AND contractfrom <='".$ed."' AND contractto >= '".$sd."' GROUP BY HotelName";
 		
 			
 			// and contractfrom>='".$ed."' and  '".$sd."' between contractfrom and contratcto 

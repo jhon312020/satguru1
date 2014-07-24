@@ -57,7 +57,7 @@
       <!-- <div class="stars<?php //echo $starRating; ?>"></div> -->
       <div class="clr_space"></div>
       </br>
-      <div style="width:444px; float:left; color:#333; font-size:11px; line-height:15px;  margin-top:7px; margin-bottom:-7px; word-wrap:break-word;"> <strong>Description</strong><?php echo preg_replace("/[^a-z0-9_-]/i", " ",  substr($result[$i]->HotelDesc,0,200)); ?>
+      <div style="width:444px; float:left; color:#333; font-size:11px; line-height:15px;  margin-top:7px; margin-bottom:-7px; word-wrap:break-word;"> <strong>Description </strong><?php echo preg_replace("/[^a-z0-9_-]/i", " ",  substr($result[$i]->HotelDesc,0,200)); ?>
         <div class="clr"></div>
       </div>
       <div class="clr_space"></div>

@@ -1,32 +1,25 @@
 <?php
-
-
-		$hotel_details= $this->Hotel_Model->get_permanent_details_v3_Hotelspro($id,$api);		
-		$hotel_code = $hotel_details->Hotelspro_Hotelcode;
-		$hotel_name = $hotel_details->Hotel_name;
-		$star = $hotel_details->Hotel_star;
-		$image = $hotel_details->Hotel_thumbnail;
-		if($image=='')
-		{
-			$image= base_url().'assets/images/img/noimagefound.jpg';
-		}
+	$hotel_details= $this->Hotel_Model->get_permanent_details_v3_Hotelspro($id,$api);
+	$hotel_code = $hotel_details->Hotelspro_Hotelcode;
+	$hotel_name = $hotel_details->Hotel_name;
+	$star = $hotel_details->Hotel_star;
+	$image = $hotel_details->Hotel_thumbnail;
+	if($image=='')
+	{
+		$image= base_url().'assets/images/img/noimagefound.jpg';
+	}
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    
-    
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-
-        <title>DSS DEMO</title>
+	<title>satguru</title>
         <!-- CSS -->
         <!--########### COMMON CSS #############-->    
-        <script type="text/javascript" src="<?php echo base_url()?>assets/Validation/js/jquery.validationEngine.js"></script>
+<script type="text/javascript" src="<?php echo base_url()?>assets/Validation/js/jquery.validationEngine.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>assets/Validation/js/languages/jquery.validationEngine-en.js"></script>
 <link rel="stylesheet" href="<?php echo base_url()?>assets/Validation/css/validationEngine.jquery.css" media="all" type="text/css" />
-    
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main_style.css" type="text/css"/>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/search_result.css" type="text/css"/>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/smart_tab.css" type="text/css"/>

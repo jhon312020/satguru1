@@ -50,7 +50,9 @@
 	{
 		echo 'Sorry There is No Amenities';
 	}
-echo'</div></div></div></div>';
+echo'</div></div></div>';
+echo "<br/><div align = 'left' style = 'color:#F00'>Note : <img  width='20' src='".$base_url."/assets/img/paid.png'> Some services shall be paid at the establishment.&nbsp;</div>";
+echo '</div>';
 	$hotelRoomListResource = mysql_query("SELECT * FROM hotel_room_list WHERE HotelCode='$ids' GROUP BY RoomName");
 	echo '<div class="row-fluid top20">
 	<div class="span12">
@@ -79,6 +81,8 @@ echo'</div></div></div></div>';
 			echo 'Sorry There is No Amenities';
 		}
 	}
-	echo'</div></div></div></div>';
+	echo'</div></div></div>';
+	echo "<br/><div align = 'left' style = 'color:#F00'>Note : <img  width='20' src='".$base_url."/assets/img/paid.png'> Some services shall be paid at the establishment.&nbsp;</div>";
+    echo '</div>';
 	mysql_close($con);
 ?>

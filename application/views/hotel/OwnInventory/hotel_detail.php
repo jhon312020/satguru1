@@ -274,13 +274,15 @@ top: 0;
                         <div class="padding10">
                             <?php 
                                 if(isset($hotel_details->hoteldescmore))
-                                {echo '<strong>Hotel Description:</strong>';
-                                echo '</br>';
+                                {
+									//echo '<strong>Hotel Description:</strong>';
+									echo '</br>';
                                     echo html_entity_decode($hotel_details->hoteldescmore);
                                 }
-                                if(isset($hotel_details->hotel_facilities))
-                                {echo '</br></br>';
-                                echo '<strong>Hotel Facilities:</strong>';
+                                /*if(isset($hotel_details->hotel_facilities))
+                                {
+									echo '</br></br>';
+									echo '<strong>Hotel Facilities:</strong>';
                                     echo html_entity_decode($hotel_details->hotel_facilities);
                                 }
                                 if(isset($hotelPolicy))
@@ -305,7 +307,7 @@ top: 0;
                                 {
                                     echo html_entity_decode($locationDescription);
                                     echo '<input type="hidden" name="location_details" value="'.$locationDescription.'">';
-                                }
+                                }*/
                             ?>
                         </div>
                     </div> 

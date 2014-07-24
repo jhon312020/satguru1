@@ -65,7 +65,7 @@ if(isset($result_data) && $result_data)
 				   </br>
 	<?php if(isset($result->Hotel_description) && !empty($result->Hotel_description)) { ?>				
 	<div style="width:444px; float:left; color:#333; font-size:11px; line-height:15px;  margin-top:7px; margin-bottom:-7px; word-wrap:break-word;">
-	 <strong>Description</strong><?php echo preg_replace("/[^a-z0-9_-]/i", " ",  substr($result->Hotel_description,0,200)); ?>
+	 <strong>Description </strong><?php echo preg_replace("/[^a-z0-9_-]/i", " ",  substr($result->Hotel_description,0,200)); ?>
 		<div class="clr"></div>
 	</div>
 	<?php } ?>

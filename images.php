@@ -1,10 +1,12 @@
-<script type="text/javascript" src="http://localhost/satguru1/assets/js/slimbox2.js"></script>
-<link rel="stylesheet" href="http://localhost/satguru1/assets/css/slimbox2.css" type="text/css" media="screen">
-
-<?php 
+<?php
 	session_start();
 	error_reporting(0);
 	include("db.php");
+?>
+<script type="text/javascript" src="<?php echo $base_url;?>/assets/js/slimbox2.js"></script>
+<link rel="stylesheet" href="<?php echo $base_url;?>/assets/css/slimbox2.css" type="text/css" media="screen">
+<?php 
+	
 	$hotelIds = $_GET['search'];
 	$ses = $_SESSION['hotel_search']['session_id'];
 	$cinval = explode("/",$_SESSION['hotel_search']['cin']);

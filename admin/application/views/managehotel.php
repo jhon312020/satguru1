@@ -117,14 +117,22 @@ function airlinname_empty(val)
             <div class="control-group">
               <label for="textfield" class="control-label">Star Rating</label>
               <div class="controls">
-                <select name="starrating">
+                <!-- <select name="starrating">
                   <OPTION value="Boutique">Boutique</OPTION>
                   <OPTION value="Luxury Boutique">Luxury Boutique </OPTION>
                   <OPTION value="5 stars">5</OPTION>
                   <OPTION value="4 stars">4</OPTION>
                   <OPTION value="3 stars">3</OPTION>
                   <OPTION value="2 stars">2</OPTION>
-                </select>
+                </select> -->
+                <select name="starrating">
+                
+                  <OPTION value="5">5 stars</OPTION>
+                  <OPTION value="4">4 stars</OPTION>
+                  <OPTION value="3">3 stars</OPTION>
+                  <OPTION value="2">2 stars</OPTION>
+                  <OPTION value="1">1 stars</OPTION>
+                </select> 
               </div>
             </div> <br>
             <div class="control-group">

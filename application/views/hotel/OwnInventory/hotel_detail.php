@@ -729,7 +729,7 @@ top: 0;
 	if($val!='SGD')
 	{
 		var menu_count = document.getElementById("count_price_id").value;
-		var api_url= 'http://localhost/satguru1/index.php';
+		var api_url= baseUrl+'/index.php';
 		$.ajax({
 			type: 'POST',
 			url: api_url+'/api/get_currency_val/'+$val,

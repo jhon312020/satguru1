@@ -240,18 +240,56 @@ top: 0;
                         <a href="javascript:;" class="tabLink " id="cont-5">Description</a> 
                     </div>
                     <div class="tabcontent" id="cont-1-1" style="padding-left:4px;"> 
-                    <div class="padding10">
-                            <b>Available  Room : </b>
-                            <div class="bg01">
-                            <div class="hotel_details_room_type_part">&nbsp;<span class="text1">Room type</span></div>
-                            <div class="hotel_details_room_rate_part"><span class="text1">Room rate</span></div>
-                            <div class="hotel_details_room_status_part">&nbsp;<span class="text1">Status</span></div>
-                            
-                            <div class="hotel_details_room_total_part">&nbsp;<span class="text1">Total</span></div>
-                            <div class="clear"></div>
-                        </div>
-                            <div class="bg02" id="sample">
-                              </div>
+						<div class="padding10">
+							<div style="width:100%; text-align:right;">
+								<b><span id="">Currency Converter</span> </b> 
+								<select class="qsb_select" id="" onchange="currency_converter(this.value)"  style="font-family:Arial;font-size:8pt;border-radius: 4px; color: #555555; display: inline-block;font-size: 14px;line-height: 20px;margin-bottom: 10px;padding: 4px 6px;vertical-align: middle;" name="">
+									<option value="AUD">Australian Dollar (AUD)</option>
+									<option value="BHD">Bahrain (BHD)</option>
+									<option value="BWP">Botswana Pulas (BWP)</option>
+									<option value="GBP">British Pound (GBP)</option>
+									<option value="BND">Brunei Dollar (BND)</option>
+									<option value="CAD">Canadian Dollar (CAD)</option>
+									<option value="CNY">Chinese Yuan Renminbi (CNY)</option>
+									<option value="EUR">Euro (EUR)</option>
+									<option value="FJD">Fiji Dollar (FJD)</option>
+									<option value="HKD">Hong Kong Dollar (HKD)</option>
+									<option value="INR">India (INR)</option>
+									<option value="IDR">Indonesia (IDR)</option>
+									<option value="JPY">Japanese Yen (JPY)</option>
+									<option value="JOD">Jordan (JOD)</option>
+									<option value="KWD">Kuwait Dinar (KWD)</option>
+									<option value="MOP">Macau Pataca (MOP)</option>
+									<option value="MYR">Malaysia Ringgit (MYR)</option>
+									<option value="MUR">Mauritius Rupees (MUR)</option>
+									<option value="MAD">Morocco Dirhams (MAD)</option>
+									<option value="MZN">Mozambican Metical  (MZN)</option>
+									<option value="MMK">Myanmar Kyats (MMK)</option>
+									<option value="NZD">New Zealand Dollar (NZD)</option>
+									<option value="OMR">Oman (OMR)</option>
+									<option value="PKR">Pakistan (PKR)</option>
+									<option value="PHP">Philippine Peso (PHP)</option>
+									<option value="QAR">Qatar (QAR)</option>
+									<option value="RUB">Russian Ruble (RUB)</option>
+									<option value="SAR">Saudi Arabia (SAR)</option>
+									<option value="SGD" selected="selected">Singapore Dollar (SGD)</option>
+									<option value="ZAR">South Africa (ZAR)</option>
+									<option value="KRW">South Korean Won (KRW)</option>
+									<option value="SEK">Sweden Kroner (SEK)</option>
+									<option value="CHF">Switzerland Franc (CHF)</option>
+									<option value="TWD">Taiwan (TWD)</option>
+									<option value="THB">Thai Baht (THB)</option>
+									<option value="TND">Tunisian Dollar (TND)</option>
+									<option value="AED">United Arab Emirates Dirham  (AED)</option>
+									<option value="USD">US Dollar (USD)</option>
+									<option value="VND">Vietnamese Dong (VND)</option>
+								</select>
+							</div>
+                            <div id="sample" style="overflow:auto;min-height:120px;">
+								<div id="progressbar" style=" margin-top:50px;" align="center">
+									<img src="<?php echo base_url();?>assets/images/ajax-loader1.gif" width="" />
+								</div>
+							</div>
                         </div>
                     </div>
                     
@@ -685,3 +723,54 @@ top: 0;
   google.maps.event.addDomListener(window, 'load', initialize);
     </script>
  
+<script>
+	function currency_converter($val)
+{
+	if($val!='SGD')
+	{
+		var menu_count = document.getElementById("count_price_id").value;
+		var api_url= 'http://localhost/satguru1/index.php';
+		$.ajax({
+			type: 'POST',
+			url: api_url+'/api/get_currency_val/'+$val,
+			data: '',
+			async: true,
+			dataType: 'json',
+			beforeSend:function(){
+			},
+		success: function(data){
+			var currency_vals = data.currency_val;
+			for(var x=0; x < menu_count ; x++)
+			{
+				var total_finalss = document.getElementById("price"+x).innerHTML;
+				var total_finalss1_org = document.getElementById("price1_org"+x).value;
+				var total_finalss1_org_c = document.getElementById("price_org"+x).value;
+				var tots = parseFloat(total_finalss1_org_c) * parseFloat(currency_vals);
+				total_final = tots.toFixed(2);
+				document.getElementById("price"+x).innerHTML=total_final;
+					if(total_finalss1_org!='' && total_finalss1_org!='NaN')
+					{
+						var total_finalss1 = document.getElementById("price1_org"+x).value;
+						var tots1 = parseFloat(total_finalss1) * parseFloat(currency_vals);
+						total_final1 = tots1.toFixed(2);
+						document.getElementById("price1_"+x).innerHTML=total_final1;
+					}
+			}
+		},
+		error:function(request, status, error){}
+		});
+	} else {
+		var menu_count = document.getElementById("count_price_id").value;
+		for(var x=0; x < menu_count ; x++)
+		{
+			var total_finalss = document.getElementById("price_org"+x).value;
+			var total_finalss1 = document.getElementById("price1_org"+x).value;
+			document.getElementById("price"+x).innerHTML=total_finalss;
+				if(total_finalss1!='')
+				{
+				document.getElementById("price1_"+x).innerHTML=total_finalss1;
+				}
+		}
+	}
+}
+</script>

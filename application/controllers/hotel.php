@@ -2159,4 +2159,104 @@ function bookingdetail_sendmsg()
 	{
 		return $details->AvgPrice;
 	}
+
+	function hotel_booking_own1($hotel_id)
+	{
+		//$data['result'] = $this->Hotel_Model->fetch_temp_result_room_id($result_id);
+		if($hotel_id)
+		{
+			//$data['result_id'] = $result_id;
+			//$data['room_info'] = $this->Hotel_Model->fetch_temp_result_room_id_v1($result_id);
+			$this->load->model('Hotelbeds_Model');
+			$data['cart_result'] = $this->Hotelbeds_Model->fetch_cart_search_result_db_id1($result_id);
+			$data['room_info'] = '';
+			$data['hotel_id'] = $hotel_id;
+			$booking_type = $this->input->post('booking_type');
+			if($booking_type == 'guest_booking')
+			{
+				$guest_email = $this->input->post('guest_email');
+				$sessionUserInfo = array( 
+					'guest_id' 		=> '',
+					'guest_email'	 => $guest_email,
+					'guest_type' 		=> 4,
+					'guest_logged_in' 	=> TRUE,
+					'guest_firstname'  => 'Guest',
+					'guest_lastname'  => 'Guest',
+				);
+				$this->session->set_userdata($sessionUserInfo);
+				$customer_user_email = $this->input->post('guest_email');
+				$data['totalrooms'] =  $_SESSION['hotel_search']['room_count'];
+				$data['adult'] = $_SESSION['hotel_search']['adult'];
+				$data['adults'] = $_SESSION['adult_count'];
+				$data['price'] = $_POST['price'];
+				/* ------------- contact details ------*/
+				$data['address']='';
+				$data['contact_no']='';
+				$data['city']='';
+				$data['country']='';
+				$data['postal_code']='';
+				$data['title']='';
+				$data['firstname']='';
+				$data['lastname']='';
+				/* ------------- contact details ------*/
+				$data['customer_user_email']=$customer_user_email;
+				$this->load->view('hotel/OwnInventory/booking_v1',$data );
+			}
+			elseif($booking_type == 'user_booking')
+			{
+				$domain_id = $this->Account_Model->get_domain_list_id($this->domain);
+				$res = $this->Account_Model->check_admin_login(
+								 $this->input->post('user_name'), 
+								 $this->input->post('user_password'),
+								 $domain_id->domain_id
+							); 
+				//  echo '<pre/>';
+				//  print_r($res);exit;
+				if ( $res !== false ) 
+				{
+					$sessionUserInfo = array( 
+					'b2c_id' 		=> $res->user_id,
+					'b2c_email'	 			=> $res->email,
+					'b2c_type' 		=> $res->usertype,
+					'b2c_logged_in' 	=> TRUE,
+					'b2c_firstname'  => $res->firstname,
+					'b2c_lastname'  => $res->lastname,
+					);
+					$this->session->set_userdata($sessionUserInfo);
+					$data['totalrooms']=$_SESSION['room_count'];
+					$data['adult']=$_SESSION['adult_count'];
+					$data['adults']=$_SESSION['adult_count'];
+					$data['price']=$_POST['price'];
+					/* ------------- contact details ------*/
+					$data['address']=$res->address;
+					$data['contact_no']=$res->contact_no;
+					$data['city']=$res->city;
+					$data['country']=$res->country;
+					$data['postal_code']=$res->postal_code;
+					$data['title']=$res->title;
+					$data['firstname']=$res->firstname;
+					$data['lastname']=$res->lastname;
+					/* ------------- contact details ------*/
+					$customer_user_email = $this->input->post('user_name');
+					$data['customer_user_email']=$customer_user_email;
+					$this->load->view('hotel/OwnInventory/booking_v1',$data );
+				}
+				else
+				{
+					$status ='Failed';
+					redirect("hotel/hotel_booking/".$result_id."/".$hotel_id."/".$status, 'refresh');
+				}
+			}
+			else
+			{
+				$customer_user_email='';
+				$this->load->view('hotel/others/404-error');
+			}
+		}
+		else
+		{
+
+			$this->load->view('hotel/others/session_expiry');
+		}
+	}
 }

@@ -12,7 +12,7 @@ $hotel_details= $this->Hotel_Model->get_permanent_details_v3_Hotelspro($id,$api)
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-<title>DSS DEMO</title>
+<title>satguru</title>
 <!-- CSS -->
 <!--########### COMMON CSS #############-->
 

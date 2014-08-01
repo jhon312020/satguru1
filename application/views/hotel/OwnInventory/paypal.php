@@ -31,6 +31,7 @@ getID:function(el)
 </head>
 
 <body onload="call()">
+	<?php $currency = $_SESSION['user_currency']; $amount = $_SESSION['total_price']; ?>
 <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/logo.png" />
 <div id="load" style="display:none;"> </div>
 <form name="frmname" action="https://www.sandbox.paypal.com/cgi-bin/webscr"  method="post">
@@ -38,16 +39,15 @@ getID:function(el)
 <input type="hidden" name="cmd" value="_xclick"/>
 
 
-  <input type="hidden" value="laxmi.provab@gmail.com" name="business" />
-
+ <input type="hidden" value="laxmi.provab@gmail.com" name="business" /> 
   <input type="hidden" value="<?php echo site_url(); ?>/home/payment" name="return" />
   
   <input type="hidden" value="<?php echo site_url(); ?>/home/index" name="cancel_return" />
   <input type="hidden" value="" name="notify_url" />
   <input type="hidden" value="DSS DEMO" name="item_name" />
                     
-  <input type="hidden" value="<?php echo $amount?>" name="amount" />
-  <input type="hidden" value="SGD" name="currency_code" />
+  <input type="hidden" value="<?php echo $amount; ?>" name="amount" />
+  <input type="hidden" value="<?php echo $currency; ?>" name="currency_code" />
 
 <div class="loading_part">
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tableborder">

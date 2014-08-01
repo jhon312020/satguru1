@@ -202,6 +202,7 @@ top: 0;
 							<?php 
 							echo $hotel_details->Address;
 							echo $hotel_details->Location; 
+							echo "<br>";
                         ?> </div>
                         <div class="stars<?php echo $hotel_details->StarRating; ?>"></div>
                         <div class="clr_space"></div>

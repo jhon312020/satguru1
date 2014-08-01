@@ -1886,10 +1886,6 @@ echo json_encode($map_data);
 	function reservation($parent_pnr_no,$pdf_ehck='')
 	{
 		
-		
-			
-			
-			
 			
 		$data['parent_no'] = $parent_pnr_no; 
 		
@@ -2162,14 +2158,13 @@ function bookingdetail_sendmsg()
 
 	function hotel_booking_own1($hotel_id)
 	{
-		//$data['result'] = $this->Hotel_Model->fetch_temp_result_room_id($result_id);
 		if($hotel_id)
 		{
-			//$data['result_id'] = $result_id;
-			//$data['room_info'] = $this->Hotel_Model->fetch_temp_result_room_id_v1($result_id);
+			$data['result_id'] = $hotel_id;
+			$data['room_info'] = $this->Hotel_Model->fetch_temp_result_room_id_v1($hotel_id);
 			$this->load->model('Hotelbeds_Model');
-			$data['cart_result'] = $this->Hotelbeds_Model->fetch_cart_search_result_db_id1($result_id);
-			$data['room_info'] = '';
+			$data['cart_result'] = $this->Hotelbeds_Model->fetch_cart_search_result_db_id1($hotel_id);
+			//$data['room_info'] = '';
 			$data['hotel_id'] = $hotel_id;
 			$booking_type = $this->input->post('booking_type');
 			if($booking_type == 'guest_booking')

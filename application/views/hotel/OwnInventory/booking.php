@@ -16,7 +16,7 @@
 	$currency = mysql_query("select currency from hotel_price where HotelCode='".$cart_result[0]->HotelCode."'");
 	$fetchcurrency = mysql_fetch_array($currency);
 	$currencysg = $fetchcurrency['currency'];
-	foreach($daterange as $date)
+	/* foreach($daterange as $date)
 	{
 		$newdate = $date->format('Y-m-d');
 		$day_of_the_week = date('l', strtotime($newdate));
@@ -103,7 +103,7 @@
 		$cancel_result_set = mysql_query("select * from hotel_cancellationpolicy where HotelCode = '".$cart_result[0]->HotelCode."'");
 		$cancel_record = '';
 		$cancel_record = mysql_fetch_assoc($cancel_result_set);
-	}
+	} */
 ?>
 <div id="wrapper">
         <!-- CSS -->
@@ -261,7 +261,7 @@ top: 0;
                         
                     </div>
                         <div class="text12" style="color:#08427e;"><?php echo $hotel_details['HotelName']; ?></div>
-                        <div style="color:#535353; font-size:11px;"><?php echo $hotel_details['Address']; ?><br /><?php echo $hotel_details['Location']; ?><br /><?php echo $hotel_details['PostalCode']; ?> </div>
+                        <div style="color:#535353; font-size:11px;"><?php echo $hotel_details['Address']; ?><br /><?php echo $hotel_details['Location']; ?><br /><?php echo $hotel_details['PostalCode']; echo "<br>"?> </div>
                         <div class=""><img src="<?php echo base_url().'assets/images/dummy/star-active'.$hotel_details['StarRating'].'.png'; ?>" style="border: none;"/></div>
                         <div class="clr_space"></div>
                         <div style="width:444px; float:left; color:#333; font-size:11px; line-height:15px;  margin-top:-7px; margin-bottom:-7px;">
@@ -360,6 +360,86 @@ top: 0;
 		for($days_count = 0; $days_count < $_SESSION['hotel_search']['days']; $days_count++)
 		{
 			$date_val[] = date('Y-m-d', strtotime($_SESSION['hotel_search']['cin']. " + $days_count days"));
+		
+		$newdate = date('Y-m-d', strtotime($_SESSION['hotel_search']['cin']. " + $days_count days"));
+		$day_of_the_week = date('l', strtotime($newdate));
+		$day_of_the_week1 = date('w', strtotime($newdate));
+		//Currency
+		// Price
+		$roomprice = mysql_query("select * from hotel_room_price where '".$newdate."' between ratefrom and rateto  and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		$fetch_price = mysql_fetch_array($roomprice);
+		$contractrate = $fetch_price['contractrate'];
+		$roompricemarkup = $fetch_price['roompricemarkup'];
+		$surcharge = $fetch_price['surcharge'];
+		$weekdayfrom = $fetch_price['weekdayfrom'];
+		$weekdaytill = $fetch_price['weekdaytill'];
+		//holidaySurcharge
+		$holidaysurcharge = mysql_query("select ratetosurcharge from hotel_room_holidayprice where HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."' and ratefromh='".$newdate."'");
+		$fetch_holidayprice = mysql_fetch_array($holidaysurcharge);
+		$fetch_holidaysur = $fetch_holidayprice['ratetosurcharge'];
+		//Total Price
+		$totalpricemarkup = $contractrate + $roompricemarkup;
+		$totalprice = $contractrate + $roompricemarkup + $fetch_holidaysur;
+		// Total Price Discount
+		$discountrate = mysql_query("select discountrate from  hotel_price_discount where '".$newdate."' between discountfrom and  discountto  and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		$numfetchdiscount = mysql_num_rows($discountrate);
+		$fetchdiscount = mysql_fetch_array($discountrate);
+		$discountrate=$fetchdiscount['discountrate'];
+		if($numfetchdiscount>0)
+		{
+			$totalprice1 = $totalprice/$discountrate;
+			$totalprice = $totalprice-$totalprice1;
+		}
+		// hotel_roompricediscount
+		$roomprice = mysql_query("select pricerate from  hotel_roompricediscount where '".$newdate."' between pricefrom and  priceto  and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		$numfetchpricediscount = mysql_num_rows($roomprice);
+		$fetchdiscountprice = mysql_fetch_array($roomprice);
+		$discountpricerate = $fetchdiscountprice['pricerate'];
+		if($numfetchpricediscount>0)
+		{
+			$totalprice = $totalprice-$discountpricerate;
+		}
+		// Pay stay Promotion
+		$paystaypromotion = mysql_query("select * from hotel_paystaypromo where '".$newdate."' between ratefrom and rateto and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		$fetch_holidaypromotion=mysql_fetch_array($paystaypromotion);
+		$fetch_stay = $fetch_holidaypromotion['stay'];
+		$breakfast = $fetch_holidaypromotion['breakfast'];
+		if($days >= $fetch_stay) 
+		{
+			$fetch_pay = $fetch_holidaypromotion['pay'];
+			$differenc = $fetch_stay-$fetch_pay;
+			$differencmarkup = $differenc*$totalpricemarkup;
+			if($breakfast == 'yes')
+			{
+				$breakrate = $fetch_holidaypromotion['breakrate'];
+				$breakmarkup = $fetch_holidaypromotion['breakmarkup'];
+				$totalbreak = $breakrate + $breakmarkup;
+			}
+		}
+		// Weekend promo
+		$weekdaysurcharge = mysql_query("select * from hotel_priceweekendpromo where '".$newdate."' between ratefrom and rateto and '".$day_of_the_week1."' between weekdayfrom and weekdaytill and  HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		if ($weekdaysurcharge)
+		{
+			$fetch_weekdaysurcharge = mysql_fetch_array($weekdaysurcharge);
+			$weekdayfrom = $fetch_weekendpromo['weekdayfrom'];
+			$weekdaytill = $fetch_weekendpromo['weekdaytill'];
+			$weekendrate = $fetch_weekendpromo['weekendrate'];
+			$totalprice2 = $totalprice/$discountpricerate;
+			$totalprice = $totalprice-$totalprice2;
+		}
+		// Weekday surcharge
+		$weekendpromo = mysql_query("select * from hotel_room_price where '".$newdate."' between ratefrom and rateto and '".$day_of_the_week1."' between weekdayfrom and weekdaytill  and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		$fetch_weekendpromo = mysql_fetch_array($weekendpromo);
+		$weeksurcharge = $fetch_weekendpromo['surcharge'];
+		$totalprice = $totalprice + $weeksurcharge;
+		
+		// Cancellation Information
+		$cancel_result_set = mysql_query("select * from hotel_cancellationpolicy where HotelCode = '".$cart_result[0]->HotelCode."'");
+		$cancel_record = '';
+		$cancel_record = mysql_fetch_assoc($cancel_result_set);
+		
+		$totalprice_array[] = $totalprice;
+		
 		}
 		
 $data_val1 = array_unique($date_val);
@@ -384,16 +464,15 @@ $shurival = 	array();//explode("^^^^",$result->shurival);
 $shurival_v1 = array();
 $adults_count = 0; 
 $child_count = 0;
+$chd_i = 0;
+$overall_amount = 0;
 //print_r($_SESSION['hotel_search']['child']);
 foreach($_SESSION['hotel_search']['adult'] as $adults) 
 { 
-	$adults_count = $adults_count + $adults; 
-} 
-foreach($_SESSION['hotel_search']['child'] as $child) 
-{ 
-	$child_count = $child_count + $child; 
-} 
-
+	
+	$adults_count = $adults; 
+	$child_count = $_SESSION['hotel_search']['child'][$chd_i];
+	$chd_i = $chd_i+1;
 	//for($r=0;$r< count($shurival);$r++)
 	//{
 		//$shurival_v1 = 	explode("||||",$shurival[$r]);
@@ -428,7 +507,16 @@ foreach($_SESSION['hotel_search']['child'] as $child)
         </td>
         <td nowrap="" align="center" style="width:100px;" class="RateTblRoomDesc">1</td>
         <td nowrap="" align="center" style="width:100px;" class="RateTblInstant<?php //echo $result->status; ?>">
-        <span style="font-weight:bold;">SGD <?php echo $totalpricemarkup; ?> </span></td>
+        <span style="font-weight:bold;">SGD 
+        <?php 
+				$days_total_amount = 0; 
+				for($da=0;$da<count($data_val1);$da++)
+				{
+					$days_total_amount = $days_total_amount+$totalprice_array[$da];
+				}
+				$overall_amount = $overall_amount+$days_total_amount;
+				echo $days_total_amount; 
+		?> </span></td>
         <?php
 			
 		for($da=0;$da<count($data_val1);$da++)
@@ -438,11 +526,11 @@ foreach($_SESSION['hotel_search']['child'] as $child)
               <td nowrap="" align="center" style="width:90px;" class="RateTblInstant<?php //echo $token_val_occ_id_final[$to][4]; ?>">
               
               <a style="text-decoration:none;" onmouseout="UnTip()" onmouseover="Tip('<?php echo $tip_text; ?>&lt;br /&gt;Billing Currency : SGD')">
-              <span id="">SGD <?php echo $totalpricemarkup; ?></span>
+              <span id="">SGD <?php echo $totalprice_array[$da] ?></span>
               </a>
               </td>
               <?php
-	
+	}
 	?>
         
       
@@ -452,10 +540,10 @@ foreach($_SESSION['hotel_search']['child'] as $child)
         
 	</tr>
     <?php
-	//}
+	$_SESSION['overall_amount'] = $overall_amount;
 	?>
     <tr style="height:30px">
-		<td  align="right"colspan="2" class="RateTblRoomDesc" style="  text-align:right; font-size:12px"><span><strong> Total Cost :  </strong></span></td><td class="RateTblRoomDesc" style="text-align:center;"><strong>SGD <?php echo $totalprice;; ?></strong></td><td colspan="<?php echo count($data_val1); ?>" class="RateTblRoomDesc"><span></span></td>
+		<td  align="right"colspan="2" class="RateTblRoomDesc" style="  text-align:right; font-size:12px"><span><strong> Total Cost :  </strong></span></td><td class="RateTblRoomDesc" style="text-align:center;"><strong>SGD <?php echo $overall_amount; ?></strong></td><td colspan="<?php echo count($data_val1); ?>" class="RateTblRoomDesc"><span></span></td>
 	</tr>
     
 </tbody></table>
@@ -597,7 +685,7 @@ Promo Not Applicable For Below Dates <br />
           </div>
           <div style="width:728px;">
            <?php if(!$this->session->userdata('b2c_logged_in') && !$this->session->userdata('b2b_logged_in')){?>
-          <div style="background-color: #FFF;margin-left:10px;
+          <div style="background-color: #FFF;margin-left:0px;
 border-radius: 10px;margin-bottom:10px;" class="top10 fleft left60">
           <form class="form-horizontal form-validate" action="<?php echo base_url(); ?>index.php/hotel/hotel_booking_own1/<?php echo $cart_result[0]->RoomCode; ?>" method="POST" id="contine_guest" name="guest_form">
             <div class="top30 fleft left20">
@@ -608,7 +696,7 @@ border-radius: 10px;margin-bottom:10px;" class="top10 fleft left60">
                 Enter your e-mail to continue.</div>
               <input type="text" class="flight_booking_inputbox top20 validate[required,custom[email]]"  value="" style="margin-top:5px;" name="guest_email" id="guest_email">
               <input type="hidden" value="guest_booking" name="booking_type">
-            <input type="hidden" name="price" value="<?php echo $totalprice; ?>" />
+            <input type="hidden" name="price" value="<?php echo $overall_amount; ?>" />
                <div class="clear"></div>
               <button style="margin-top:10px;" class="flight_booking_redbtn top20"> Continue as Guest </button>
               <span id="formerror"></span><br>
@@ -623,7 +711,7 @@ border-radius: 10px;margin-bottom:10px;" class="top10 fleft left60">
 		  ?>
 		
           <div style="background-color: #FFF;
-border-radius: 10px;margin-bottom:10px;" class="top10 fleft left60">
+border-radius: 10px;margin-bottom:10px; margin-left:0px;" class="top10 fleft left60">
           <?php if($this->session->userdata('b2c_logged_in')){
 			  ?><div style="float: right;
     margin-top: 22px;">

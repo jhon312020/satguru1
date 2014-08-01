@@ -1,11 +1,209 @@
-<?php
-	$this->load->view('header_footer/header_hotel'); 
+<style>
+	textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    border-radius: 4px;
+    color: #555555;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    padding: 4px 6px;
+    vertical-align: middle;
+    width: 176px;
+}
+
+</style>
+<?php 
+	$amount = '';  $totalbreak = ''; $totalam = ''; $this->load->view('header_footer/header_hotel');
 	$qry = mysql_query("select * from hotel_search_list where hotelcode='".$cart_result[0]->HotelCode."'"); 
 	$hotel_details = mysql_fetch_array($qry);
+	$room_info_result = mysql_query("select * from hotel_room_list where roomcode='".$cart_result[0]->RoomCode."'"); 
+	$room_info_results = mysql_fetch_array($room_info_result);
+	$begin = new DateTime($_SESSION['hotel_search']['cin']);
+	$end = new DateTime($_SESSION['hotel_search']['cout']);
+	$daterange = new DatePeriod($begin, new DateInterval('P1D'), $end);
+	$timestamp_start = strtotime($_SESSION['hotel_search']['cin']);
+	$timestamp_end = strtotime($_SESSION['hotel_search']['cout']);
+	$difference = abs($timestamp_end - $timestamp_start);
+	$days = floor($difference/(60*60*24));
+	$currency = mysql_query("select currency from hotel_price where HotelCode='".$cart_result[0]->HotelCode."'");
+	$fetchcurrency = mysql_fetch_array($currency);
+	$currencysg = $fetchcurrency['currency'];
+	foreach($daterange as $date)
+	{
+		$newdate = $date->format('Y-m-d');
+		$day_of_the_week = date('l', strtotime($newdate));
+		$day_of_the_week1 = date('w', strtotime($newdate));
+		//Currency
+		// Price
+		$roomprice = mysql_query("select * from hotel_room_price where '".$newdate."' between ratefrom and rateto  and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		$fetch_price = mysql_fetch_array($roomprice);
+		$contractrate = $fetch_price['contractrate'];
+		$roompricemarkup = $fetch_price['roompricemarkup'];
+		$surcharge = $fetch_price['surcharge'];
+		$weekdayfrom = $fetch_price['weekdayfrom'];
+		$weekdaytill = $fetch_price['weekdaytill'];
+		//holidaySurcharge
+		$holidaysurcharge = mysql_query("select ratetosurcharge from hotel_room_holidayprice where HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."' and ratefromh='".$newdate."'");
+		$fetch_holidayprice = mysql_fetch_array($holidaysurcharge);
+		$fetch_holidaysur = $fetch_holidayprice['ratetosurcharge'];
+		//Total Price
+		$totalpricemarkup = $contractrate + $roompricemarkup;
+		$totalprice = $contractrate + $roompricemarkup + $fetch_holidaysur;
+		// Total Price Discount
+		$discountrate = mysql_query("select discountrate from  hotel_price_discount where '".$newdate."' between discountfrom and  discountto  and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		$numfetchdiscount = mysql_num_rows($discountrate);
+		$fetchdiscount = mysql_fetch_array($discountrate);
+		$discountrate=$fetchdiscount['discountrate'];
+		if($numfetchdiscount>0)
+		{
+			$totalprice1 = $totalprice/$discountrate;
+			$totalprice = $totalprice-$totalprice1;
+		}
+		// hotel_roompricediscount
+		$roomprice = mysql_query("select pricerate from  hotel_roompricediscount where '".$newdate."' between pricefrom and  priceto  and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		$numfetchpricediscount = mysql_num_rows($roomprice);
+		$fetchdiscountprice = mysql_fetch_array($roomprice);
+		$discountpricerate = $fetchdiscountprice['pricerate'];
+		if($numfetchpricediscount>0)
+		{
+			$totalprice = $totalprice-$discountpricerate;
+		}
+		// hotel_roompricediscount
+		$roomprice = mysql_query("select pricerate from  hotel_roompricediscount where '".$newdate."' between pricefrom and  priceto  and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		$numfetchpricediscount = mysql_num_rows($roomprice);
+		$fetchdiscountprice = mysql_fetch_array($roomprice);
+		$discountpricerate = $fetchdiscountprice['pricerate'];
+		if($numfetchpricediscount>0)
+		{
+			$totalprice = $totalprice-$discountpricerate;
+		}
+		// Pay stay Promotion
+		$paystaypromotion = mysql_query("select * from hotel_paystaypromo where '".$newdate."' between ratefrom and rateto and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		$fetch_holidaypromotion=mysql_fetch_array($paystaypromotion);
+		$fetch_stay = $fetch_holidaypromotion['stay'];
+		$breakfast = $fetch_holidaypromotion['breakfast'];
+		if($days >= $fetch_stay) 
+		{
+			$fetch_pay = $fetch_holidaypromotion['pay'];
+			$differenc = $fetch_stay-$fetch_pay;
+			$differencmarkup = $differenc*$totalpricemarkup;
+			if($breakfast == 'yes')
+			{
+				$breakrate = $fetch_holidaypromotion['breakrate'];
+				$breakmarkup = $fetch_holidaypromotion['breakmarkup'];
+				$totalbreak = $breakrate + $breakmarkup;
+			}
+		}
+		// Weekend promo
+		$weekdaysurcharge = mysql_query("select * from hotel_priceweekendpromo where '".$newdate."' between ratefrom and rateto and '".$day_of_the_week1."' between weekdayfrom and weekdaytill and  HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		if ($weekdaysurcharge)
+		{
+			$fetch_weekdaysurcharge = mysql_fetch_array($weekdaysurcharge);
+			$weekdayfrom = $fetch_weekendpromo['weekdayfrom'];
+			$weekdaytill = $fetch_weekendpromo['weekdaytill'];
+			$weekendrate = $fetch_weekendpromo['weekendrate'];
+			$totalprice2 = $totalprice/$discountpricerate;
+			$totalprice = $totalprice-$totalprice2;
+		}
+		// Weekday surcharge
+		$weekendpromo = mysql_query("select * from hotel_room_price where '".$newdate."' between ratefrom and rateto and '".$day_of_the_week1."' between weekdayfrom and weekdaytill  and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		$fetch_weekendpromo = mysql_fetch_array($weekendpromo);
+		$weeksurcharge = $fetch_weekendpromo['surcharge'];
+		$totalprice = $totalprice + $weeksurcharge;
+		
+		// Cancellation Information
+		$cancel_result_set = mysql_query("select * from hotel_cancellationpolicy where HotelCode = '".$cart_result[0]->HotelCode."'");
+		$cancel_record = '';
+		$cancel_record = mysql_fetch_assoc($cancel_result_set);
+	}
+	$totalprice = $_SESSION['overall_amount'];
 ?>
 <div id="wrapper">
-<?php //$this->load->view('header_footer/header_hotel'); ?>
-<div class="inner_wrapper">
+        <!-- CSS -->
+        <!--########### COMMON CSS #############-->    
+        
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/slimbox2.js"></script>
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/slimbox2.css" type="text/css" media="screen" />
+        
+        
+        <!--<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/flexslider.css" type="text/css" media="screen" />-->
+        
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/camera.css" type="text/css" media="screen" />
+        <!--########### COMMON CSS #############-->    
+        <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/cat_js/intl/en_us/mapfiles/api-3/15/11/%7Bcommon,map,overlay,util,marker%7D.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/cat_js/intl/en_us/mapfiles/api-3/15/11/%7Binfowindow%7D.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/cat_js/intl/en_us/mapfiles/api-3/15/11/%7Bonion%7D.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/cat_js/intl/en_us/mapfiles/api-3/15/11/%7Bcontrols%7D.js"></script>
+    <script type="text/javascript" charset="UTF-8" src="https://maps.gstatic.com/cat_js/intl/en_us/mapfiles/api-3/15/11/%7Bstats%7D.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  
+<style type="text/css">.gm-style .gm-style-mtc label,.gm-style .gm-style-mtc div{font-weight:400}</style><style type="text/css">.gm-style .gm-style-cc span,.gm-style .gm-style-cc a,.gm-style .gm-style-mtc div{font-size:10px}</style><link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"><style type="text/css">@media print {  .gm-style .gmnoprint, .gmnoprint {    display:none  }}@media screen {  .gm-style .gmnoscreen, .gmnoscreen {    display:none  }}</style><style type="text/css">.gm-style{font-family:Roboto,Arial,sans-serif;font-size:11px;font-weight:400;text-decoration:none}</style><script type="text/javascript" src="<?php echo base_url()?>assets/Validation/js/jquery.validationEngine.js"></script>
+<script type="text/javascript" src="<?php echo base_url()?>assets/Validation/js/languages/jquery.validationEngine-en.js"></script>
+<link rel="stylesheet" href="<?php echo base_url()?>assets/Validation/css/validationEngine.jquery.css" media="all" type="text/css" />
+    
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/smart_tab.css" type="text/css"/>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.smartTab.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/menu_jquery.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/bjqs-1.3.min.js"></script>
+    <!-- Home Slider Javascript--> 
+    
+    <script class="secret-source">
+    jQuery(document).ready(function($) {
+        $('#tabs').smartTab({autoProgress: false, stopOnFocus: true, transitionEffect: 'vSlide'});
+    });
+    </script>
+	<style type="text/css">
+
+.stepcarousel{
+	position: relative;
+	overflow: scroll; /*leave this value alone*/
+	width: 1035px; /*Width of Carousel Viewer itself*/
+	height: 170px; /*Height should enough to fit largest content's height*/
+	-moz-border-radius: 0px 10px 10px 0px;
+    -webkit-border-radius: 0px 10px 10px 0px;
+    -khtml-border-radius: 0px 10px 10px 0px;
+    border-radius: 0px 10px 10px 0px;
+
+	background-color: #none;
+	margin:0 8px 8px 8px;
+	margin-left:160px;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size:12px;
+}
+
+.stepcarousel .belt{
+position: absolute; /*leave this value alone*/
+left: 0;
+top: 0;
+}
+
+.stepcarousel .panel{
+	float: left; /*leave this value alone*/
+	overflow: hidden; /*margin around each panel*/
+	width: 100px; /*Width of each panel holding each content. If removed, widths should be individually defined on each content DIV then. */
+	padding-right: 0px;
+	padding-left: 0px;
+	margin-top: 0px;
+	margin-right: 5px;
+	margin-bottom: 0px;
+	margin-left: 0px;/*
+	border-right:1px solid #CCCCCC;*/
+	background:none;
+	border:1px solid #ccc;
+}
+
+
+</style>
+<div class="inner_wrapper" >
   <div class="padding10 part985">
     <div class="left_part">
       <div id='cssmenu'  >
@@ -57,12 +255,13 @@
         </ul>
       </div>
     </div>
-   
     <div style="width:750px; margin-left:0px;" class="right_part">
       <div class="color_blue1 font_size22 padding10"><strong><?php 
 	  
 	  
-	 echo $hotel_details['HotelName'];?></strong> 
+	 echo $hotel_details['HotelName'];
+
+	 ?></strong> 
         <script>
 		function goBack()
 		  {
@@ -80,27 +279,28 @@
                     <div class="fright" style="margin-right:20px;">Adults 12+ yrs (1)  </div> </div>
                 <div class="clear"></div>
 
-               <form name="pre_booking" id="pre_booking" method="POST" action="<?php echo base_url() ?>index.php/api/booking_api/<?php echo $result->api.'/'.$result->api_temp_hotel_id.'/'.$result->hotel_code; ?>" class='form-horizontal form-validate' onsubmit="return b2clogincheck();">
+               <!-- <form name="pre_booking" id="pre_booking" method="POST" action="<?php echo base_url() ?>index.php/api/booking_api/<?php echo $cart_result->api.'/'.$cart_result->api_temp_hotel_id.'/'.$cart_result->hotel_code; ?>" class='form-horizontal form-validate' onsubmit="return b2clogincheck();"> -->
+
+<form method="post" action="<?php echo base_url() ?>index.php/home/payment_load/<?php echo $totalprice; ?>/<?php echo $cart_result[0]->id ?>"  name="member_login" class='form-horizontal bbq wizard' id="member_payment">
                <div>
  <?php
 		
-		$room_count = explode("<br>",$room_info[0]->room_count_v);
-		$room_type = explode("<br>",$room_info[0]->room_type_V);
-		$adult = explode("<br>",$room_info[0]->adult_v);
-		$child = explode("<br>",$room_info[0]->child_v);
-		
-		  for($i=0;$i< count($room_count); $i++)
+		$room_count = $_SESSION['hotel_search']['adult'];
+		$room_type = $room_info_results['RoomName'];
+		$adult = $_SESSION['hotel_search']['adult'];
+		$child = $_SESSION['hotel_search']['child'];
+		  for($i=0; $i < count($room_count); $i++)
 		  {
 			  if($room_count[$i]==1)
 			  {
-				  //traveller_blue_bg
 				  
 			  ?>
     <div id="r-box" style="height:auto;">
-    	<div  class="" style="padding-left: 10px; margin-top: 10px; color: rgb(0, 17, 76);"><strong>Room <?php echo $i+1; ?>:  <?php echo $room_type[$i]; ?></strong> </div>
+		
+    	<div  class="" style="padding-left: 10px; margin-top: 10px; color: rgb(0, 17, 76);"><strong>Room <?php echo $i+1; ?>:  <?php echo $room_type; ?></strong> </div>
     </div>
      <?php
-			 for($j=0;$j<  $adult[$i]; $j++)
+			 for($j=0;$j < $adult[$i]; $j++)
 		  {
 			  ?>
      <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="margin-top:0px;  border-radius:10px;">
@@ -165,13 +365,14 @@
 			  
 			  if($room_count[$i]==2)
 			  {
+				  
 			  ?>
  <div id="r-box" style="height:auto;">
     	<div  class="" style="padding-left: 10px; margin-top: 10px; color: rgb(0, 17, 76);"><strong>Room <?php echo $i+1; ?>: <?php echo $room_type[$i]; ?> </strong></div>
     </div> 
      <?php
-			 for($j=0;$j<  $adult[$i]; $j++)
-		  {
+			for($j=0;$j<  $adult[$i]; $j++)
+			{
 			  ?>
      <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:320px; margin-top:0px;  border-radius:10px;">
       
@@ -204,7 +405,7 @@
       </tr>
     </table>
      <?php
-		  }
+			}
 			  ?>
               <?php
 			  
@@ -232,74 +433,12 @@
      <?php
 		  }
 			  ?>
-    <div id="r-box" style="height:auto;">
-    	<div class="" style="padding-left: 10px; margin-top: 10px; color: rgb(0, 17, 76);"><strong>Room <?php echo $i+2; ?>: <?php echo $room_type[$i]; ?> </strong> </div>
-    </div> 
-     <?php
-			 for($j=0;$j<  $adult[$i]; $j++)
-		  {
-			  ?>
-     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:320px; margin-top:0px;  border-radius:10px;">
-      
-      <tr>
-        <td width="70">Salutation *</td>
-        <td width="220">  <?php
-        if($j==0)
-		{
-			echo ' Lead Passenger´s First Name ';
-		}
-		else
-		{
-			echo 'First Name';
-		}
-			?></td>
-         <td width="220">Last Name</td>
-         <td >&nbsp;</td>
-      </tr>
-      <tr>
-        <td> <select name="sal[]" class="search_input_box2 validate[required]" style="-moz-appearance: none; -webkit-appearance: none; text-indent: 0.01px; text-overflow: ''; width:75px; padding:5px; font-size:11px;" >
-                 <option value="Mr">Mr</option>
-                   <option value="Ms">Ms</option>
-                 <option value="Mrs">Mrs</option>
-                  <option value="Dr">Dr</option>
-                 </select>
-               </td>
-        <td> <input type="text" name="fname[]" style="width:200px" class="validate[required]"  required="required"   /></td>
-         <td><input style="width:200px" type="text" name="lname[]" class="validate[required]"  required="required"   /></td>
-         <td >&nbsp;</td>
-      </tr>
-    </table>
-     <?php
-		  }
-		   for($j=0;$j<  $child[$i]; $j++)
-		  {
-			  ?>
-     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:100px; margin-top:15px;  border-radius:10px;">
-      
-      <tr>       
-			<td width="70">&nbsp;</td>
-			<td width="220">Child First Name</td>
-			<td width="220">Child Last Name</td>
-			<td width="70">&nbsp;</td>
-		</tr>
-
-       <tr>
-		   <td></td>
-		   <td><input type="text" name="cname[]" style="width:200px" class="validate[required]"  required="required"   /> </td>
-		   <td>&nbsp;<input type="text" name="cname1[]" style="width:200px" class="validate[required]"  required="required"   /></td>
-      
-         
-      </tr>
-      
-    </table>
-     <?php
-		  }
-			  ?>
               <?php
 			  }
 			  
 			  if($room_count[$i]==3)
 			  {
+
 			  ?>
     <div id="r-box" style="height:auto;">
     	<div class="" style="padding-left: 10px; margin-top: 10px; color: rgb(0, 17, 76);"><strong>Room <?php echo $i+1; ?>: <?php echo $room_type[$i]; ?> </strong></div>
@@ -365,146 +504,13 @@
 		  }
 			  ?>
               <?php
-			  
+	}			  
 			  ?>
-     <div id="r-box" style="height:auto;">
-    	<div class="" style="padding-left: 10px; margin-top: 10px; color: rgb(0, 17, 76);"><strong>Room <?php echo $i+2; ?>: <?php echo $room_type[$i]; ?> </strong> </div>
-    </div> 
-     <?php
-			 for($j=0;$j<  $adult[$i]; $j++)
-		  {
-			  ?>
-     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:320px; margin-top:0px;  border-radius:10px;">
-      
-      <tr>
-        <td width="70">Salutation *</td>
-        <td width="220">  <?php
-        if($j==0)
-		{
-			echo ' Lead Passenger´s First Name ';
-		}
-		else
-		{
-			echo 'First Name';
-		}
-			?></td>
-         <td width="220">Last Name</td>
-         <td >&nbsp;</td>
-      </tr>
-      <tr>
-        <td> <select name="sal[]" class="search_input_box2 validate[required]" style="-moz-appearance: none; -webkit-appearance: none; text-indent: 0.01px; text-overflow: ''; width:75px; padding:5px; font-size:11px;" >
-                 <option value="Mr">Mr</option>
-                 <option value="Ms">Ms</option>
-                 <option value="Mrs">Mrs</option>
-                  <option value="Dr">Dr</option>
-                 </select>
-               </td>
-        <td> <input type="text" name="fname[]" style="width:200px" class="validate[required]"  required="required"   /></td>
-         <td><input style="width:200px" type="text" name="lname[]" class="validate[required]"  required="required"  /></td>
-         <td >&nbsp;</td>
-      </tr>
-    </table>
-     <?php
-		  }
-		   for($j=0;$j<  $child[$i]; $j++)
-		  {
-			  ?>
-     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:100px; float:left; margin-top:15px;  border-radius:10px;">
-      
-      <tr>       
-			<td width="70">&nbsp;</td>
-			<td width="220">Child First Name</td>
-			<td width="220">Child Last Name</td>
-			<td width="70">&nbsp;</td>
-		</tr>
-       
-        
-        <td></td> 
-        <td><input type="text" name="cname[]" style="width:200px" class="validate[required]"  required="required"  /></td>
-        <td><input type="text" name="cname1[]" style="width:200px" class="validate[required]"  required="required"   /></td>
-      
-         
-      </tr>
-      
-    </table>
-     <?php
-		  }
-			  ?>
-              <?php
-			  
-			  ?>
-   <div id="r-box" style="height:auto;">
-    	<div  class="" style="padding-left: 10px; margin-top: 10px; color: rgb(0, 17, 76);"><strong>Room <?php echo $i+3; ?>: <?php echo $room_type[$i]; ?></strong> </div>
-    </div>
     
-     <?php
-			 for($j=0;$j<  $adult[$i]; $j++)
-		  {
-			  ?>
-     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:320px; margin-top:0px;  border-radius:10px;">
-      
-      <tr>
-        <td width="70">Salutation *</td>
-        <td width="220">  <?php
-        if($j==0)
-		{
-			echo ' Lead Passenger´s First Name ';
-		}
-		else
-		{
-			echo 'First Name';
-		}
-			?></td>
-         <td width="220">Last Name</td>
-         <td >&nbsp;</td>
-      </tr>
-      <tr>
-        <td> <select name="sal[]" class="search_input_box2 validate[required]" style="-moz-appearance: none; -webkit-appearance: none; text-indent: 0.01px; text-overflow: ''; width:75px; padding:5px; font-size:11px;" >
-                 <option value="Mr">Mr</option>
-                   <option value="Ms">Ms</option>
-                 <option value="Mrs">Mrs</option>
-                  <option value="Dr">Dr</option>
-                 </select>
-               </td>
-        <td> <input type="text" name="fname[]" style="width:200px" class="validate[required]"  required="required"   /></td>
-         <td><input style="width:200px" type="text" name="lname[]" class="validate[required]"  required="required"   /></td>
-         <td >&nbsp;</td>
-      </tr>
-    </table>
-     <?php
-		  }
-		   for($j=0;$j<  $child[$i]; $j++)
-		  {
-			  ?>
-     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:100px; margin-top:15px;  border-radius:10px;">
-      
-      <tr>       
-			<td width="70">&nbsp;</td>
-			<td width="220">Child First Name</td>
-			<td width="220">Child Last Name</td>
-			<td width="70">&nbsp;</td>
-		</tr>
-       
-       <tr>
-        <td></td>
-        <td><input type="text" name="cname[]" style="width:200px" class="validate[required]"  required="required"   /></td>
-        <td><input type="text" name="cname1[]" style="width:200px" class="validate[required]"  required="required"   /></td>
-      
-         
-      </tr>
-      
-    </table>
-     <?php
-		  }
-			  ?>
               <?php
 			  }
 			  
 			  ?>
-    <?php
-		  }
-		  ?>
-          
           </div>
                 <div class="detail_area top10" style=" width:690px;">
                     <div class="traveller_blue_bg" style="color:#0F4F8B; padding-left:10px;"> Please Note : Please make sure that the name entered is exactly as per traveller's passport.  Traveler age is calculated as per the travel date. </div> 
@@ -594,14 +600,17 @@
                 
                                 <div >  
 
-                    <div class="fright top20" style="text-align:right; ">Total you need to pay : <span class="red_txt" style="font-size:20px; font-weight:bold;"> SGD <?php echo $result->total_cost;?> </span>
+                    <div class="fright top20" style="text-align:right; ">Total you need to pay : <span class="red_txt" style="font-size:20px; font-weight:bold;"> <!-- SGD --><?php echo $currencysg; ?> <?php echo $totalprice; ?> </span>
+                    <?php 
+                     $_SESSION['user_currency'] =  $currencysg;  $_SESSION['total_price'] = $totalprice;
+                    ?>
                         <div>Click the button below to make the payment & complete your booking</div>
  <?php
  if($this->session->userdata('b2b_logged_in')) { 
  
 					$deposit_amount_det = $this->Account_Model->get_deposit_amount($this->session->userdata('b2b_id')); 
 			
-			  if($deposit_amount_det->balance_credit > $result->total_cost)
+			  if($deposit_amount_det->balance_credit > $cart_result->total_cost)
 			  {
 				  ?>
                         <button class="flight_booking_redbtn top10" style="margin-bottom:10px;">MAKE PAYMENT</button>

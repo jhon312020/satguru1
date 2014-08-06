@@ -141,7 +141,10 @@ function fetch_ficilities($hotelCode){
             $hotel_star = implode(',', $_SESSION['f_category']);
         }
 			//$select = "SELECT  * FROM  hotel_search_list WHERE  status='1' AND COUNTRY='".$_SESSION['hotel_search']['country']."' GROUP BY HotelName";
-			$select = "SELECT  * FROM  hotel_search_list WHERE  status='1' AND COUNTRY='".$_SESSION['hotel_search']['country']."' AND contractfrom <='".$ed."' AND contractto >= '".$sd."'";
+			//$select = "SELECT  * FROM  hotel_search_list WHERE  status='1' AND COUNTRY='".$_SESSION['hotel_search']['country']."' AND contractfrom <='".$ed."' AND contractto >= '".$sd."'";
+			$select = sprintf("SELECT * FROM hotel_search_list WHERE status='1' AND COUNTRY = '%s' AND contractfrom <='".$ed."' AND contractto >= '".$sd."'",
+            mysql_real_escape_string($_SESSION['hotel_search']['country']));
+			
 			if ($hotel_star)
 			{
 				$select .= " AND StarRating in ($hotel_star)";

@@ -303,7 +303,7 @@ top: 0;
 			 for($j=0;$j < $adult[$i]; $j++)
 		  {
 			  ?>
-     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="margin-top:0px;  border-radius:10px;">
+     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="margin-top:0px;  border-radius:10px; float:none;">
       
       <tr>
         <td width="70">Salutation *</td>
@@ -311,7 +311,7 @@ top: 0;
         <?php
         if($j==0)
 		{
-			echo ' Lead Passenger´s First Name ';
+			echo " Lead Passenger's First Name ";
 		}
 		else
 		{
@@ -342,7 +342,7 @@ top: 0;
 		   for($j=0;$j<  $child[$i]; $j++)
 		  {
 			  ?>
-     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:100px; margin-top:0px;  border-radius:10px;">
+     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:100px; margin-top:0px;  border-radius:10px; float:none;">
       
       <tr>       
        <td width="70">&nbsp;</td>
@@ -374,14 +374,14 @@ top: 0;
 			for($j=0;$j<  $adult[$i]; $j++)
 			{
 			  ?>
-     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:320px; margin-top:0px;  border-radius:10px;">
+     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:320px; margin-top:0px;  border-radius:10px; float:none;">
       
       <tr>
         <td width="70">Salutation *</td>
         <td width="220">  <?php
         if($j==0)
 		{
-			echo ' Lead Passenger´s First Name ';
+			echo " Lead Passenger's First Name ";
 		}
 		else
 		{
@@ -412,7 +412,7 @@ top: 0;
 			   for($j=0;$j<  $child[$i]; $j++)
 		  {
 			  ?>
-     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:100px; margin-top:15px;  border-radius:10px;">
+     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:100px; margin-top:15px;  border-radius:10px; float:none;">
       
         <tr>       
 			<td width="70">&nbsp;</td>
@@ -447,14 +447,14 @@ top: 0;
 			 for($j=0;$j<  $adult[$i]; $j++)
 		  {
 			  ?>
-     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:320px; margin-top:0px;  border-radius:10px;">
+     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:320px; margin-top:0px;  border-radius:10px; float:none;">
       
       <tr>
         <td width="70">Salutation *</td>
         <td width="220">  <?php
         if($j==0)
 		{
-			echo ' Lead Passenger´s First Name ';
+			echo " Lead Passenger's First Name ";
 		}
 		else
 		{
@@ -482,7 +482,7 @@ top: 0;
 		   for($j=0;$j<  $child[$i]; $j++)
 		  {
 			  ?>
-     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:100px; margin-top:15px;  border-radius:10px;">
+     <table align="left" width="724" border="0" cellspacing="5" cellpadding="5" class="sum-txt" style="min-height:100px; margin-top:15px;  border-radius:10px; float:none;">
       
 		<tr>       
 			<td width="70">&nbsp;</td>

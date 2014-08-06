@@ -265,7 +265,7 @@ top: 0;
                         <div class=""><img src="<?php echo base_url().'assets/images/dummy/star-active'.$hotel_details['StarRating'].'.png'; ?>" style="border: none;"/></div>
                         <div class="clr_space"></div>
                         <div style="width:444px; float:left; color:#333; font-size:11px; line-height:15px;  margin-top:-7px; margin-bottom:-7px;">
-                    <p><!--<b><?php //echo preg_replace("/[^a-z0-9_-]/i", " ", $hotel_details->HotelDesc); ?></b> <br>--><b><?php echo preg_replace("/[^a-z0-9_-]/i", " ",  substr($hotel_details['HotelDesc'],0,200)); ?></b></p><div class="clr"></div>
+                    <p><!--<b><?php //echo preg_replace("/[^a-z0-9_-]/i", " ", $hotel_details->HotelDesc); ?></b> <br>--> <br><b><?php echo preg_replace("/[^a-z0-9_-]/i", " ",  substr($hotel_details['HotelDesc'],0,200)); ?></b></p><div class="clr"></div>
                 </div>
                         <div class="clr_space"></div>
                         <?php  

@@ -281,7 +281,7 @@ top: 0;
 
                <!-- <form name="pre_booking" id="pre_booking" method="POST" action="<?php echo base_url() ?>index.php/api/booking_api/<?php echo $cart_result->api.'/'.$cart_result->api_temp_hotel_id.'/'.$cart_result->hotel_code; ?>" class='form-horizontal form-validate' onsubmit="return b2clogincheck();"> -->
 
-<form method="post" action="<?php echo base_url() ?>index.php/home/payment_load/<?php echo $totalprice; ?>/<?php echo $cart_result[0]->id ?>"  name="member_login" class='form-horizontal bbq wizard' id="member_payment">
+<form method="post" action="<?php echo base_url() ?>index.php/home/payment_load/own/<?php echo $cart_result[0]->RoomCode; ?>/<?php echo $cart_result[0]->HotelCode; ?>"  name="member_login" class='form-horizontal bbq wizard' id="member_payment">
                <div>
  <?php
 		

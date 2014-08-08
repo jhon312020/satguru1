@@ -9,6 +9,7 @@ class Hotel extends CI_Controller {
 	{
 		parent::__construct();
 		$this->domain = 'DSS';
+		$this->load->model('Owninventory_Model');
 		$this->load->model('Hotel_Model');
 		$this->load->model('Api_Model');
 		$this->load->model('Account_Model');
@@ -1393,6 +1394,7 @@ echo $profitPercentage;exit;
 	{
 		$api = base64_decode($api_encode);
 		//$api= 'Asiantravel';
+		
 		if(isset($_SESSION['session_data_id']))
 		{
 			if($api!='')
@@ -1428,7 +1430,7 @@ echo $profitPercentage;exit;
 							$star = $service->StarRating;
 							$image = $service->FrontPgImage;
 							$data['service']=$service;
-							$data['hotelCode']=$hotel_code;
+							$data['hotelCode']=$id;
 							$data['star']=$service->StarRating;
 							$data['phone']=$service->ContactNo ;
 							/*$data['location']=$servicess->location;
@@ -1452,10 +1454,12 @@ echo $profitPercentage;exit;
 								$data['nearby_hotel']='';
 							}
 							$this->load->model('Hotelbeds_Model');
+							$this->Owninventory_Model->hotel_availabilty($api, $id);
 							$this->load->view('hotel/OwnInventory/hotel_detail',$data);
 						}
 					break;
 					default:
+					
 					$data['id']=$id;
 					$data['api']=$api;
 					$this->load->model($api.'_Model');

@@ -62,6 +62,35 @@
 		//echo $this->db->last_query();exit;
 		return $query->row();
 	}
+	
+//own inventory function
+	function fetch_own_result_room($hotel_code)
+	{
+		$this->db->select('*');
+		$this->db->from('hotel_room_list');
+		$this->db->where('HotelCode',$hotel_code);
+		$query = $this->db->get();	
+		return $query->result();
+	}
+	function fetch_temp_result_own_room_id($result_id)
+	{
+		$this->db->select('*');
+		$this->db->from('api_hotel_detail_t');
+		$this->db->where('room_code',$result_id);
+		$query = $this->db->get();	
+		//echo $this->db->last_query();exit;
+		return $query->row();
+	}
+	function fetch_temp_result_own_room_id_v1($result_id)
+	{
+		$this->db->select('*');
+		$this->db->from('api_hotel_detail_t');
+		$this->db->where('api_temp_hotel_id',$result_id);
+		$query = $this->db->get();	
+		//echo $this->db->last_query();exit;
+		return $query->result();
+	}
+//End own inventory
 
 	function fetch_temp_result_room_id_v1($result_id)
 	{
@@ -392,14 +421,14 @@
 	{
 
 	}
-		function insert_booking_attrib($sec_res,$api,$purTokenVal,$serviceval,$canceldisplayValc,$dateFromValc,$dateToValc)
-		{
+	function insert_booking_attrib($sec_res,$api,$purTokenVal,$serviceval,$canceldisplayValc,$dateFromValc,$dateToValc)
+	{
 
-			$data=array('criteria_id'=>$sec_res,'api_name'=>$api,'token_val'=>$purTokenVal,'service_val'=>$serviceval,'cancel_amt'=>$canceldisplayValc,'from_date'=>$dateFromValc,'to_date'=>$dateToValc);
+		$data=array('criteria_id'=>$sec_res,'api_name'=>$api,'token_val'=>$purTokenVal,'service_val'=>$serviceval,'cancel_amt'=>$canceldisplayValc,'from_date'=>$dateFromValc,'to_date'=>$dateToValc);
 
-			$this->db->insert('booking_attrib_hb',$data);
+		$this->db->insert('booking_attrib_hb',$data);
 
-		}
+	}
 	function get_reservation_details($id)
 	{
 		
@@ -418,7 +447,7 @@
 		$query = $this->db->get();	
 		return $query->row();
 	}
-		function get_reservation_details_global($id)
+	function get_reservation_details_global($id)
 	{
 		
 		$this->db->select('*');
@@ -456,6 +485,23 @@
 			return $query->row();
 		}
 	}
+// Own Inventory code	
+	function get_permanent_details_own_v3($id)
+	{
+		
+		$this->db->select('*');
+		$this->db->from('hotel_search_list');
+		$this->db->where('HotelCode',$id);
+		
+		$query = $this->db->get();	
+		
+		 if ($query->num_rows() == 0) {
+			return '';
+		} else {
+			return $query->row();
+		}
+	}
+// End Own Inventory
 		function get_permanent_details_v3_Hotelspro($id,$api='')
 	{
 		
@@ -502,13 +548,43 @@
 		  return $a->Hotel_name;
 		}
 	}
-
+		function get_permanent_details_v3_own_hotelname($id)
+	{
+		
+		$this->db->select('HotelName');
+		$this->db->from('hotel_search_list');
+		$this->db->where('HotelCode',$id);
+		
+		$query = $this->db->get();	
+		
+		 if ($query->num_rows() == 0) {
+			return '';
+		} else {
+		  $a=  $query->row();
+		  return $a->HotelName;
+		}
+	}
 	function get_permanent_details_v4_Hotelspro($id,$api='')
 	{
 		
 		$this->db->select('*');
 		$this->db->from('api_permanent_hotel_hotelspro');
 		$this->db->where('Hotelspro_Hotelcode',$id);
+		
+		$query = $this->db->get();	
+		
+		 if ($query->num_rows() == 0) {
+			return '';
+		} else {
+			return $query->row();
+		}
+	}
+	function get_permanent_details_v4_Own($id)
+	{
+		
+		$this->db->select('*');
+		$this->db->from('hotel_search_list');
+		$this->db->where('HotelCode',$id);
 		
 		$query = $this->db->get();	
 		

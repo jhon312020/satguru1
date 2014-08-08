@@ -394,7 +394,7 @@ $shurival = 	explode("^^^^",$result->shurival);
 
 		$token_val_occ_id=array();
 		$token_val_occ_id_final=array();
-		for($ta=0;$ta<count($token_val);$ta++)
+	for($ta=0;$ta<count($token_val);$ta++)
 	{
 	$token_val_occ_id[] = $token_val[$ta][0].'##'.$token_val[$ta][1].'##'.$token_val[$ta][2].'##'.$token_val[$ta][3].'##'.$token_val[$ta][4].'##'.$token_val[$ta][5];
 	}
@@ -451,15 +451,11 @@ $shurival = 	explode("^^^^",$result->shurival);
                 <strong style="color: #FF0000; line-height: 15px; font-size:11px">Billing Currency :  SGD</strong></br>
     <img alt="" src="<?php echo base_url(); ?>assets/images/bullet_arrow.gif">
     <?php if($result->board_type=='true'){ ?>  <img alt="" src="<?php echo base_url(); ?>assets/images/bullet_arrow.gif"><strong style="color: #FF0000; line-height: 15px; font-size:11px;">All rates are Included with Breakfast.</strong><?php }else{ echo '';}?>
-                <strong style="color: #FF0000;
- line-height: 15px; font-size:11px;">All rates are exclusive of hotel tax and service charges.</strong></div>
+                <strong style="color: #FF0000;line-height: 15px; font-size:11px;">All rates are exclusive of hotel tax and service charges.</strong></div>
  </div>
- 
-                                <table width="720" align="center">
-                                    <tbody><tr class="" style="text-align:left">
-                                      <td valign="top">
-                                            
-
+<table width="720" align="center">
+	<tbody><tr class="" style="text-align:left">
+	  <td valign="top">
     <div class="notesbox1_bl">
         <div class="notesbox1_br">
             <div class="notesbox1_tl">

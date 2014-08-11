@@ -256,7 +256,6 @@ foreach ((array)$hotelResponse as $hnum => $hotel) {
 									
 								$temp[] = $codev1;
 								}
-															
   }  
 
 
@@ -320,15 +319,15 @@ function hotel_availabilty($api,$hotel_code)
 				{
 					$availabilityStatus = 'Instant';
 				}
-				$totalPrice = $mainvalue->totalPrice;	
-							
+				$totalPrice = $mainvalue->totalPrice;
+				
 				if($mainvalue->currency !='SGD')
 				{
 					$c_val1 =$this->Hotel_Model->get_currecy_details($mainvalue->currency);
 					if($c_val1!='')
 					{
 						$c_val = $c_val1->value;
-						$total_cost =  number_format(($totalPrice /  $c_val), 2, '.', '');					
+						$total_cost =  number_format(($totalPrice /  $c_val), 2, '.', '');
 					}
 					else
 					{
@@ -403,7 +402,6 @@ function hotel_availabilty($api,$hotel_code)
 					{
 					$roomrate_cost =  number_format(((($roomrate_cost/100)*$markup)+$roomrate_cost), 2, '.', '');
 					}
-															
 					$adult = 0;
 					$child = 0;
 
@@ -424,25 +422,18 @@ function hotel_availabilty($api,$hotel_code)
 								$child++;
 							}
 							
-							
-								
-								
-												
-							
 						}
-						
 					}
 					$room_info_V[] = 1;
 					$adult_v1[] = $adult;
 					$child_v1[] = $child;
 					$new_rate_final = array('OccupancyId'=>$i,'NoAdult'=>$adult,'NoChild'=>$child,'Seq'=>'','Rate'=>$roomrate_cost,'Rate_org'=>$roomrate_org);
-							$occpancy_information[] = implode("||||",$new_rate_final);	
+					$occpancy_information[] = implode("||||",$new_rate_final);
 					$pernigtvalue_date = array();
 					$pernigtvalue_amount = array();
-						
+					
 					if(!empty($value->ratesPerNight))
 					{
-						
 						foreach($value->ratesPerNight as $pernigtkey => $pernigtvalue)
 						{
 							$pernigtvalue_v1 = $pernigtvalue->amount;
@@ -461,7 +452,6 @@ function hotel_availabilty($api,$hotel_code)
 												$pernigtvalue_v2 =  ($pernigtvalue_v1);
 										}
 									
-									
 									}
 									else
 									{
@@ -474,8 +464,6 @@ function hotel_availabilty($api,$hotel_code)
 									$pernigtvalue_v2 =  number_format(((($pernigtvalue_v2/100)*$markup)+$pernigtvalue_v2), 2, '.', '');
 									}
 									
-							
-							
 							$new_rate = array('OccupancyId'=>$i,'OccupancyRate'=>$pernigtvalue_v2,'Dateval'=>$pernigtvalue->date,'Breakfastval'=>'','Availabilityval'=>$availabilityStatus,'Inclusionval'=>$boardType);
 							$new_rate_ = implode("^^^^",$new_rate);
 										
@@ -483,9 +471,6 @@ function hotel_availabilty($api,$hotel_code)
 						}
 					}
 					
-											
-									
-									
 					
 				//	print_r($pernigtvalue_date);
 				/*	$aData['session_id'] = $sec_res;
@@ -572,9 +557,7 @@ function hotel_availabilty($api,$hotel_code)
 														'WiFival' => ''
 														);
 				
-													
-				
-			}			
+			}
 		}
 		 if(isset($insertion_data))
 						 {

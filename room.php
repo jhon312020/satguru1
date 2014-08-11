@@ -24,7 +24,9 @@
 		$datetoday = date('Y-m-d');
 		if($hotelRoomRow['AvgPrice'] == '') 
 		{
-			$hotelRoomPriceResult = mysql_query("SELECT * FROM  hotel_room_price WHERE HotelCode = '$hotelIds' and Roomcode='".$hotelRoomRow['RoomCode']."' and  rateto >= '".$datetoday."' and ratefrom <= '".$datetoday."'");
+			$price_query = "SELECT * FROM hotel_room_price WHERE id IN ( SELECT max( id ) FROM hotel_room_price WHERE Roomcode = '".$hotelRoomRow['RoomCode']."' and HotelCode = '$hotelIds' and  rateto >= '".$datetoday."' and ratefrom <= '".$datetoday."' GROUP BY Roomcode)";
+			//$hotelRoomPriceResult = mysql_query("SELECT * FROM  hotel_room_price WHERE HotelCode = '$hotelIds' and Roomcode='".$hotelRoomRow['RoomCode']."' and  rateto >= '".$datetoday."' and ratefrom <= '".$datetoday."'");
+			$hotelRoomPriceResult = mysql_query($price_query);
 			$hotelRoomPricearray = mysql_fetch_array($hotelRoomPriceResult);
 			$hotelRoomRow['AvgPrice'] = $hotelRoomPricearray['contractrate'] + $hotelRoomPricearray['roompricemarkup'];
 		}
@@ -63,7 +65,9 @@
 		$day_of_the_week1 = date('w', strtotime($newdate));
 		//Currency
 		// Price
-		$roomprice = mysql_query("select * from hotel_room_price where '".$newdate."' between ratefrom and rateto  and HotelCode='".$hotelIds."' and Roomcode='".$hotelRoomRow['RoomCode']."'");
+		$price_query = "SELECT * FROM hotel_room_price WHERE id IN ( SELECT max( id ) FROM hotel_room_price WHERE '".$newdate."' between ratefrom and rateto  and HotelCode='".$hotelIds."' and Roomcode='".$hotelRoomRow['RoomCode']."' GROUP BY Roomcode)";
+		//$roomprice = mysql_query("select * from hotel_room_price where '".$newdate."' between ratefrom and rateto  and HotelCode='".$hotelIds."' and Roomcode='".$hotelRoomRow['RoomCode']."'");
+		$roomprice = mysql_query($price_query);
 		$fetch_price = mysql_fetch_array($roomprice);
 		$contractrate = $fetch_price['contractrate'];
 		$roompricemarkup = $fetch_price['roompricemarkup'];

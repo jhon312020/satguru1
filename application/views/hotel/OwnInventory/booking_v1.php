@@ -275,7 +275,7 @@ top: 0;
           
           <div class="right_part " style="width:720px;">
                     <div class="right_main_bar top20" style="margin-top:10px; width:720px;">                                        
-                    <div class="fleft left20">Passanger Details</div>
+                    <div class="fleft left20">Passenger Details</div>
                     <div class="fright" style="margin-right:20px;">Adults 12+ yrs (1)  </div> </div>
                 <div class="clear"></div>
 

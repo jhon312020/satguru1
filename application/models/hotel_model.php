@@ -69,15 +69,31 @@
 		$this->db->select('*');
 		$this->db->from('hotel_room_list');
 		$this->db->where('HotelCode',$hotel_code);
-		$query = $this->db->get();	
+		$query = $this->db->get();
 		return $query->result();
+	}
+	function fetch_own_result_room_price($hotel_code)
+	{
+		$today = date('Y-m-d');
+		$price_query = "SELECT * FROM hotel_room_price WHERE id IN ( SELECT max( id ) FROM hotel_room_price WHERE rateto > '$today' and HotelCode = '$hotel_code' GROUP BY Roomcode)";
+		$query = $this->db->query($price_query);
+		$result = $query->result();
+		$price_list = array();
+		if ($result)
+		{
+			foreach ($result as $price)
+			{
+				$price_list[$price->Roomcode] = $price->contractrate + $price->roompricemarkup;
+			}
+		}
+		return $price_list;
 	}
 	function fetch_temp_result_own_room_id($result_id)
 	{
 		$this->db->select('*');
 		$this->db->from('api_hotel_detail_t');
 		$this->db->where('room_code',$result_id);
-		$query = $this->db->get();	
+		$query = $this->db->get();
 		//echo $this->db->last_query();exit;
 		return $query->row();
 	}

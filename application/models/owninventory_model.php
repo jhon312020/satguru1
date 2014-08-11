@@ -270,7 +270,7 @@ $_SESSION['own_xml_data'] = $own_data;
 
 
 }
-					
+
 
 }
 function hotel_availabilty($api,$hotelCode)
@@ -280,9 +280,14 @@ function hotel_availabilty($api,$hotelCode)
 		$city_val = $_SESSION['city_val'];
 		$hotel_name =  $this->Hotel_Model->get_permanent_details_v3_own_hotelname($hotelCode);
 		$room_list =  $this->Hotel_Model->fetch_own_result_room($hotelCode);
-		for($i=0; $i<count($room_list); $i++){
-		$total_cost = $_SESSION['hotel_xml_data'][0]->AvgPrice * $_SESSION['room_count']*$_SESSION['days'];
-		$insertion_data[] = array(
+		$room_price =  $this->Hotel_Model->fetch_own_result_room_price($hotelCode);
+		$sec_res =  $_SESSION['session_data_id'];
+		$this->delete_temp_results($sec_res, $hotelCode);
+		for($i=0; $i < count($room_list); $i++)
+		{
+			//$total_cost = $_SESSION['hotel_xml_data'][0]->AvgPrice * $_SESSION['room_count']*$_SESSION['days'];
+			$total_cost = $room_price[$room_list[$i]->RoomCode] * $_SESSION['room_count'] * $_SESSION['days'];
+			$insertion_data[] = array(
 									'session_id' =>  $_SESSION['session_data_id'],
 									'api' => $api,
 									'hotel_code' => $hotelCode,
@@ -293,7 +298,7 @@ function hotel_availabilty($api,$hotelCode)
 									'MaxChildOccupancyval' => $room_list[$i]->MaxChildOccupancy,
 									'MaxChildAgeval' => '',
 									'total_cost' => $total_cost,
-									'w_markup' => $_SESSION['hotel_xml_data'][0]->AvgPrice,
+									'w_markup' => $room_price[$room_list[$i]->RoomCode],
 									'status' => $room_list[$i]->Availability,
 									'inclusion' => $room_list[$i]->Inclusion,
 									'shurival' => $room_list[$i]->NormalOccupancy,
@@ -303,23 +308,21 @@ function hotel_availabilty($api,$hotelCode)
 									'token' =>'',
 									'ShortNameaa' =>'',
 									'des_offer_value' => '',
-									
 									'room_count' => $_SESSION['room_count'],
-									'org_amt' => $_SESSION['hotel_xml_data'][0]->AvgPrice,
+									'org_amt' => $room_price[$room_list[$i]->RoomCode],
 									'xml_currency' => 'SGD',
 									'currency_val' => '',
 									'city' => $city_val,
 									'room_type_V' => $room_list[$i]->RoomName,
-								
 									'room_count_v' => $room_list[$i]->beds,
 									'adult_v' => 2,
 									'child_v' => 3,
 									'WiFival' => ''
-									);
-		 if(isset($insertion_data))
-						 {
-				   $this->db->insert_batch('api_hotel_detail_t',$insertion_data);
-						 }
+				);
+		}
+		if(isset($insertion_data))
+		{
+			$this->db->insert_batch('api_hotel_detail_t',$insertion_data);
 		}
 		return true;
 	}

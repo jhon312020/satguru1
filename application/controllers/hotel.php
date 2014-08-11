@@ -1459,7 +1459,6 @@ echo $profitPercentage;exit;
 						}
 					break;
 					default:
-					
 					$data['id']=$id;
 					$data['api']=$api;
 					$this->load->model($api.'_Model');

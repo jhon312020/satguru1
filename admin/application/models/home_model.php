@@ -660,6 +660,14 @@ class Home_Model extends CI_Model
 		}
 	}
 	
+	function editdiscount($id, $discountfrom, $discountto, $discountrate)
+	{
+		$data = array('discountfrom '=>$discountfrom,'discountto'=>$discountto,'discountrate'=>$discountrate);
+		$this->db->where('id',$id);
+		$this->db->update('hotel_price_discount',$data);
+	}
+	
+	
 	function editdiscountpr($id,$discountfrom,$discountto,$discountrate)
 	{
 		$data = array('pricefrom '=>$discountfrom,'priceto'=>$discountto,'pricerate'=>$discountrate);
@@ -772,8 +780,14 @@ class Home_Model extends CI_Model
 	{
 		$data = array('ratefrom'=>$ratefrom,'rateto'=>$rateto,'contractrate'=>$contractrate,'roompricemarkup'=>$roompricemarkup,'weekdayfrom'=>$weekdayfrom,'weekdaytill'=>$weekdaytill,'surcharge'=>$surcharge);
 		$this->db->where('id',$id);
-			$this->db->update('hotel_room_price',$data);
-		
+		$this->db->update('hotel_room_price',$data);
+	}
+	
+	function editweekendpromo($id, $weekdayfrom, $weekdaytill, $weekendrate)
+	{
+		$data = array('weekdayfrom'=>$weekdayfrom,'weekdaytill'=>$weekdaytill,'weekendrate '=>$weekendrate);
+		$this->db->where('id',$id);
+		$this->db->update('hotel_priceweekendpromo',$data);
 	}
 	/* End of it */
 }

@@ -80,7 +80,7 @@
           <h3> <i class="icon-ok"></i> <?php echo $page_header;?> </h3>
         </div>
         <div class="box-content">
-        <form action="<?php echo WEB_URL_ADMIN ?>admin/updatediscount/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>/<?php echo $this->uri->segment(5);?>" method="POST" class='form-horizontal form-validate' id="bb" enctype="multipart/form-data">
+        <form action="<?php echo WEB_URL_ADMIN ?>admin/editdiscountpr/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>/<?php echo $this->uri->segment(5);?>" method="POST" class='form-horizontal form-validate' id="bb" enctype="multipart/form-data">
     
               <div class="control-group">
               
@@ -94,11 +94,11 @@
              <div class="control-group">
               <label for="textfield" class="control-label"></label>
               <div class="controls"> From
-                <input type='text' id="pricefrom" name="discountfrom"  class="input-xlarge datepick" style="width:50px;"  value="<?php if($getdiscount-> discountfrom   != '') { echo $getdiscount->discountfrom  ; } ?>">&nbsp;
+                <input type='text' id="pricefrom" name="pricefrom"  class="input-xlarge datepick" style="width:50px;"  value="<?php if($getdiscount-> pricefrom   != '') { echo $getdiscount->pricefrom  ; } ?>">&nbsp;
                Till&nbsp;
-                <input type='text' id="priceto" name="discountto"  class="input-xlarge datepick" style="width:50px;"  value="<?php if($getdiscount->discountto != '') { echo $getdiscount->discountto; } ?>">
+                <input type='text' id="priceto" name="priceto"  class="input-xlarge datepick" style="width:50px;"  value="<?php if($getdiscount->priceto != '') { echo $getdiscount->priceto; } ?>">
                 &nbsp;&nbsp;&nbsp;Enjoy
-                <input type='text' id="pricerate" name="discountrate"  class="" style="width:50px;"  value="<?php if($getdiscount->discountrate != '') { echo $getdiscount->discountrate; } ?>"> &nbsp;&nbsp;&nbsp; %</div>
+                <input type='text' id="pricerate" name="pricerate"  class="" style="width:50px;"  value="<?php if($getdiscount->pricerate != '') { echo $getdiscount->pricerate; } ?>"> &nbsp;&nbsp;&nbsp; %</div>
           <div class="form-actions">
             <input type="submit" class="btn btn-primary" value="Submit">
             <a href="<?php echo WEB_URL_ADMIN ?>admin/admin_dashboard">

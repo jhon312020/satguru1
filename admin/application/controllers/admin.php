@@ -1103,7 +1103,6 @@ class Admin extends CI_Controller
 	{
 		if($this->session->userdata('admin_id')!='')
 		{
-			
 			$roomcode=$this->uri->segment(3);
 			$roomcode1="R".$this->uri->segment(3);
 			$hotelcode=$this->uri->segment(4);
@@ -1111,7 +1110,7 @@ class Admin extends CI_Controller
 			$discountfrom=$this->input->post('discountfrom');
 			$discountto=$this->input->post('discountto');
 			$discountrate=$this->input->post('discountrate');
-			$this->Home_Model->addnewdiscount($roomcode1,$hotelcode,$discountfrom,$discountto,$discountrate);	
+			$this->Home_Model->addnewdiscount($roomcode1,$hotelcode,$discountfrom,$discountto,$discountrate);
 			redirect('admin/viewpromo/'.$ext,'refresh'); 
 		}
 		else
@@ -1136,6 +1135,25 @@ class Admin extends CI_Controller
 		}
 	}
 	
+	function updatediscount($id)
+	{
+		if($this->session->userdata('admin_id')!='')
+		{
+			$roomcode = $this->uri->segment(4);
+			$hotelcode = $this->uri->segment(5);
+			$ext = $roomcode."/".$hotelcode;
+			$discountfrom = $this->input->post('discountfrom');
+			$discountto = $this->input->post('discountto');
+			$discountrate = $this->input->post('discountrate');
+			$this->Home_Model->editdiscount($id, $discountfrom, $discountto, $discountrate);
+			redirect('admin/viewpromo/'.$ext,'refresh'); 
+		}
+		else
+		{
+			redirect('admin','refresh');
+		}
+	}
+	
 	function editdiscountpr($id)
 	{
 		if($this->session->userdata('admin_id')!='')
@@ -1148,7 +1166,6 @@ class Admin extends CI_Controller
 			$discountrate=$this->input->post('pricerate');
 			$this->Home_Model->editdiscountpr($id,$discountfrom,$discountto,$discountrate);	
 			redirect('admin/viewpromo/'.$ext,'refresh'); 
-			
 		}
 		else
 		{
@@ -1201,7 +1218,7 @@ class Admin extends CI_Controller
 			$data['admin_det'] = $this->Home_Model->admin_det($admin_id);
 			$data['getdiscount'] = $this->Home_Model->getdiscountprice($id);
 			$data['page_header'] = 'Edit % Discount';
-			$this->load->view('editdiscount',$data);
+			$this->load->view('editdiscountprice',$data);
 		}
 		else
 		{
@@ -1455,6 +1472,25 @@ class Admin extends CI_Controller
 			$this->Home_Model->editroomprice($id,$ratefrom,$rateto,$contractrate,$roompricemarkup,$weekdayfrom,$weekdaytill,$surcharge);	
 			redirect('admin/addeditprice/'.$ext,'refresh'); 
 			
+		}
+		else
+		{
+			redirect('admin','refresh');
+		}
+	}
+	function editweekendpromo($id)
+	{
+		if($this->session->userdata('admin_id')!='')
+		{
+			
+			$roomcode=$this->uri->segment(4);
+			$hotelcode=$this->uri->segment(5);
+			$ext=$roomcode."/".$hotelcode;
+			$weekdayfrom=$this->input->post('weekdayfrom');
+			$weekdaytill=$this->input->post('weekdaytill');
+			$weekendrate=$this->input->post('weekendrate');
+			$this->Home_Model->editweekendpromo($id,$weekdayfrom,$weekdaytill,$weekendrate);
+			redirect('admin/viewpromo/'.$ext,'refresh'); 
 		}
 		else
 		{

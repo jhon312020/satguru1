@@ -34,7 +34,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	$currency = mysql_query("select currency from hotel_price where HotelCode='".$cart_result[0]->HotelCode."'");
 	$fetchcurrency = mysql_fetch_array($currency);
 	$currencysg = $fetchcurrency['currency'];
-	foreach($daterange as $date)
+	/*foreach($daterange as $date)
 	{
 		$newdate = $date->format('Y-m-d');
 		$day_of_the_week = date('l', strtotime($newdate));
@@ -121,7 +121,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 		$cancel_result_set = mysql_query("select * from hotel_cancellationpolicy where HotelCode = '".$cart_result[0]->HotelCode."'");
 		$cancel_record = '';
 		$cancel_record = mysql_fetch_assoc($cancel_result_set);
-	}
+	}*/
 	$totalprice = $_SESSION['overall_amount'];
 ?>
 <div id="wrapper">

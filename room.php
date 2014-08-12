@@ -101,22 +101,30 @@
 			$totalprice = $totalprice-$discountpricerate;
 		}
 		// Pay stay Promotion
-		$paystaypromotion = mysql_query("select * from hotel_paystaypromo where '".$newdate."' between ratefrom and rateto and HotelCode='".$hotelIds."' and Roomcode='".$hotelRoomRow['RoomCode']."'");
+		//echo "select * from hotel_paystaypromo where '".$newdate."' between ratefrom and rateto and HotelCode='".$hotelIds."' and Roomcode='".$hotelRoomRow['RoomCode']."'";
+		/*$paystaypromotion = mysql_query("select * from hotel_paystaypromo where '".$newdate."' between ratefrom and rateto and HotelCode='".$hotelIds."' and Roomcode='".$hotelRoomRow['RoomCode']."'");
+		//print_r($paystaypromotion);
 		$fetch_holidaypromotion=mysql_fetch_array($paystaypromotion);
+		//echo '<pre>';
+		//echo $_SESSION['days'];
+		$days = $_SESSION['days'];
+		
 		$fetch_stay = $fetch_holidaypromotion['stay'];
 		$breakfast = $fetch_holidaypromotion['breakfast'];
+		$differencmarkup = '';
+		$totalbreak = '';
 		if($days >= $fetch_stay) 
 		{
 			$fetch_pay = $fetch_holidaypromotion['pay'];
-			$differenc = $fetch_stay-$fetch_pay;
-			$differencmarkup = $differenc*$totalpricemarkup;
+			$differenc = $fetch_stay - $fetch_pay;
+			$differencmarkup = $differenc * $totalpricemarkup;
 			if($breakfast == 'yes')
 			{
 				$breakrate = $fetch_holidaypromotion['breakrate'];
 				$breakmarkup = $fetch_holidaypromotion['breakmarkup'];
 				$totalbreak = $breakrate + $breakmarkup;
 			}
-		}
+		}*/
 		// Weekend promo
 		$weekdaysurcharge = mysql_query("select * from hotel_priceweekendpromo where '".$newdate."' between ratefrom and rateto and '".$day_of_the_week1."' between weekdayfrom and weekdaytill and  HotelCode='".$hotelIds."' and Roomcode='".$hotelRoomRow['RoomCode']."'");
 		if ($weekdaysurcharge)

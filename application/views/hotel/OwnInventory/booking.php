@@ -20,9 +20,10 @@
 	{
 		$newdate = $date->format('Y-m-d');
 		$day_of_the_week = date('l', strtotime($newdate));
-		$day_of_the_week1 = date('w', strtotime($newdate));
+		$day_of_the_week1 = date('w', strtotime($newdate));*/
 		//Currency
 		// Price
+		$newdate = date('Y-m-d', $timestamp_end);
 		$roomprice = mysql_query("select * from hotel_room_price where '".$newdate."' between ratefrom and rateto  and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
 		$fetch_price = mysql_fetch_array($roomprice);
 		$contractrate = $fetch_price['contractrate'];
@@ -66,10 +67,12 @@
 			$totalprice = $totalprice-$discountpricerate;
 		}
 		// Pay stay Promotion
+		$differencmarkup = '';
 		$paystaypromotion = mysql_query("select * from hotel_paystaypromo where '".$newdate."' between ratefrom and rateto and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
 		$fetch_holidaypromotion=mysql_fetch_array($paystaypromotion);
 		$fetch_stay = $fetch_holidaypromotion['stay'];
 		$breakfast = $fetch_holidaypromotion['breakfast'];
+		
 		if($days >= $fetch_stay) 
 		{
 			$fetch_pay = $fetch_holidaypromotion['pay'];
@@ -83,7 +86,7 @@
 			}
 		}
 		// Weekend promo
-		$weekdaysurcharge = mysql_query("select * from hotel_priceweekendpromo where '".$newdate."' between ratefrom and rateto and '".$day_of_the_week1."' between weekdayfrom and weekdaytill and  HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
+		/*$weekdaysurcharge = mysql_query("select * from hotel_priceweekendpromo where '".$newdate."' between ratefrom and rateto and '".$day_of_the_week1."' between weekdayfrom and weekdaytill and  HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
 		if ($weekdaysurcharge)
 		{
 			$fetch_weekdaysurcharge = mysql_fetch_array($weekdaysurcharge);
@@ -97,13 +100,13 @@
 		$weekendpromo = mysql_query("select * from hotel_room_price where '".$newdate."' between ratefrom and rateto and '".$day_of_the_week1."' between weekdayfrom and weekdaytill  and HotelCode='".$cart_result[0]->HotelCode."' and Roomcode='".$cart_result[0]->RoomCode."'");
 		$fetch_weekendpromo = mysql_fetch_array($weekendpromo);
 		$weeksurcharge = $fetch_weekendpromo['surcharge'];
-		$totalprice = $totalprice + $weeksurcharge;
+		$totalprice = $totalprice + $weeksurcharge;*/
 		
 		// Cancellation Information
 		$cancel_result_set = mysql_query("select * from hotel_cancellationpolicy where HotelCode = '".$cart_result[0]->HotelCode."'");
 		$cancel_record = '';
 		$cancel_record = mysql_fetch_assoc($cancel_result_set);
-	} */
+	/* } */
 ?>
 <div id="wrapper">
         <!-- CSS -->
@@ -540,10 +543,17 @@ foreach($_SESSION['hotel_search']['adult'] as $adults)
         
 	</tr>
     <?php
-	$_SESSION['overall_amount'] = $overall_amount;
 	?>
+	<?php if ($differencmarkup)  { ?>
     <tr style="height:30px">
-		<td  align="right"colspan="2" class="RateTblRoomDesc" style="  text-align:right; font-size:12px"><span><strong> Total Cost :  </strong></span></td><td class="RateTblRoomDesc" style="text-align:center;"><strong>SGD <?php echo $overall_amount; ?></strong></td><td colspan="<?php echo count($data_val1); ?>" class="RateTblRoomDesc"><span></span></td>
+		<td  align="right"colspan="2" class="RateTblRoomDesc" style="  text-align:right; font-size:12px"><span><strong> Promotions :  </strong></span></td><td class="RateTblRoomDesc" style="text-align:center;"><strong>SGD <?php echo $differencmarkup; ?></strong></td><td colspan="<?php echo count($data_val1); ?>" class="RateTblRoomDesc"><span></span></td>
+	</tr>
+	<?php } ?>
+    <tr style="height:30px">
+		<td  align="right"colspan="2" class="RateTblRoomDesc" style="  text-align:right; font-size:12px"><span><strong> Total Cost :  </strong></span></td><td class="RateTblRoomDesc" style="text-align:center;"><strong>SGD <?php 
+		echo ($differencmarkup)? $overall_amount = $overall_amount - $differencmarkup: $overall_amount;
+		$_SESSION['overall_amount'] = $overall_amount;
+		?></strong></td><td colspan="<?php echo count($data_val1); ?>" class="RateTblRoomDesc"><span></span></td>
 	</tr>
     
 </tbody></table>

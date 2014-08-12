@@ -1469,7 +1469,7 @@ class Admin extends CI_Controller
 			$weekdayfrom=$this->input->post('weekdayfrom');
 			$weekdaytill=$this->input->post('weekdaytill');
 			$surcharge=$this->input->post('surcharge');
-			$this->Home_Model->editroomprice($id,$ratefrom,$rateto,$contractrate,$roompricemarkup,$weekdayfrom,$weekdaytill,$surcharge);	
+			$this->Home_Model->editroomprice($id,$ratefrom,$rateto,$contractrate,$roompricemarkup,$weekdayfrom,$weekdaytill,$surcharge);
 			redirect('admin/addeditprice/'.$ext,'refresh'); 
 			
 		}

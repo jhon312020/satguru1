@@ -744,7 +744,14 @@ $this->load->view('hotels/reservation_print', $data);
 			{
 			$passanger_full .= $_SESSION['booking_pass_details']['sal'][$k].' '.$_SESSION['booking_pass_details']['fname'][$k].' '.$_SESSION['booking_pass_details']['lname'][$k].'<br>';
 			}
-			
+		if ($api == 'own')
+		{
+			$amount = $_SESSION['ItemTotalPrice'];
+		}
+		else
+		{
+			$amount = $result->total_cost;
+		}
 //print_r($service);			
 		$data_hotel=array(
 		'booking_number'=>'',
@@ -754,7 +761,8 @@ $this->load->view('hotels/reservation_print', $data);
 		'user_type'=>'',
 		'user_id'=>'',
 		'branch_id'=>'',
-		'amount'=>$result->total_cost,
+		//'amount'=>$result->total_cost,
+		'amount'=>$amount,
 		'api_status'=>'',
 		'booking_status'=>'',
 		'voucher_date'=>$voucher_date,
@@ -1107,13 +1115,16 @@ function payment_load_v1($api='', $result_id, $hotel_id,$parent_pnr_no)
 					$data['header']='BOOKING ERROR!!!';
 					$this->load->view('hotel/others/error_page',$data);
 			  }
-				
 		}
 		else
 		{
-		
-		//echo '<pre/>';
-		//print_r($result);print_r($service);exit;
+		/*echo '<pre/>';
+		echo $api;
+		print_r($result);
+		print_r($service);
+		print_r($_SESSION);
+		print_r($_POST);
+		exit;*/
 		$PayPalMode 			= 'sandbox'; // sandbox or live
 		$PayPalApiUsername 		= 'ruby.provab-facilitator_api1.gmail.com'; //PayPal API Username
 		$PayPalApiPassword 		= '1397909558'; //Paypal API password
@@ -1132,7 +1143,15 @@ function payment_load_v1($api='', $result_id, $hotel_id,$parent_pnr_no)
 	//$ItemPrice = $mysqli->query("SELECT item_price FROM products WHERE id = Product_Number");
 	
 	$ItemName 		= $result->hotel_name.'('.$result->room_type.')'; //Item Name
-	$ItemPrice 		= $result->total_cost; //Item Price$result->total_cost
+	if ($api == 'own')
+	{
+		$ItemPrice 		= $_SESSION['overall_amount']; //Item Price$result->total_cost
+		$result->total_cost = $ItemPrice;
+	}
+	else
+	{
+		$ItemPrice 		= $result->total_cost; //Item Price$result->total_cost
+	}
 	$ItemNumber 	= $parent_pnr_no; //Item Number
 	$ItemDesc 		= ''; //Item Number
 	$ItemQty 		= 1; // Item Quantity

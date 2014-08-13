@@ -497,78 +497,78 @@ class Admin extends CI_Controller
 	{
 		if($this->session->userdata('admin_id')!='')
 		{
-			
+			$createdby = 'admin';
 			$hotelid_id = $this->input->post('id');
-			if($hotelid_id==""){
-			$hotelid_id1=$this->uri->segment(3);
-			} else {
-				
-				$hotelid_id1="H".$hotelid_id;
+			if($hotelid_id == "")
+			{
+				$hotelid_id1=$this->uri->segment(3);
+			} 
+			else
+			{
+				$hotelid_id1 = "H".$hotelid_id;
 			}
 			$redir=$this->uri->segment(4);
 			$roomname=$this->input->post('roomname');
 			$roomsize=$this->input->post('roomsize');
 			$beds=$this->input->post('beds');
-			
 			$description=$this->input->post('description');
 			$roomfeature1=$this->input->post('roomfeature');
 			
 			
-			if($beds!=""){
-			$beds=$this->input->post('beds');	
-			} else
+			if($beds!="")
+			{
+				$beds=$this->input->post('beds');
+			} 
+			else
 			{
 				$beds='';
 			}
-					
 			
-			for($i = 0; $i < count($roomname); $i++)  {
-				
-				
+			for ($i = 0; $i < count($roomname); $i++)
+			{
 				$roomimage=$_FILES['roomimage']['name'][$i];
 				$redirect = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 				$redirectimage=dirname(dirname(dirname(dirname($redirect))));
 				$redirectupload=$redirectimage."/banner_images/";
 				if($roomimage)
-			{		
-				$rd = "room".rand(10,1000);
-				$file=$rd.$_FILES['roomimage']['name'][$i];
-				copy($_FILES['roomimage']['tmp_name'][$i],"banner_images/".$file);
-				$left_ban1=$file;
-				$left_ban2=$redirectupload.$left_ban1;
+				{
+					$rd = "room".rand(10,1000);
+					$file = $rd.$_FILES['roomimage']['name'][$i];
+					copy($_FILES['roomimage']['tmp_name'][$i],"banner_images/".$file);
+					$left_ban1 = $file;
+					$left_ban2 = $redirectupload.$left_ban1;
+				}
+				else
+				{
+					$left_ban1 = '';
+					$left_ban2 = '';
+				}
+				/*if($roomfeature1!=""){
+				  $flag1=0;
+				  foreach($roomfeature1 as $roomf){
+				  $roomfeature .= $roomf."#";
+				  $flag1=1;
+				  }
+				  if($flag1==1){
+				  $roomfeature=rtrim($roomfeature);
+				  } 
+				} else
+				{
+					 $roomfeature='';
+				} */
+				$extrabed = $this->input->post('extrabed');
+				$this->Home_Model->add_room($hotelid_id1,$roomname[$i],$roomsize[$i],$beds[$i],$extrabed[$i],$description[$i],$left_ban2);
+				$room_id = $this->db->insert_id();
+				$roomcode = "R".$room_id;
+				$this->Home_Model->add_roomcode($roomcode,$room_id);
+				for($k = 0; $k < count($roomfeature1); $k++)  
+				{
+					if ($roomfeature1[$k])
+					{
+						$this->Home_Model->add_amen($hotelid_id1, $roomcode, $roomfeature1[$k], $createdby);
+					}
+				}
 			}
-			else
-			{
-				$left_ban1 = '';
-			}
-			
-			/*if($roomfeature1!=""){
-			  $flag1=0;
-			  foreach($roomfeature1 as $roomf){
-			  $roomfeature .= $roomf."#";
-			  $flag1=1;
-			  }
-			  if($flag1==1){
-			  $roomfeature=rtrim($roomfeature);
-			  } 
-			} else
-			{
-				 $roomfeature='';
-			} */
-			$extrabed=$this->input->post('extrabed');
-			
-			$this->Home_Model->add_room($hotelid_id1,$roomname[$i],$roomsize[$i],$beds[$i],$extrabed[$i],$description[$i],$left_ban2);
-			$room_id = $this->db->insert_id();
-			$roomcode="R".$room_id;
-			$this->Home_Model->add_roomcode($roomcode,$room_id);
-			
-			for($k = 0; $k < count($roomfeature1); $k++)  {
-	
-			$this->Home_Model->add_amen($hotelid_id1,$roomcode,$roomfeature1[$k],$createdby);
-			
-		}
-				
-		}
 			/*if($redir==''){
 			
 				redirect('admin/manageprice/'.$hotelid_id1,'refresh');
@@ -577,7 +577,6 @@ class Admin extends CI_Controller
 			
 			} */
 			redirect('admin/manageprice/'.$hotelid_id1,'refresh');
-			
 		}
 		else
 		{

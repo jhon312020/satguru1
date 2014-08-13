@@ -61,7 +61,7 @@
     <div class="container-fluid">
       <div class="page-header">
         <div class="pull-left">
-          <h1><?php echo $data['page_header'];?></h1>
+          <h1><?php if (isset($data)) echo $data['page_header'];?></h1>
         </div>
         <div class="pull-right">
           <ul class="minitiles">
@@ -131,7 +131,7 @@
                 <td><?php echo $list->pay; ?></td>
                 <td><?php echo $list->breakfast; ?></td>
                 <td><?php echo $breakfast;?></td>
-                <td><a href="<?php echo WEB_URL_ADMIN ?>admin/editpaystay/<?php echo $list->id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>">Edit</td><td><a href="javascript:confirm_delete('<?php echo $list->id; ?>','<?php echo $list->RoomCode;?>','<?php echo $list->HotelCode;?>','<?php echo $this->uri->segment(3);?>')">Delete</td>
+                <td><a href="<?php echo WEB_URL_ADMIN ?>admin/editpaystay/<?php echo $list->id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>">Edit</td><td><a href="javascript:confirm_delete('<?php echo $list->id; ?>','<?php echo $list->Roomcode;?>','<?php echo $list->HotelCode;?>','<?php echo $this->uri->segment(3);?>')">Delete</td>
               </tr>
               <?php $i++;} } } ?>
             </tbody>
@@ -213,7 +213,7 @@
                 <td><?php echo $weekday; ?></td>
                 <td><?php echo $weekdaytill; ?></td>
                 <td><?php echo $list1->weekendrate ; ?>%</td>
-                <td><a href="<?php echo WEB_URL_ADMIN ?>admin/editweekendstay/<?php echo $list1->id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>">Edit</td><td><a href="javascript:confirm_delete1('<?php echo $list1->id; ?>','<?php echo $list1->RoomCode;?>','<?php echo $list1->HotelCode;?>','<?php echo $this->uri->segment(3);?>')">Delete</td>
+                <td><a href="<?php echo WEB_URL_ADMIN ?>admin/editweekendstay/<?php echo $list1->id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>">Edit</td><td><a href="javascript:confirm_delete1('<?php echo $list1->id; ?>','<?php echo $list1->Roomcode;?>','<?php echo $list1->HotelCode;?>','<?php echo $this->uri->segment(3);?>')">Delete</td>
               </tr>
               <?php $i++;} } } ?>
             </tbody>
@@ -268,7 +268,7 @@
                 <td><?php echo $list2->discountfrom ; ?></td>
                 <td><?php echo $list2->discountto; ?></td>
                 <td><?php echo $list2->discountrate; ?> %</td>
-                <td><a href="<?php echo WEB_URL_ADMIN ?>admin/editdiscount/<?php echo $list2->id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>">Edit</td><td><a href="javascript:confirm_delete2('<?php echo $list2->id; ?>','<?php echo $list2->RoomCode;?>','<?php echo $list2->HotelCode;?>','<?php echo $this->uri->segment(3);?>')">Delete</td>
+                <td><a href="<?php echo WEB_URL_ADMIN ?>admin/editdiscount/<?php echo $list2->id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>">Edit</td><td><a href="javascript:confirm_delete2('<?php echo $list2->id; ?>','<?php echo $list2->Roomcode;?>','<?php echo $list2->HotelCode;?>','<?php echo $this->uri->segment(3);?>')">Delete</td>
               </tr>
               <?php $i++;} } } ?>
             </tbody>
@@ -321,7 +321,7 @@
                 <td><?php echo $list3->pricefrom ; ?></td>
                 <td><?php echo $list3->priceto ; ?></td>
                 <td><?php echo $list3->pricerate ; ?></td>
-                <td><a href="<?php echo WEB_URL_ADMIN ?>admin/editdiscountprice/<?php echo $list3->id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>">Edit</td><td><a href="javascript:confirm_delete3('<?php echo $list3->id; ?>','<?php echo $list3->RoomCode;?>','<?php echo $list3->HotelCode;?>','<?php echo $this->uri->segment(3);?>')">Delete</td>
+                <td><a href="<?php echo WEB_URL_ADMIN ?>admin/editdiscountprice/<?php echo $list3->id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>">Edit</td><td><a href="javascript:confirm_delete3('<?php echo $list3->id; ?>','<?php echo $list3->Roomcode;?>','<?php echo $list3->HotelCode;?>','<?php echo $this->uri->segment(3);?>')">Delete</td>
               </tr>
               <?php $i++;} } } ?>
             </tbody>
@@ -374,7 +374,7 @@
                 <td><?php echo $list4->upgradefrom ; ?></td>
                 <td><?php echo $list4->upgradeto ; ?></td>
                 <td><?php echo $list4->promo ; ?></td>
-                <td><a href="<?php echo WEB_URL_ADMIN ?>admin/editservice/<?php echo $list4->id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>">Edit</td><td><a href="javascript:confirm_delete4('<?php echo $list4->id; ?>','<?php echo $list4->RoomCode;?>','<?php echo $list4->HotelCode;?>','<?php echo $this->uri->segment(3);?>')">Delete</td>
+                <td><a href="<?php echo WEB_URL_ADMIN ?>admin/editservice/<?php echo $list4->id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>">Edit</td><td><a href="javascript:confirm_delete4('<?php echo $list4->id; ?>','<?php echo $list4->Roomcode;?>','<?php echo $list4->HotelCode;?>','<?php echo $this->uri->segment(3);?>')">Delete</td>
               </tr>
               <?php $i++;} } } ?>
             </tbody>

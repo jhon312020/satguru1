@@ -61,7 +61,7 @@
     <div class="container-fluid">
       <div class="page-header">
         <div class="pull-left">
-          <h1><?php echo $data['page_header'];?></h1>
+          <h1><?php //echo $page_header; ?></h1>
         </div>
         <div class="pull-right">
           <ul class="minitiles">

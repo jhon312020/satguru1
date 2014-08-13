@@ -339,7 +339,7 @@ class Home_Model extends CI_Model
 		$this->db->update('hotel_room_list',$data);
 	}
 	
-	function add_amen($hotelid_id1,$rcode,$aminity,$createdby)
+	function add_amen($hotelid_id1, $rcode, $aminity, $createdby)
 	{
 		$data = array('HotelCode'=>$hotelid_id1,'RoomCode'=>$rcode,'RoomAmenities'=>$aminity,'createdby'=>'admin');
 		$this->db->insert('hotel_aminities',$data);

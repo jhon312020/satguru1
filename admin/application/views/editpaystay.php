@@ -61,7 +61,7 @@
     <div class="container-fluid">
       <div class="page-header">
         <div class="pull-left">
-          <h1><?php echo $data['page_header'];?></h1>
+          <h1><?php //echo $data['page_header'];?></h1>
         </div>
         <div class="pull-right">
           <ul class="minitiles">
@@ -86,7 +86,7 @@
               
                 <input type='hidden' name="id"  class="input-xlarge datepick" style="width:70px;" value="<?php echo $paystay->id;?>" >
            
-              <input type="hidden" name="roomid" id="roomid" value="<?php echo $paystay->RoomCode; ?>">
+              <input type="hidden" name="roomid" id="roomid" value="<?php echo $paystay->Roomcode; ?>">
          
           
             <div class="control-group">

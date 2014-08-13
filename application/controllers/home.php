@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Home extends CI_Controller {
-	
+class Home extends CI_Controller 
+{
 	public function __construct()
 	{
 		parent::__construct();
@@ -13,75 +13,64 @@ class Home extends CI_Controller {
 		$this->domain = "DSS";
 		$this->domain_id = "1";
 	}
+
 	function index()
 	{
 		/* $data['airports'] = '';
 		 $data['imp_airports'] ='';
-         $this->load->view('flight/flight_index', $data); */
+		$this->load->view('flight/flight_index', $data); */
 		redirect('home/hotels/', 'refresh');
-	}	
+	}
+	
 	function forget_password()
 	{
-	
-        $this->load->view('account/forget_password');
-		
+		$this->load->view('account/forget_password');
 	}
+
 	function forget_password_process()
 	{
-			    $this->load->model('Email_Model');
-
+		$this->load->model('Email_Model');
 		$email3 = $this->input->post('email');
 		$domain = $this->domain_id;
-			$Query="select * from  b2c  where email ='".$email3."' and  domain ='".$domain."'";
-	 
-		 $query=$this->db->query($Query);
-		
+		$Query="select * from  b2c  where email ='".$email3."' and  domain ='".$domain."'";
+		$query=$this->db->query($Query);
 		if ($query->num_rows() > 0)
 		{
-			
 			$result = $query->row();
-				   
-				
-					 $message ='<table width="100%" border="0" cellspacing="5" cellpadding="5">
-					 
-					 <tr>
-					 <td  align="left" valign="top">
-					  This is to inform you that an login details of your account .<br><br>
-					 </td>
-					 <tr>
-   			
+			$message ='<table width="100%" border="0" cellspacing="5" cellpadding="5">
+			<tr>
+			<td  align="left" valign="top">
+			This is to inform you that an login details of your account .<br><br>
+			</td>
+			<tr>
 			<td  align="left" valign="top">
 			<strong><u>Login Details </u></strong><br><br>
 			<strong>Login Url </strong> : '.site_url().'/login/member_login <br>
 			<strong>Username </strong> : '.$result->email.' <br>
 			<strong>Password </strong> : '.$result->password.' <br>
 			</td>
-		 	</tr>
+			</tr>
 			</table>'; 
-				 $message_header='Forget Password';
-				 $subject='DSS - Forget Password';
-				$fnam = $result->firstname;
-				 $this->Email_Model->send_email($fnam,$subject,$email3,$message_header,$message);
-				 $data['x'] = 'Password has been sent to your Email-Id !.';
-				    $this->load->view('account/forget_password',$data);
-				 
+			$message_header='Forget Password';
+			$subject='DSS - Forget Password';
+			$fnam = $result->firstname;
+			$this->Email_Model->send_email($fnam,$subject,$email3,$message_header,$message);
+			$data['x'] = 'Password has been sent to your Email-Id !.';
+			$this->load->view('account/forget_password',$data);
 		}
 		else
 		{
-			 $data['x'] = 'Email-Id is wrong !.';
-				    $this->load->view('account/forget_password',$data);
-			
+			$data['x'] = 'Email-Id is wrong !.';
+			$this->load->view('account/forget_password',$data);
 		}
-			
 	}
+
 	function chat()
 	{
-		
 		$server = "localhost";
 		$db_user = "root";
 		$db_pass = "";
 		$database = "DSS";
-
 		$db = mysql_connect($server, $db_user,$db_pass);
 		mysql_select_db($database,$db);
 		$timeoutseconds = 5; //5 minutes
@@ -91,16 +80,19 @@ class Home extends CI_Controller {
 		$PHP_SELF = $_SERVER['PHP_SELF'];
 		echo "INSERT INTO useronline VALUES ('$timestamp','$REMOTE_ADDR','$PHP_SELF')";
 		$insert = mysql_query("INSERT INTO useronline VALUES ('$timestamp','$REMOTE_ADDR','$PHP_SELF')",$db);
-		if(!($insert)) {
-		print "Useronline Insert Failed > ";
+		if (!($insert))
+		{
+			print "Useronline Insert Failed > ";
 		}
 		$delete = mysql_query("DELETE FROM useronline WHERE timestamp<$timeout",$db);
-		if(!($delete)) {
-		print "Useronline Delete Failed > ";
+		if (!($delete))
+		{
+			print "Useronline Delete Failed > ";
 		}
 		$result = mysql_query("SELECT DISTINCT ip FROM useronline WHERE file='$PHP_SELF'",$db);
-		if(!($result)) {
-		print "Useronline Select Error > ";
+		if(!($result))
+		{
+			print "Useronline Select Error > ";
 		}
 		$user = mysql_num_rows($result);
 		//mysql_close();
@@ -110,24 +102,25 @@ class Home extends CI_Controller {
 		print("$user users online\n");
 		}
 	}
+
 	function email_test()
 	{
-	$this->load->view('email/email_test - voucher 2');
+		$this->load->view('email/email_test - voucher 2');
 	}
+
 	function email_test1()
 	{
-	$this->load->view('email/email_test - voucher');
+		$this->load->view('email/email_test - voucher');
 	}
 	
 	function contact_detail()
 	{
-	  $this->load->view('hotel/contact_us');	
+		$this->load->view('hotel/contact_us');
 	}
 	
 	function sortHotel()
 	{
 		$data = $_SESSION['hotel_search_session_data'];
-		
 		if($_POST['filter'] == "name" && $_POST['type'] == "asc") 
 		{
 			usort($data, function($a, $b) {
@@ -204,15 +197,13 @@ class Home extends CI_Controller {
 		}
 		
 		$_SESSION['hotel_search_session_data']  = $data;
-		
-		
 		$aResponse['result'] = $data;
 		$hotel_search_result = $this->load->view('hotel/search_result_ajax_search_page', $aResponse, true);		
 		print json_encode(array(
 			'hotel_search_result' => $hotel_search_result,
 		));
-	}	
-	
+	}
+
 	function currencyConvert()
 	{
 		$_SESSION['hotel_currency_code'] = $_POST['currency_code'];
@@ -235,86 +226,86 @@ class Home extends CI_Controller {
 			'hotel_search_result' => $hotel_search_result,
 		));
 	}
-	
+
 	function modify_search()
 	{
 		$this->load->view('hotel/modify_search');
 	}
-	
+
 	function contact_us()
 	{
 		$this->load->view('contact_us');
 	}
-	  public function hotels() {
-      
-        $this->load->view('hotel/hotel_index');
-    }
-	  public function getAdultChilds() {
-        $roomCount = $_GET['count'];
-        $showAdultChild = showAdultChildBox($roomCount); // showing adult child boxes from home helper function
-        print json_encode(array(
-            'total_result' => $showAdultChild
-        ));
-    }
 
-    public function showChildAgeBox() {
-        $childCount = $_GET['count'];
-        $rm = $_GET['rm'];
-        $showChild = showChildAgeBox($childCount, $rm); // showing adult child boxes from home helper function
-        print json_encode(array(
-            'total_result' => $showChild
-        ));
-    }
+	public function hotels()
+	{
+		$this->load->view('hotel/hotel_index');
+	}
 
-    public function getAdultChildsModifySearch() {
-        $roomCount = $_GET['count'];
-        $showAdultChild = showAdultChildBoxModify($roomCount); // showing adult child boxes from home helper function
-        print json_encode(array(
-            'total_result' => $showAdultChild
-        ));
-    }
+	public function getAdultChilds()
+	{
+		$roomCount = $_GET['count'];
+		$showAdultChild = showAdultChildBox($roomCount); // showing adult child boxes from home helper function
+		print json_encode(array(
+			'total_result' => $showAdultChild
+		));
+	}
 
-    public function showChildAgeBoxModify() {
-        $childCount = $_GET['count'];
-        $rm = $_GET['rm'];
-        $showChild = showChildAgeBoxModify($childCount, $rm); // showing adult child boxes from home helper function
-        print json_encode(array(
-            'total_result' => $showChild
-        ));
-    }
-    
-    
-    function payment(){
+	public function showChildAgeBox()
+	{
+		$childCount = $_GET['count'];
+		$rm = $_GET['rm'];
+		$showChild = showChildAgeBox($childCount, $rm); // showing adult child boxes from home helper function
+		print json_encode(array(
+			'total_result' => $showChild
+		));
+	}
+
+	public function getAdultChildsModifySearch() 
+	{
+		$roomCount = $_GET['count'];
+		$showAdultChild = showAdultChildBoxModify($roomCount); // showing adult child boxes from home helper function
+		print json_encode(array(
+			'total_result' => $showAdultChild
+		));
+	}
+
+	public function showChildAgeBoxModify() 
+	{
+		$childCount = $_GET['count'];
+		$rm = $_GET['rm'];
+		$showChild = showChildAgeBoxModify($childCount, $rm); // showing adult child boxes from home helper function
+		print json_encode(array(
+			'total_result' => $showChild
+		));
+	}
+
+	function payment()
+	{
 		//$this->db->select('*');
 		//$this->db->from('asia_hotel_room_list');
 		//$this->db->where('id',$_SESSION['customer']['id']);	
 		//$query = $this->db->get();
-		
-			$service = '';
-			$RoomCode=$service->RoomCode;
-			$HotelCode=$service->HotelCode;
-			$AvgPrice 	=$service->Rate;
-			$OccupancyId 	=$service->OccupancyId;
-			$cinval = explode("/",$_SESSION['hotel_search']['cin']);
-
+		$service = '';
+		$RoomCode=$service->RoomCode;
+		$HotelCode=$service->HotelCode;
+		$AvgPrice 	=$service->Rate;
+		$OccupancyId 	=$service->OccupancyId;
+		$cinval = explode("/",$_SESSION['hotel_search']['cin']);
 		$cin  = $cinval[2].'-'.$cinval[0].'-'.$cinval[1];
-
 		$coutval = explode("/",$_SESSION['hotel_search']['cout']);
-
 		$cout  = $coutval[2].'-'.$coutval[0].'-'.$coutval[1];
 		$sec_id=$_SESSION['hotel_search']['session_id'];
-		for($i=0;$i< $_SESSION['hotel_search']['adult'];$i++){
-			
-			
+		for($i=0; $i< $_SESSION['hotel_search']['adult']; $i++)
+		{
 		}
 		$sal=$this->input->post('sal');
-		
 		$data['fname']=$fname=$this->input->post('fname');
 		$data['email']=$email=$this->input->post('email');
 		$data['mobile']=$mobile=$this->input->post('mobile');
 		$data['address']=$address=$this->input->post('address');
-        $soapUser = "promise_xml";  //  username
-        $soapPassword = "promise11"; // password	
+		$soapUser = "promise_xml";  //  username
+		$soapPassword = "promise11"; // password	
 	$xml_post_string='<?xml version="1.0" encoding="utf-16"?>
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <soap:Header>
@@ -700,50 +691,42 @@ $this->load->view('hotels/reservation_print', $data);
 	{
 		$result=$this->Hotel_Model->fetch_temp_result_own_room_id($result_id);	
 		$service=$this->Hotel_Model->get_permanent_details_v4_Own($hotel_id);		
-		
 		//echo '<pre/>';
 		//print_r($this->session->userdata);exit;
 		//echo '<pre/>';
 		//print_r($service);
 		//print_r($result);
 		//exit;
-	
-	 if($this->session->userdata('guest_email') && $this->session->userdata('guest_email')!= '')
-	  {
-		  $userid = '';
-		  $usertype = 4;
-		  $useremail = $this->session->userdata('guest_email');
-	  }
-	  elseif($this->session->userdata('b2c_email') &&  $this->session->userdata('b2c_email')!= '')
-	  {
-		 $userid = $this->session->userdata('b2c_id');
-		  $usertype = 3;
-		  $useremail = $this->session->userdata('b2c_email');
-	  }
-	  elseif($this->session->userdata('b2b_email') &&  $this->session->userdata('b2b_email')!= '')
-	  {
-		  $userid = $this->session->userdata('b2b_id');
-		  $usertype = 2;
-		  $useremail = $this->session->userdata('b2b_email');
-		  
-		 
-	  }
-	  else
-	  {
-		  $userid = 'Unkown';
-		  $usertype = 'Unkown';
-		  $useremail = 'Unkown';
-		  
-	  }
-	
-	
+		if($this->session->userdata('guest_email') && $this->session->userdata('guest_email')!= '')
+		{
+			$userid = '';
+			$usertype = 4;
+			$useremail = $this->session->userdata('guest_email');
+		}
+		elseif($this->session->userdata('b2c_email') &&  $this->session->userdata('b2c_email')!= '')
+		{
+			$userid = $this->session->userdata('b2c_id');
+			$usertype = 3;
+			$useremail = $this->session->userdata('b2c_email');
+		}
+		elseif($this->session->userdata('b2b_email') &&  $this->session->userdata('b2b_email')!= '')
+		{
+			$userid = $this->session->userdata('b2b_id');
+			$usertype = 2;
+			$useremail = $this->session->userdata('b2b_email');
+		}
+		else
+		{
+			$userid = 'Unkown';
+			$usertype = 'Unkown';
+			$useremail = 'Unkown';
+		}
 		$voucher_date=date("Y-m-d H:i:s");   
-		
-			$passanger_full = '';
-			for($k=0;$k<count($_SESSION['booking_pass_details']['sal']);$k++)
-			{
+		$passanger_full = '';
+		for ($k = 0; $k < count($_SESSION['booking_pass_details']['sal']); $k++)
+		{
 			$passanger_full .= $_SESSION['booking_pass_details']['sal'][$k].' '.$_SESSION['booking_pass_details']['fname'][$k].' '.$_SESSION['booking_pass_details']['lname'][$k].'<br>';
-			}
+		}
 		if ($api == 'own')
 		{
 			$amount = $_SESSION['ItemTotalPrice'];
@@ -752,225 +735,200 @@ $this->load->view('hotels/reservation_print', $data);
 		{
 			$amount = $result->total_cost;
 		}
-//print_r($service);			
-		$data_hotel=array(
-		'booking_number'=>'',
-		'pnr_no'=>$parent_pnr_no,
-		'parent_booking_number'=>'',
-		'parent_pnr_no'=>'',
-		'user_type'=>'',
-		'user_id'=>'',
-		'branch_id'=>'',
-		//'amount'=>$result->total_cost,
-		'amount'=>$amount,
-		'api_status'=>'',
-		'booking_status'=>'',
-		'voucher_date'=>$voucher_date,
-		'markup'=>'',
-		'gateway'=>'',
-		'currency_val'=>'',
-		'xml_currency'=>'',
-		'cancellation_till_date'=>'',
-		'cancellation_till_charge'=>'',
-		'callcenterid'=>'',
-		'cancellation_by'=>'',
-		'promo'=>'',
-		'cust_remark'=>$_SESSION['booking_pass_details']['special'],
-		'cust_remark1'=>'',
-		'check_in'=>$_SESSION['cin'],
-		'check_out'=>$_SESSION['cout'],
-		'hotel_code'=>$result->hotel_code,
-		'hotel_name'=>$service->HotelName,
-		'image'=>$service->FrontPgImage,
-	
-		'city'=>$result->city,
-		'room_type'=>$result->room_type,
-		'star'=>$service->StarRating,
-		'address'=>$service->Address,
-		'room_count'=>$result->room_count,
-		'cancel_policy'=>'',
-		'adult'=>$result->adult,
-		'child'=>$result->child,
-		'description'=>$service->HotelDesc,
-		'nights'=>$_SESSION['days'],
-		'api'=>$result->api,
-		'inclusion_val'=>$result->Classification_val,
-		'child_age'=>'',
-		'adult_info'=>'',
-		'child_info'=>'',
-		'passanger'=>$passanger_full,
-		'pass_mobile_no'=>$_SESSION['booking_pass_details']['mobile'],
-		'pass_address'=>$_SESSION['booking_pass_details']['address'],
-		'pass_nationality'=>$_SESSION['booking_pass_details']['nationality'],
-		'pass_city'=>$_SESSION['booking_pass_details']['user_city'],
-		'remarks'=>$_SESSION['booking_pass_details']['special'],
-		'voucherd_status'=>''
-		
+		$data_hotel = array(
+			'booking_number'=>'',
+			'pnr_no'=>$parent_pnr_no,
+			'parent_booking_number'=>'',
+			'parent_pnr_no'=>'',
+			'user_type'=>'',
+			'user_id'=>'',
+			'branch_id'=>'',
+			//'amount'=>$result->total_cost,
+			'amount'=>$amount,
+			'api_status'=>'',
+			'booking_status'=>'',
+			'voucher_date'=>$voucher_date,
+			'markup'=>'',
+			'gateway'=>'',
+			'currency_val'=>'',
+			'xml_currency'=>'',
+			'cancellation_till_date'=>'',
+			'cancellation_till_charge'=>'',
+			'callcenterid'=>'',
+			'cancellation_by'=>'',
+			'promo'=>'',
+			'cust_remark'=>$_SESSION['booking_pass_details']['special'],
+			'cust_remark1'=>'',
+			'check_in'=>$_SESSION['cin'],
+			'check_out'=>$_SESSION['cout'],
+			'hotel_code'=>$result->hotel_code,
+			'hotel_name'=>$service->HotelName,
+			'image'=>$service->FrontPgImage,
+			'city'=>$result->city,
+			'room_type'=>$result->room_type,
+			'star'=>$service->StarRating,
+			'address'=>$service->Address,
+			'room_count'=>$result->room_count,
+			'cancel_policy'=>'',
+			'adult'=>$result->adult,
+			'child'=>$result->child,
+			'description'=>$service->HotelDesc,
+			'nights'=>$_SESSION['days'],
+			'api'=>$result->api,
+			'inclusion_val'=>$result->Classification_val,
+			'child_age'=>'',
+			'adult_info'=>'',
+			'child_info'=>'',
+			'passanger'=>$passanger_full,
+			'pass_mobile_no'=>$_SESSION['booking_pass_details']['mobile'],
+			'pass_address'=>$_SESSION['booking_pass_details']['address'],
+			'pass_nationality'=>$_SESSION['booking_pass_details']['nationality'],
+			'pass_city'=>$_SESSION['booking_pass_details']['user_city'],
+			'remarks'=>$_SESSION['booking_pass_details']['special'],
+			'voucherd_status'=>''
 		);
-			$this->db->insert('booking',$data_hotel);
-			$hotel_id_pa =  $this->db->insert_id();
-			//$_SESSION['booking_pass_details']
-			
-		
-		$data=array(
-		'pnr_no'=>$parent_pnr_no,
-		'booking_no'=>'',
-		'user_id'=>$userid,
-		'useremail'=>$useremail,
-		'user_type'=>$usertype,
-		'amount'=>$result->total_cost,
-		'api_status'=>'',
-		'booking_status'=>'',
-		'voucher_date'=>$voucher_date,
-		'ipaddress'=>$this->get_client_ip(),
-		'leadpax'=>$_SESSION['booking_pass_details']['user_title'].' '.$_SESSION['booking_pass_details']['firstname'].' '.$_SESSION['booking_pass_details']['lastname'],
-		'product_name'=>'Hotel',
-		'transaction_id'=>$tran_id,
-		'transaction_status'=>$tran_status,
-		'transaction_details'=>$tran_des,
-		'product_id'=>$hotel_id_pa
-		
+		$this->db->insert('booking',$data_hotel);
+		$hotel_id_pa =  $this->db->insert_id();
+		//$_SESSION['booking_pass_details']
+		$data = array(
+			'pnr_no'=>$parent_pnr_no,
+			'booking_no'=>'',
+			'user_id'=>$userid,
+			'useremail'=>$useremail,
+			'user_type'=>$usertype,
+			'amount'=>$result->total_cost,
+			'api_status'=>'',
+			'booking_status'=>'',
+			'voucher_date'=>$voucher_date,
+			'ipaddress'=>$this->get_client_ip(),
+			'leadpax'=>$_SESSION['booking_pass_details']['user_title'].' '.$_SESSION['booking_pass_details']['firstname'].' '.$_SESSION['booking_pass_details']['lastname'],
+			'product_name'=>'Hotel',
+			'transaction_id'=>$tran_id,
+			'transaction_status'=>$tran_status,
+			'transaction_details'=>$tran_des,
+			'product_id'=>$hotel_id_pa
 		);
-			$this->db->insert('booking_global',$data);
-			//echo $this->db->last_query();exit;
-		   $global_id =  $this->db->insert_id();
-		
+		$this->db->insert('booking_global',$data);
+		//echo $this->db->last_query();exit;
+		$global_id =  $this->db->insert_id();
 	}
-	function PPHttpPost($methodName_, $nvpStr_, $PayPalApiUsername, $PayPalApiPassword, $PayPalApiSignature, $PayPalMode) {
-			// Set up your API credentials, PayPal end point, and API version.
-			$API_UserName = urlencode($PayPalApiUsername);
-			$API_Password = urlencode($PayPalApiPassword);
-			$API_Signature = urlencode($PayPalApiSignature);
-			
-			$paypalmode = ($PayPalMode=='sandbox') ? '.sandbox' : '';
-	
-			$API_Endpoint = "https://api-3t".$paypalmode.".paypal.com/nvp";
-			$version = urlencode('109.0');
-		
-			// Set the curl parameters.
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $API_Endpoint);
-			curl_setopt($ch, CURLOPT_VERBOSE, 1);
-		
-			// Turn off the server and peer verification (TrustManager Concept).
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-		
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_POST, 1);
-		
-			// Set the API operation, version, and API signature in the request.
-			$nvpreq = "METHOD=$methodName_&VERSION=$version&PWD=$API_Password&USER=$API_UserName&SIGNATURE=$API_Signature$nvpStr_";
-		
-			// Set the request as a POST FIELD for curl.
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $nvpreq);
-		
-			// Get response from the server.
-			$httpResponse = curl_exec($ch);
-		
-			if(!$httpResponse) {
-				exit("$methodName_ failed: ".curl_error($ch).'('.curl_errno($ch).')');
+
+	function PPHttpPost($methodName_, $nvpStr_, $PayPalApiUsername, $PayPalApiPassword, $PayPalApiSignature, $PayPalMode)
+	{
+		// Set up your API credentials, PayPal end point, and API version.
+		$API_UserName = urlencode($PayPalApiUsername);
+		$API_Password = urlencode($PayPalApiPassword);
+		$API_Signature = urlencode($PayPalApiSignature);
+		$paypalmode = ($PayPalMode=='sandbox') ? '.sandbox' : '';
+		$API_Endpoint = "https://api-3t".$paypalmode.".paypal.com/nvp";
+		$version = urlencode('109.0');
+		// Set the curl parameters.
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $API_Endpoint);
+		curl_setopt($ch, CURLOPT_VERBOSE, 1);
+		// Turn off the server and peer verification (TrustManager Concept).
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		// Set the API operation, version, and API signature in the request.
+		$nvpreq = "METHOD=$methodName_&VERSION=$version&PWD=$API_Password&USER=$API_UserName&SIGNATURE=$API_Signature$nvpStr_";
+		// Set the request as a POST FIELD for curl.
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $nvpreq);
+		// Get response from the server.
+		$httpResponse = curl_exec($ch);
+		if(!$httpResponse)
+		{
+			exit("$methodName_ failed: ".curl_error($ch).'('.curl_errno($ch).')');
+		}
+		// Extract the response details.
+		$httpResponseAr = explode("&", $httpResponse);
+		$httpParsedResponseAr = array();
+		foreach ($httpResponseAr as $i => $value) 
+		{
+			$tmpAr = explode("=", $value);
+			if(sizeof($tmpAr) > 1)
+			{
+				$httpParsedResponseAr[$tmpAr[0]] = $tmpAr[1];
 			}
-		
-			// Extract the response details.
-			$httpResponseAr = explode("&", $httpResponse);
-		
-			$httpParsedResponseAr = array();
-			foreach ($httpResponseAr as $i => $value) {
-				$tmpAr = explode("=", $value);
-				if(sizeof($tmpAr) > 1) {
-					$httpParsedResponseAr[$tmpAr[0]] = $tmpAr[1];
-				}
-			}
-		
-			if((0 == sizeof($httpParsedResponseAr)) || !array_key_exists('ACK', $httpParsedResponseAr)) {
-				exit("Invalid HTTP Response for POST request($nvpreq) to $API_Endpoint.");
-			}
-		
+		}
+		if ((0 == sizeof($httpParsedResponseAr)) || !array_key_exists('ACK', $httpParsedResponseAr)) 
+		{
+			exit("Invalid HTTP Response for POST request($nvpreq) to $API_Endpoint.");
+		}
 		return $httpParsedResponseAr;
 	}
-		
-	function get_client_ip() {
-     $ipaddress = '';
-	 if(getenv('REMOTE_ADDR'))
-         $ipaddress = getenv('REMOTE_ADDR');
-   else if (getenv('HTTP_CLIENT_IP'))
-         $ipaddress = getenv('HTTP_CLIENT_IP');
-     else if(getenv('HTTP_X_FORWARDED_FOR'))
-         $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
-     else if(getenv('HTTP_X_FORWARDED'))
-         $ipaddress = getenv('HTTP_X_FORWARDED');
-     else if(getenv('HTTP_FORWARDED_FOR'))
-         $ipaddress = getenv('HTTP_FORWARDED_FOR');
-     else if(getenv('HTTP_FORWARDED'))
-        $ipaddress = getenv('HTTP_FORWARDED');
-    
-     else
-         $ipaddress = 'UNKNOWN';
 
-     return $ipaddress; 
-}
+	function get_client_ip()
+	{
+		$ipaddress = '';
+		if(getenv('REMOTE_ADDR'))
+			$ipaddress = getenv('REMOTE_ADDR');
+		else if (getenv('HTTP_CLIENT_IP'))
+			$ipaddress = getenv('HTTP_CLIENT_IP');
+		 else if(getenv('HTTP_X_FORWARDED_FOR'))
+			$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+		 else if(getenv('HTTP_X_FORWARDED'))
+			$ipaddress = getenv('HTTP_X_FORWARDED');
+		 else if(getenv('HTTP_FORWARDED_FOR'))
+			$ipaddress = getenv('HTTP_FORWARDED_FOR');
+		 else if(getenv('HTTP_FORWARDED'))
+			$ipaddress = getenv('HTTP_FORWARDED');
+		 else
+			$ipaddress = 'UNKNOWN';
+		return $ipaddress; 
+	}
+
 	function cancellation_view($booking_id)
 	{
 		$data['resultsd'] =  $this->Hotel_Model->get_reservation_details_id($booking_id);
 		$data['result'] =  $this->Hotel_Model->get_hotel_information($data['resultsd']->product_id);
 		$data['booking_id'] =$booking_id;
-		
 		$this->load->view('global/cancellation_view',$data);
 	}
+
 	function cancellation($booking_id)
 	{
-		
-		
 		$this->load->model('Hotelspro_Model');
 		$this->load->model('Asiantravel_Model');
-		
-	
 		$result =  $this->Hotel_Model->get_reservation_details_id($booking_id);
-		
-	if($result!='')
-	{
-		$result_hotel =  $this->Hotel_Model->get_hotel_information_v4($result->product_id);
-	//echo '<pre/>';
-//	print_r($result);
-//	print_r($result_hotel);exit;
-		$api = $result_hotel->api;
-		$api_m =$api.'_Model';
-		
-		//echo $api;exit;
-		$this->$api_m->cancellation($api,$booking_id);
-		
-		redirect("hotel/reservation/".$booking_id, 'refresh');
+		if($result!='')
+		{
+			$result_hotel =  $this->Hotel_Model->get_hotel_information_v4($result->product_id);
+			//echo '<pre/>';
+			//	print_r($result);
+			//	print_r($result_hotel);exit;
+			$api = $result_hotel->api;
+			$api_m =$api.'_Model';
+			//echo $api;exit;
+			$this->$api_m->cancellation($api,$booking_id);
+			redirect("hotel/reservation/".$booking_id, 'refresh');
+		}
 	}
-		
-	}
+
 	function cancellation_policy_api($cart_id)
 	{
 		$cart_result =  $this->Cart_Model->fetch_cart_search_result_db_cartid_api($this->ses_id,$cart_id);
-	
-     			$api =$cart_result->api;
-				$api_m =$api.'_Model';
-				echo $this->$api_m->cancellation_policy($api,$cart_id);
-
+		$api =$cart_result->api;
+		$api_m =$api.'_Model';
+		echo $this->$api_m->cancellation_policy($api,$cart_id);
 	}
+
 	function get_currency_val($cur)
 	{
 		$currency_val =  $this->Hotel_Model->get_currecy_details($cur);
-	$currency_val1=1;
-	
-	if($currency_val!='')
-	{
-     			$currency_val1 =$currency_val->value;
-	}
-			print json_encode(array(
-		'currency_val' => $currency_val1
-		
+		$currency_val1 = 1;
+		if($currency_val != '')
+		{
+			$currency_val1 =$currency_val->value;
+		}
+		print json_encode(array(
+			'currency_val' => $currency_val1
 		));
-
 	}
 
-function payment_load_v1($api='', $result_id, $hotel_id,$parent_pnr_no)
-{
+	function payment_load_v1($api='', $result_id, $hotel_id,$parent_pnr_no)
+	{
 		if(isset($_GET["token"]) && isset($_GET["PayerID"]))
 		{
 			$token = $_GET["token"];
@@ -1014,44 +972,52 @@ function payment_load_v1($api='', $result_id, $hotel_id,$parent_pnr_no)
 						'&PAYMENTREQUEST_0_AMT='.urlencode($GrandTotal).
 						'&PAYMENTREQUEST_0_CURRENCYCODE='.urlencode($PayPalCurrencyCode);
 	
-	//We need to execute the "DoExpressCheckoutPayment" at this point to Receive payment from user.
-	$httpParsedResponseAr = $this->PPHttpPost('DoExpressCheckoutPayment', $padata, $PayPalApiUsername, $PayPalApiPassword, $PayPalApiSignature, $PayPalMode);
+			//We need to execute the "DoExpressCheckoutPayment" at this point to Receive payment from user.
+			$httpParsedResponseAr = $this->PPHttpPost('DoExpressCheckoutPayment', $padata, $PayPalApiUsername, $PayPalApiPassword, $PayPalApiSignature, $PayPalMode);
 		
-		//Check if everything went ok..
-		if("SUCCESS" == strtoupper($httpParsedResponseAr["ACK"]) || "SUCCESSWITHWARNING" == strtoupper($httpParsedResponseAr["ACK"])) 
-		{
-			$pament_Transaction_ID = urldecode($httpParsedResponseAr["PAYMENTINFO_0_TRANSACTIONID"]);
-			$pament_Transaction_des= 'Failed';
-			$pament_Transaction_status='Failed';
-			if('Completed' == $httpParsedResponseAr["PAYMENTINFO_0_PAYMENTSTATUS"])
-			{
-				$pament_Transaction_des =  'Transaction Completed Successfully, Your Payment Received! ';
-				$pament_Transaction_status='Success';
-			}
-			if('Pending' == $httpParsedResponseAr["PAYMENTINFO_0_PAYMENTSTATUS"])
-			{
-				$pament_Transaction_des =  'Transaction Completed Successfully, But Payment Is Still Pending! ';
-				$pament_Transaction_status='Pending';
-			}
-
-			// we can retrive transection details using either GetTransactionDetails or GetExpressCheckoutDetails
-			// GetTransactionDetails requires a Transaction ID, and GetExpressCheckoutDetails requires Token returned by SetExpressCheckOut
-			$padata = 	'&TOKEN='.urlencode($token);
-
-			$httpParsedResponseAr = $this->PPHttpPost('GetExpressCheckoutDetails', $padata, $PayPalApiUsername, $PayPalApiPassword, $PayPalApiSignature, $PayPalMode);
-
+			//Check if everything went ok..
 			if("SUCCESS" == strtoupper($httpParsedResponseAr["ACK"]) || "SUCCESSWITHWARNING" == strtoupper($httpParsedResponseAr["ACK"])) 
-			{
-					
-					//$this->load->model('Hotelspro_Model');
-					//$this->load->model('Asiantravel_Model');
-					$this->load->model('Owninventory_Model');
-					$this->ses_id= $_SESSION['session_data_id'];
-					$booking_global_id = $this->insert_booking_data($api,$result_id,$hotel_id,$parent_pnr_no,$pament_Transaction_ID,$pament_Transaction_status,$pament_Transaction_des);
-					$api_m ='Owninventory_Model';
-					$this->$api_m->booking($api,$result_id,$hotel_id,$parent_pnr_no,$booking_global_id);
-					redirect('hotel/reservation/'.$parent_pnr_no,'refresh');
-			
+				{
+				$pament_Transaction_ID = urldecode($httpParsedResponseAr["PAYMENTINFO_0_TRANSACTIONID"]);
+				$pament_Transaction_des= 'Failed';
+				$pament_Transaction_status='Failed';
+				if('Completed' == $httpParsedResponseAr["PAYMENTINFO_0_PAYMENTSTATUS"])
+				{
+					$pament_Transaction_des =  'Transaction Completed Successfully, Your Payment Received! ';
+					$pament_Transaction_status='Success';
+				}
+				if('Pending' == $httpParsedResponseAr["PAYMENTINFO_0_PAYMENTSTATUS"])
+				{
+					$pament_Transaction_des =  'Transaction Completed Successfully, But Payment Is Still Pending! ';
+					$pament_Transaction_status='Pending';
+				}
+
+				// we can retrive transection details using either GetTransactionDetails or GetExpressCheckoutDetails
+				// GetTransactionDetails requires a Transaction ID, and GetExpressCheckoutDetails requires Token returned by SetExpressCheckOut
+				$padata = 	'&TOKEN='.urlencode($token);
+
+				$httpParsedResponseAr = $this->PPHttpPost('GetExpressCheckoutDetails', $padata, $PayPalApiUsername, $PayPalApiPassword, $PayPalApiSignature, $PayPalMode);
+
+				if("SUCCESS" == strtoupper($httpParsedResponseAr["ACK"]) || "SUCCESSWITHWARNING" == strtoupper($httpParsedResponseAr["ACK"])) 
+				{
+						
+						//$this->load->model('Hotelspro_Model');
+						//$this->load->model('Asiantravel_Model');
+						$this->load->model('Owninventory_Model');
+						$this->ses_id= $_SESSION['session_data_id'];
+						$booking_global_id = $this->insert_booking_data($api,$result_id,$hotel_id,$parent_pnr_no,$pament_Transaction_ID,$pament_Transaction_status,$pament_Transaction_des);
+						$api_m ='Owninventory_Model';
+						$this->$api_m->booking($api,$result_id,$hotel_id,$parent_pnr_no,$booking_global_id);
+						redirect('hotel/reservation/'.$parent_pnr_no,'refresh');
+				
+				}
+				else
+				{
+					$data['msg']=urldecode($httpParsedResponseAr["L_LONGMESSAGE0"]);
+					$data['header']='Payment Gateway ERROR!!!';
+					$this->load->view('hotel/others/paypal_error',$data);
+				}
+		
 			}
 			else
 			{
@@ -1059,13 +1025,6 @@ function payment_load_v1($api='', $result_id, $hotel_id,$parent_pnr_no)
 				$data['header']='Payment Gateway ERROR!!!';
 				$this->load->view('hotel/others/paypal_error',$data);
 			}
-	
-		}else{
-		
-			$data['msg']=urldecode($httpParsedResponseAr["L_LONGMESSAGE0"]);
-			$data['header']='Payment Gateway ERROR!!!';
-			$this->load->view('hotel/others/paypal_error',$data);
-		}
 	}
 }	
 	function payment_load($api='',$result_id,$hotel_id)

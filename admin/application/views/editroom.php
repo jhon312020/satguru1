@@ -86,7 +86,7 @@ function airlinname_empty(val)
 			<div class="container-fluid">
 				<div class="page-header">
 					<div class="pull-left">
-						<h1><?php echo $data['page_header'];?></h1>
+						<h1><?php if (isset($data)) echo $data['page_header'];?></h1>
 					</div>
 					<div class="pull-right">
 						<ul class="minitiles">
@@ -114,7 +114,7 @@ function airlinname_empty(val)
 							<div class="box-title">
 								<h3>
 									<i class="icon-ok"></i>
-								<?php echo $data['page_header'];?>
+								<?php if (isset($data)) echo $data['page_header'];?>
 								</h3>
                               
 							</div>
@@ -147,7 +147,7 @@ function airlinname_empty(val)
                   <div class="control-group">
                   <label for="textfield" class="control-label">Extra Bed Availability</label>
                   <div class="controls">
-                    <input type='checkbox' id="extrabed" name="extrabed" value="yes"  <?php if($roomdisplay->extrabed=='yes') echo ' checked="checked"';?>>&nbsp;Yes <input type='checkbox' id="extrabed[]" name="extrabed[]" value="no" <?php if($roomdisplay->extrabed=='no') echo ' checked="checked"';?>>&nbsp;No
+                    <input type='checkbox' id="extrabed" name="extrabed" value="yes"  <?php if($roomdisplay->extrabed=='yes') echo ' checked="checked"';?>>&nbsp;Yes <input type='checkbox' id="extrabed" name="extrabed" value="no" <?php if($roomdisplay->extrabed=='no') echo ' checked="checked"';?>>&nbsp;No
                   </div>
                 </div>
                 <div class="control-group">
@@ -157,22 +157,22 @@ function airlinname_empty(val)
                   </div>
                 </div> <br>
                 
-                 <?php $i =1; if(isset($aminity)) { if($aminity != '') { foreach($aminity as $list) { ?> 
+                 <?php $fa1 = $fa2 = $fa3 = $fa4 = $fa5 = $fa6 = $fa7 = $fa8 = $fa9 = $fa10 = $fa11 = $fa12 = $fa13 = $fa14 = $fa15 = ''; $i =1; if(isset($aminity)) { if($aminity != '') { foreach($aminity as $list) { ?> 
           <?php  
-		 
+			
 	  		  if($list->RoomAmenities=='air conditioning')
 			   	$fa1='yes';
 					else
-				$fa1=='';
+				$fa1='';
 				
 			 if($list->RoomAmenities=='separate shower and tub')
 			  $fa2='yes';
 					else
-				$fa2=='';
+				$fa2='';
 			 if($list->RoomAmenities=='ironing facilities')
 			   	$fa3='yes';
 					else
-				$fa3=='';
+				$fa3='';
 			 if($list->RoomAmenities=='mini bar')
 			   	$fa4='yes';
 					else
@@ -180,29 +180,29 @@ function airlinname_empty(val)
 			 if($list->RoomAmenities=='daily newspaper')
 			   	$fa5='yes';
 					else
-				$fa5=='';
+				$fa5='';
 				
 			 if($list->RoomAmenities=='desk')
 			   	$fa6='yes';
 					else
-				$fa6=='';
+				$fa6='';
 				
 			 if($list->RoomAmenities=='shower')
 			   	$fa7='yes';
 					else
-				$fa7=='';
+				$fa7='';
 			 if($list->RoomAmenities=='complimentary bottled water')
 			   	$fa8='yes';
 					else
-				$fa8=='';
+				$fa8='';
 			 if($list->RoomAmenities=='satellite/cable TV')
 			   	$fa9='yes';
 					else
-				$fa9=='';
+				$fa9='';
 			 if($list->RoomAmenities=='bathtub')
 			   	$fa10='yes';
 					else
-				$fa10=='';	
+				$fa10='';
 				
 			 if($list->RoomAmenities=='hair dryer')
 			   	$fa11='yes';
@@ -211,21 +211,19 @@ function airlinname_empty(val)
 			 if($list->RoomAmenities=='bathrobes')
 			   	$fa12='yes';
 					else
-				$fa12==''; 
+				$fa12=''; 
 			if($list->RoomAmenities=='seating area')
 			 $fa13='yes';
 					else
-				$fa13==''; 
+				$fa13=''; 
 			if($list->RoomAmenities=='Free WiFi')
 			   	$fa14='yes';
 					else
-				$fa14=='';
+				$fa14='';
 			 if($list->RoomAmenities=='coffee/tea maker')
 			   $fa15='yes';
 					else
-				$fa15==''; 
-			
-		  		
+				$fa15=''; 
 		   ?>
           
           <?php }}}?> 

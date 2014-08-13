@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <?php $this->load->view('links');
-session_start();
+//session_start();
  ?>
 <!-- Validation -->
 <script src="<?php echo WEB_DIR_ADMIN ?>js/plugins/validation/jquery.validate.min.js"></script>
@@ -313,9 +313,18 @@ function airlinname_empty(val)
           <h3> <i class="icon-ok"></i>Hotel Features</h3>
         </div>
             <h2></h2>
-            <div class="control-group"> <?php $sport= $hotel->sports;
+            <div class="control-group"> <?php 
+            $sport= $hotel->sports;
 			$str=explode("#",$sport);
-			
+			$sp = '';
+			$sp1 = '';
+			$sp2 = '';
+			$sp3 = '';
+			$sp4 = '';
+			$sp5 = '';
+			$sp6 = '';
+			$sp7 = '';
+			$fa1 = $fa2 = $fa3 = $fa4 = $fa5 = $fa6 = $fa7 = $fa8 = $fa9 = $fa10 = $fa11 = $fa12 = $fa13 = $fa14 = $fa15 = $fa16 = $fa17 = $fa18 = $fa19 = $fa20 = $fa21 = $fa22 = $fa23 = $fa24 = $fa25 = '';
 			foreach($str as $value) { 
 			
 			if($value=='fitness center')

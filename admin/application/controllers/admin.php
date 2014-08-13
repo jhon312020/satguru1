@@ -1031,12 +1031,12 @@ class Admin extends CI_Controller
 	
 	public function delete_paystay($id) 
 	{
-		 if($this->session->userdata('admin_id')!='')
+		if($this->session->userdata('admin_id')!='')
 		{
-			$orgroom_id = $this->uri->segment(5);
-			$hotelid = $this->uri->segment(4);
-			$room_id1=substr($room_id,1);
-			$ext=$orgroom_id."/".$hotelid;
+			$orgroom_id = $this->uri->segment($this->uri->total_segments());
+			$hotelid = $this->uri->segment(($this->uri->total_segments() - 1));
+			//$room_id1 = substr($orgroom_id,1);
+			$ext = $orgroom_id."/".$hotelid;
 			$this->Home_Model->delete_paystay($id);
 			redirect('admin/viewpromo/'.$ext,'refresh');
 		}
@@ -1086,10 +1086,10 @@ class Admin extends CI_Controller
 	{
 		if($this->session->userdata('admin_id')!='')
 		{
-			$orgroom_id = $this->uri->segment(5);
-			$hotelid = $this->uri->segment(4);
-			$room_id1=substr($room_id,1);
-			$ext=$orgroom_id."/".$hotelid;
+			$orgroom_id = $this->uri->segment($this->uri->total_segments());
+			$hotelid = $this->uri->segment(($this->uri->total_segments() - 1));
+			//$room_id1 = substr($orgroom_id,1);
+			$ext = $orgroom_id."/".$hotelid;
 			$this->Home_Model->delete_weekend($id);
 			redirect('admin/viewpromo/'.$ext,'refresh');
 		}
@@ -1177,10 +1177,10 @@ class Admin extends CI_Controller
 	{
 		if($this->session->userdata('admin_id')!='')
 		{
-			$orgroom_id = $this->uri->segment(5);
-			$hotelid = $this->uri->segment(4);
-			$room_id1=substr($room_id,1);
-			$ext=$orgroom_id."/".$hotelid;
+			$orgroom_id = $this->uri->segment($this->uri->total_segments());
+			$hotelid = $this->uri->segment(($this->uri->total_segments() - 1));
+			//$room_id1 = substr($orgroom_id,1);
+			$ext = $orgroom_id."/".$hotelid;
 			$this->Home_Model->delete_roomdiscount($id);
 			redirect('admin/viewpromo/'.$ext,'refresh');
 		  }
@@ -1230,10 +1230,10 @@ class Admin extends CI_Controller
 	{
 		if($this->session->userdata('admin_id')!='')
 		{
-			$orgroom_id = $this->uri->segment(5);
-			$hotelid = $this->uri->segment(4);
-			$room_id1=substr($room_id,1);
-			$ext=$orgroom_id."/".$hotelid;
+			$orgroom_id = $this->uri->segment($this->uri->total_segments());
+			$hotelid = $this->uri->segment(($this->uri->total_segments() - 1));
+			//$room_id1 = substr($orgroom_id,1);
+			$ext = $orgroom_id."/".$hotelid;
 			$this->Home_Model->delete_roompricedis($id);
 			redirect('admin/viewpromo/'.$ext,'refresh');
 		}
@@ -1302,10 +1302,10 @@ class Admin extends CI_Controller
 	{
 		if($this->session->userdata('admin_id')!='')
 		{
-			$orgroom_id = $this->uri->segment(5);
-			$hotelid = $this->uri->segment(4);
-			$room_id1=substr($room_id,1);
-			$ext=$orgroom_id."/".$hotelid;
+			$orgroom_id = $this->uri->segment($this->uri->total_segments());
+			$hotelid = $this->uri->segment(($this->uri->total_segments() - 1));
+			//$room_id1 = substr($orgroom_id,1);
+			$ext = $orgroom_id."/".$hotelid;
 			$this->Home_Model->delete_service($id);
 			redirect('admin/viewpromo/'.$ext,'refresh');
 		}
@@ -1409,8 +1409,8 @@ class Admin extends CI_Controller
 		{
 			$orgroom_id = $this->uri->segment(5);
 			$hotelid = $this->uri->segment(4);
-			$room_id1=substr($room_id,1);
-			$ext=$orgroom_id."/".$hotelid;
+			//$room_id1=substr($orgroom_id,1);
+			$ext = $orgroom_id."/".$hotelid;
 			$this->Home_Model->delete_price($id);
 			redirect('admin/addeditprice/'.$ext,'refresh');
 			//redirect('admin/managehotel','refresh');
@@ -1425,25 +1425,35 @@ class Admin extends CI_Controller
 	{
 		if($this->session->userdata('admin_id')!='')
 		{
+			$createdby = 'admin';
 			$id = $this->input->post('id');
 			$RoomName = $this->input->post('RoomName');
-			$roomsize=$this->input->post('roomsize');
-			$beds=$this->input->post('beds');
+			$roomsize = $this->input->post('roomsize');
+			$beds = $this->input->post('beds');
 			$description=$this->input->post('description');
 			$roomfeature1=$this->input->post('roomfeature');
 			//$AvgPrice = $this->input->post('AvgPrice');
 			//$NormalOccupancy = $this->input->post('NormalOccupancy');
 			$hotelcode = $this->uri->segment(3); 
 			$hotelcode = substr($hotelcode, 1);
-			$extrabed=$this->input->post('extrabed');
-			$this->Home_Model->update_room($RoomName,$roomsize,$beds,$extrabed,$description,$id);
-			
-			$roomcode="R".$id;
-			$sql=mysql_query("delete from hotel_aminities where RoomCode='".$roomcode."'");
-			$hotelcode1="H".$hotelcode;
-			for($k = 0; $k < count($roomfeature1); $k++)  
+			if ($this->input->post('extrabed'))
 			{
-				$this->Home_Model->add_amen($hotelcode1,$roomcode,$roomfeature1[$k],$createdby);
+				$extrabed = $this->input->post('extrabed');
+			}
+			else
+			{
+				$extrabed = '';
+			}
+			$this->Home_Model->update_room($RoomName, $roomsize, $beds, $extrabed, $description, $id);
+			$roomcode = "R".$id;
+			$sql = mysql_query("delete from hotel_aminities where RoomCode='".$roomcode."'");
+			$hotelcode1 = "H".$hotelcode;
+			for ($k = 0; $k < count($roomfeature1); $k++)  
+			{
+				if ($roomfeature1[$k])
+				{
+					$this->Home_Model->add_amen($hotelcode1, $roomcode, $roomfeature1[$k], $createdby);
+				}
 			}
 		    redirect('admin/edithotel/'.$hotelcode,'refresh');
 			//redirect('admin/managehotel','refresh');

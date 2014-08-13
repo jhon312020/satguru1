@@ -61,7 +61,7 @@
     <div class="container-fluid">
       <div class="page-header">
         <div class="pull-left">
-          <h1><?php echo $data['page_header'];?></h1>
+          <h1><?php //echo $data['page_header'];?></h1>
         </div>
         <div class="pull-right">
           <ul class="minitiles">
@@ -101,7 +101,7 @@
 							 newTextBoxDiv.after().html('<div class="control-group"><label for="textfield" class="control-label">Room Rates- From'+ counter + ' : </label><div class="controls">' +
 								  '<input type="text" id="ratefrom[]" name="ratefrom[]"  class="input-xlarge datepick" style="width:70px;">To<input type="text" id="rateto[]" name="rateto[]"  class="input-xlarge datepick" style="width:70px;">  &nbsp;&nbsp;&nbsp;contract Rate <input type="text" id="contractrate[]" name="contractrate[]"  class="" style="width:70px;"></div></div> <div class="control-group"><label for="textfield" class="control-label">Room Price Markup'+ counter + ' : </label><div class="controls">' +
 								  '<input type="text" id="roompricemarkup[]" name="roompricemarkup[]" >Change if different From Default</div></div> <div class="control-group"><label for="textfield" class="control-label">Weekly Surcharges'+ counter + ' : </label><div class="controls">' +
-								  '<select name="weekdayfrom[]" style="width:70px;">  <option value="0">Sun</option><option value="1">Mon</option><option value="2">Tue</option><option value="3">Wed</option><option value="4">Thur</option><option value="5">Fri</option><option value="6">Sat</option></select> Till <select name="weekdaytill[]" style="width:70px;"><option value="0">Sun</option>               <option value="1">Mon</option><option value="2">Tue</option><option value="3">Wed</option><option value="4">Thur</option><option value="5">Fri</option><option value="6">Sat</option></select>&nbsp;Surcharge<input type="text" name="surcharge[]" id="surcharge[]"></div></div><hr/><input type="hidden" name="roomid[]" id="roomid[]" value="<?php echo $list->RoomCode; ?>">'); 
+								  '<select name="weekdayfrom[]" style="width:70px;">  <option value="0">Sun</option><option value="1">Mon</option><option value="2">Tue</option><option value="3">Wed</option><option value="4">Thur</option><option value="5">Fri</option><option value="6">Sat</option></select> Till <select name="weekdaytill[]" style="width:70px;"><option value="0">Sun</option>               <option value="1">Mon</option><option value="2">Tue</option><option value="3">Wed</option><option value="4">Thur</option><option value="5">Fri</option><option value="6">Sat</option></select>&nbsp;Surcharge<input type="text" name="surcharge[]" id="surcharge[]"></div></div><hr/><input type="hidden" name="roomid[]" id="roomid[]" value="<?php echo $list->Roomcode; ?>">'); 
 							  newTextBoxDiv.appendTo("#TextBoxesGroup");
 								  
 							  counter++;
@@ -146,7 +146,7 @@
 								 
 						  
 							 newTextBoxDi.after().html('<div class="control-group"><label for="textfield" class="control-label">Holiday Surcharges'+ counter + ' : </label><div class="controls">' +
-								  '<input type="text" id="ratefromh[]" name="ratefromh[]"  class="input-xlarge datepick" style="width:70px;">Contract Rate:   <input type="text" id="ratetosurcharge[]" name="ratetosurcharge[]"  class="" style="width:70px;"></div></div>  <input type="hidden" name="roomid[]" id="roomid[]" value="<?php echo $list->RoomCode; ?>">'); 
+								  '<input type="text" id="ratefromh[]" name="ratefromh[]"  class="input-xlarge datepick" style="width:70px;">Contract Rate:   <input type="text" id="ratetosurcharge[]" name="ratetosurcharge[]"  class="" style="width:70px;"></div></div>  <input type="hidden" name="roomid[]" id="roomid[]" value="<?php echo $list->Roomcode; ?>">'); 
 							  newTextBoxDi.appendTo("#TextBoxesGroups");
 								  
 							  counter++;
@@ -326,7 +326,7 @@
                 <td><?php echo $list->roompricemarkup; ?></td>
                 <td><?php echo $weekdayfrom; ?>/<?php echo $weekdaytill; ?></td>
                 <td><?php echo $list->surcharge; ?></td>
-                 <td><a href="<?php echo WEB_URL_ADMIN ?>admin/editroomprice/<?php echo $list->id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>">Edit</td><td><a href="javascript:confirm_delete('<?php echo $list->id; ?>','<?php echo $list->RoomCode;?>','<?php echo $list->HotelCode;?>','<?php echo $this->uri->segment(3);?>')">Delete</td>
+                 <td><a href="<?php echo WEB_URL_ADMIN ?>admin/editroomprice/<?php echo $list->id; ?>/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>">Edit</td><td><a href="javascript:confirm_delete('<?php echo $list->id; ?>','<?php echo $list->Roomcode;?>','<?php echo $list->HotelCode;?>','<?php echo $this->uri->segment(3);?>')">Delete</td>
               </tr>
               <?php $i++;} } } ?>
             </tbody>

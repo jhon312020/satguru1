@@ -4,7 +4,7 @@
 	$own_inventory_hotel_list = $_SESSION['OwnInventoryHotelList'];
 	if ($own_inventory)
 	{
-		echo $own_inventory;
+		//echo $own_inventory;
 	}
 	if (isset($result_data) && $result_data)
 	{
@@ -43,7 +43,7 @@
 								
 								<img src="<?php echo $image; ?>" width="140" height="140" style="border: none;" /></a>
 							</div>
-							<div style="width: 480px; float: left;">
+							<div class = "box_change" style="width: 480px; float: left;">
 								<div class="text12" style="color:#08427e; float:left;"> <a href="<?php echo base_url().$link;?>" target=_blank><?php echo $result->Hotel_name; ?><img src="<?php echo base_url().'assets/images/dummy/star-active'.$result->Hotel_star.'.png'; ?>" style="border: none;"/></a></div>
 								<div style="color:#535353; font-size:11px; float:left; width:480px; margin:5px 0px; word-wrap:break-word;">
 									<?php if(isset($result->Hotel_postalcode) && !empty($result->Hotel_postalcode)) { ?>
@@ -55,7 +55,7 @@
 					<div class="clr_space"></div>
 				</br>
 	<?php if(isset($result->Hotel_description) && !empty($result->Hotel_description)) { ?>
-	<div style="width:444px; float:left; color:#333; font-size:11px; line-height:15px;  margin-top:7px; margin-bottom:-7px; word-wrap:break-word;">
+	<div class = "box_change" style="width:444px; float:left; color:#333; font-size:11px; line-height:15px;  margin-top:7px; margin-bottom:-7px; word-wrap:break-word;">
 	 <strong>Description </strong><?php echo preg_replace("/[^a-z0-9_-]/i", " ",  substr($result->Hotel_description,0,200)); ?>
 		<div class="clr"></div>
 	</div>

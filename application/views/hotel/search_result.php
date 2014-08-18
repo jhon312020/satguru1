@@ -138,6 +138,7 @@ top: 0;
                             </ul>
                             <div style="clear:both;"></div>
                         </li>
+                        <?php $this->load->view('header_footer/land_marks'); ?>
                         <li class='has-sub'><a href='#'><span>Modify Search</span></a>
                             <ul>
                                 
@@ -188,7 +189,7 @@ top: 0;
 
             <!-- RIGHT PART -->
 
-          <div class="right_part top30" style="width:765px; margin-left:0px;">
+          <div class="right_part top30 right_bar_tab" style="width:765px; margin-left:0px;">
           
                 <div class="right_main_header" ><span id="hotelCount">Searching</span> Hotels Available in <?php echo $_SESSION['city']; ?> </div>
                 <div style="color:#063879; font-size:11px; margin-top:0px;">Adult :<?php echo $_SESSION['adult_count']; ?> &nbsp;| &nbsp;Checkin :<?php echo date($_SESSION['cin']); ?> &nbsp; |&nbsp; Checkout :<?php echo date($_SESSION['cout']); ?> &nbsp;  | &nbsp;Rooms:<?php echo $_SESSION['room_count']; ?></div>
@@ -276,7 +277,8 @@ top: 0;
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
     <script type="text/javascript">
-		var map;
+		var map = '';
+		var center = '';
         var baseUrl = "<?php echo base_url() ?>";
         var siteUrl = "<?php echo site_url() ?>";
     </script>
@@ -379,6 +381,7 @@ top: 0;
 						$('#priceStarts').html(data.per_night_min);
 						$('#chain').html(data.chain);
 						$('#result').html(data.hotel_search_result);
+						$('#land_marks').html(data.land_marks);
 						if(i == (a.length))
 						{
 							$('.min_rate_final_load').hide();
@@ -432,27 +435,25 @@ top: 0;
 						$( "#star" ).val( $( "#slider-range-star" ).slider( "values", 0 ) +
 							" - " + $( "#slider-range-star" ).slider( "values", 1 ) );*/
 				
-					$('#setMinPrice').val(minVal);		
-					$('#setMaxPrice').val(maxVal);		
+					$('#setMinPrice').val(minVal);
+					$('#setMaxPrice').val(maxVal);
 					setPriceSlider();
-					 
 					$order='asc';
 					$sortBy='data-price';
 					sortHotels($order,$sortBy,$('.HotelSorting'));
-					 
-					var hotelCount=0;						
+					var hotelCount = 0;
 					$(".HotelInfoBox").each(function()
 					{
 						hotelCount++;
 					   
 					});	
-					
 					$("#hotelCount").text(hotelCount);	
 					$("#hotelCount1").text(hotelCount);	
 			}
 			else
 			{
 				$('#result').html('<div class="no_available" style="text-align:center"><h1>There are no available hotels  for your stay. </h1><img src="'+api_dir+'assets/images/no_hotel_img.png" width="154" height="154" /><br /><br /><div class="no_available_text" style="color:#333">Sorry, we have no prices for hotels in this date range matching your criteria. One or more of your preferences may be affecting the number of exact matches found. Try searching again with a wider search criteria. <br></div></div>');
+				$('#land_marks').html('<h1>Sorry no landmarks are available!</h1>');
 			}
 		  },
 		 	error:function(request, status, error){
@@ -465,48 +466,32 @@ top: 0;
 			}
 			else{//alert(a[i]+" Having some problem cotact your admin")cust_support
 			}
-		  }
-		  
-			});
-			
 		}
-		
-		  nextCall();
+			});
+		}
+		nextCall();
 		$('#loading').hide();
-		
-		
 
-    function search_view(val)
-  {
-	  if(val==2)
-	  {
-		  //grid
-		  $("#grid").show();
-		  $("#itemContainer").hide();
-	  }
-	  else
-	  {
-		   $("#itemContainer").show();
-		  $("#grid").hide();
-		  
-	  }
-  }
-  
+	function search_view(val)
+	{
+		if(val==2)
+		{
+			//grid
+			$("#grid").show();
+			$("#itemContainer").hide();
+		}
+		else
+		{
+			$("#itemContainer").show();
+			$("#grid").hide();
+		}
+	}
 
- 
- 
-		
-		$(".star").click(function()
-                {
-                    filter();
-                });
-                  
-               
-		  
-		 
-            
+	$(".star").click(function()
+	{
+		filter();
+	});
     });
-    
     $("#loc_name0").click(function()
     {
         alert('helll');
@@ -540,7 +525,7 @@ $(document).ready(function()
         });
 
         // Update the count
-       $("#hotelCount").text(count);	
+       $("#hotelCount").text(count);
         
     });   
     
@@ -843,6 +828,9 @@ $(document).ready(function() {
         $(this).addClass("activeLink");
         $(".tabcontent").hide();
         $("#"+tabeId+"-1").show();   
+        var center = map.getCenter();
+		google.maps.event.trigger(map, 'resize');
+		map.setCenter(center); 
         return false;
       });
     });

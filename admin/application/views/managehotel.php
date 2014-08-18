@@ -421,8 +421,12 @@ function airlinname_empty(val)
               </div>
              
             </div>
-           </div>  <input type='button' value='Add Image' id='addimage'>
-            <input type='button' value='Remove Image' id='removeimage'> 
+           </div>
+           <div class = "button_tab">
+				<input type='button' value='Add Image' id='addimage'>
+				<input type='button' value='Remove Image' id='removeimage'> 
+            </div>
+            <br/>
             </div>
             
             <div class="form-actions">

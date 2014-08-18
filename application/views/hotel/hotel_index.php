@@ -87,7 +87,7 @@
 						</div>
 
 					</span>
-					<span style="float:right; background:#ffffff; padding-bottom:20px;">
+					<span class = "sidebar_tab" style="float:right; background:#ffffff; padding-bottom:20px;">
 						<span class="who">
 							<h5>Who</h5><br />
 							<h6>ROOMS</h6>

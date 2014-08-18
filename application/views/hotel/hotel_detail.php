@@ -366,7 +366,7 @@ text-align: center;">
                  <div class="right_main_bar top10"  style="width:728px;">
                     <div class="fleft left20"> &nbsp;Hotel Map</div>
                 </div>
-                <div id="" style="height:300px; width:720px; border:5px solid #F2F2F2; float:left;" ><div class="">
+                <div class = "hotel_details" id="" style="height:300px; width:720px; border:5px solid #F2F2F2; float:left;" ><div class="">
                   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script type="text/javascript">
 function initialize() {

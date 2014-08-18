@@ -221,7 +221,7 @@ padding: 4px 6px;
       <div class="bg_whight">
         <div class="padding10">
           
-          <div class="right_part " style="width:720px;">
+          <div class="right_part right_part_1" style="width:720px;">
                     <div class="right_main_bar top20" style="margin-top:10px; width:720px;">                                        
                     <div class="fleft left20">Passenger Details</div>
                     <div class="fright" style="margin-right:20px;">Adults 12+ yrs (1)  </div> </div>
@@ -653,7 +653,7 @@ padding: 4px 6px;
 		  ?>
           
           </div>
-                <div class="detail_area top10" style=" width:690px;">
+                <div class="detail_area book_detatil_tab top10" style=" width:690px;">
                     <div class="traveller_blue_bg" style="color:#0F4F8B; padding-left:10px;"> Please Note : Please make sure that the name entered is exactly as per traveller's passport.  Traveler age is calculated as per the travel date. </div> 
                  <div>
 

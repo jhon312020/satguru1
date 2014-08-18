@@ -666,7 +666,15 @@ class Hotel extends CI_Controller {
    
 		$hotel_search_result = $this->load->view('hotel/search_result_ajax', $data, true);
 		$last = count($data['result_data'])-1;
-		
+		$city_code = array_unique(array_map(function ($i) { return $i['city_code']; }, $data['result_data']));
+		$land_marks = array();
+		$land_mark_result= '';
+		if ($city_code)
+		{
+			$this->load->model('Land_Marks_Model');
+			$land_marks['land_marks'] = $this->Land_Marks_Model->get_land_mark_list($city_code);
+			$land_mark_result = $this->load->view('hotel/land_marks_result', $land_marks, true);
+		}
 		$numbers = array_map(array('hotel','get_price_values'), $data['result_data']);
 		$own_price =  array_map(array('hotel','get_price_values_own'), $_SESSION['hotel_xml_data']);
 		if ($own_price)
@@ -684,7 +692,8 @@ class Hotel extends CI_Controller {
 		'total_result' => $tot_rec,
 		'min_val' => $min_val,
 		'max_val' =>$max_val,
-		'coordinates'=>$_SESSION['coordinates']
+		'coordinates'=>$_SESSION['coordinates'],
+		'land_marks'=> $land_mark_result
 		));
 	}
 	

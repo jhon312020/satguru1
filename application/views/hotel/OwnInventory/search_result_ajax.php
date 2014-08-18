@@ -4,16 +4,16 @@
 		$result= $own_inventory;
 		$_SESSION['OwnInventoryHotelList'] = '';
 		//echo '<pre>';echo $result[0]->FrontPgImage;exit;
-        for($i=0;$i< count($result);$i++)
+        for ($i=0; $i < count($result); $i++)
         {
 			$_SESSION['OwnInventoryHotelList'][] = $result[$i]->HotelName;
-				
+			list($latitude, $longitude) = explode(',', $result[$i]->geo_coordinates);
+			$address = preg_replace("/[^a-z0-9_-]/i", " ",  $result[$i]->Address).'   '.$result[$i]->Location.'   '.$result[$i]->PostalCode;
+			$_SESSION['coordinates'][] = array('name'=>$result[$i]->HotelName,'latitude'=>$latitude,'longitude'=>$latitude, 'address'=>$address);
+			
 				$image = $result[$i]->FrontPgImage;
 				$totalPriceAry[]=$result[$i]->AvgPrice;
-
-            
             $currency = 'SGD';
-            
             if($result[$i]->StarRating=='4'){
 				$starimage='assets/images/dummy/star-active4.png';
                 $starRating=4;}
@@ -32,7 +32,7 @@
                 $starRating=5;}
 				if($result[$i]->AvgPrice==''){
 					 $datetoday=date('Y-m-d');
-				 $sel="select * from hotel_room_price where HotelCode='".$result[$i]->HotelCode."' and rateto>='".$datetoday."' and ratefrom<='".$datetoday."' ORDER BY contractrate ASC limit 0,1";	
+				 $sel="select * from hotel_room_price where HotelCode='".$result[$i]->HotelCode."' and rateto>='".$datetoday."' and ratefrom<='".$datetoday."' ORDER BY contractrate ASC limit 0,1";
 				 $quer= mysql_query($sel);	
 				 $fetch=mysql_fetch_array($quer);
 				 $result[$i]->AvgPrice	=$fetch['contractrate']+$fetch['roompricemarkup'];
@@ -86,7 +86,7 @@
 <input type="hidden" id="setMinPrice" value="<?php if(!empty($totalPriceAry)) echo min($totalPriceAry); else echo 0; ?>" />
 <input type="hidden" id="setMaxPrice" value="<?php if(!empty($totalPriceAry)) echo max($totalPriceAry); else echo 0; ?>" />
 <input type="hidden" id="setCurrency" value="<?php echo '&#36;'; ?>" />
-<input type="hidden" name="price" id="setCurrency" value="<?php echo $totalPriceAry;?>" />
+<input type="hidden" name="price" id="setCurrency" value="<?php if ($totalPriceAry) echo $totalPriceAry[0];?>" />
 <input type="hidden" name="currency" id="setCurrency" value="<?php echo  $currency?>" />
 <?php
 	//	}
@@ -214,10 +214,8 @@ form.signin .textbox input {
 	padding:6px 6px 4px;
 	width:200px;
 }
-
 form.signin input:-moz-placeholder { color:#bbb; text-shadow:0 0 2px #000; }
 form.signin input::-webkit-input-placeholder { color:#bbb; text-shadow:0 0 2px #000;  }
-
 .button { 
 	background: -moz-linear-gradient(center top, #f3f3f3, #dddddd);
 	background: -webkit-gradient(linear, left top, left bottom, from(#f3f3f3), to(#dddddd));
@@ -236,7 +234,5 @@ form.signin input::-webkit-input-placeholder { color:#bbb; text-shadow:0 0 2px #
 	font:12px; 
 	width:314px;
 }
-
 .button:hover { background:#ddd; }
-
 </style>

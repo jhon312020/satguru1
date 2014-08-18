@@ -1,48 +1,41 @@
 <?php
-$room_count = $_SESSION['room_count'];
-$no_of_days = $_SESSION['days'];
-$own_inventory_hotel_list = $_SESSION['OwnInventoryHotelList'];
-if ($own_inventory)
-{
-	echo $own_inventory;
-}
-if(isset($result_data) && $result_data)
-{   $ii = 0;
-    $count_val = $total_record;
-    foreach($result_data as $i=>$v) {
-    
-    $res_api = @$result_data[$i]['api'];
-    $res_hotel_code = @$result_data[$i]['hotel_code'];
-    $res_total_cost = @$result_data[$i]['total_cost'];
-    $available='Instant';
-	$api_table = 'get_permanent_details_v4_'.$res_api;
-	$result = $this->Hotel_Model->$api_table($res_hotel_code);
-		// echo $this->db->last_query();echo '<br>';
-
-    if(isset($result->Hotel_name) && $result->Hotel_name !='')
+	$room_count = $_SESSION['room_count'];
+	$no_of_days = $_SESSION['days'];
+	$own_inventory_hotel_list = $_SESSION['OwnInventoryHotelList'];
+	if ($own_inventory)
 	{
-		if (in_array($result->Hotel_name, $own_inventory_hotel_list))
-	{
-		continue;
+		echo $own_inventory;
 	}
-				
-					$image = $result->Hotel_thumbnail;
-					if($image=='')
-					{
+	if (isset($result_data) && $result_data)
+	{
+		$ii = 0;
+		$count_val = $total_record;
+		foreach ($result_data as $i=>$v) 
+		{
+			$res_api = @$result_data[$i]['api'];
+			$res_hotel_code = @$result_data[$i]['hotel_code'];
+			$res_total_cost = @$result_data[$i]['total_cost'];
+			$available = 'Instant';
+			$api_table = 'get_permanent_details_v4_'.$res_api;
+			$result = $this->Hotel_Model->$api_table($res_hotel_code);
+			// echo $this->db->last_query();echo '<br>';
+			if (isset($result->Hotel_name) && $result->Hotel_name !='')
+			{
+				if (in_array($result->Hotel_name, $own_inventory_hotel_list))
+				{
+					continue;
+				}
+				$image = $result->Hotel_thumbnail;
+				$_SESSION['coordinates'][] = array('name'=>$result->Hotel_name,'latitude'=>$result->Hotel_latitude,'longitude'=>$result->Hotel_longitude, 'address'=>$result->Hotel_address);
+				if ($image == '')
+				{
 					$image = base_url().'assets/images/img/noimagefound.jpg';
-					}
-				$totalPriceAry[]=$res_total_cost;
-
-            
-            $currency = 'SGD';
-            
-         
-				
-                $link = 'index.php/hotel/hotel_details/'.$res_hotel_code.'/'.base64_encode($res_api);
-              
-				
-				?>
-                <div class="bg_whight searchhotel_box margin_bottom10">
+				}
+				$totalPriceAry[] = $res_total_cost;
+				$currency = 'SGD';
+				$link = 'index.php/hotel/hotel_details/'.$res_hotel_code.'/'.base64_encode($res_api);
+?>
+				<div class="bg_whight searchhotel_box margin_bottom10">
 				  <div class="padding10 HotelInfoBox" data-star="<?php echo $result->Hotel_star; ?>" data-price="<?php echo $res_total_cost; ?>" data-hotel-name="<?php  echo $result->Hotel_name; echo preg_replace("/[^a-z0-9_-]/i", " ",  $result->Hotel_name); ?>" data-location="<?php echo $result->Hotel_location;?> ">
 						<div class="padding5 text3">
 							<div class="hotel_image">
@@ -59,11 +52,9 @@ if(isset($result_data) && $result_data)
 										<?php echo  preg_replace("/[^a-z0-9_-]/i", " ",  $result->Hotel_address).'   '.$result->Hotel_location; ?>
 									<?php } ?>
 								</div>
-
 					<div class="clr_space"></div>
-					
-				   </br>
-	<?php if(isset($result->Hotel_description) && !empty($result->Hotel_description)) { ?>				
+				</br>
+	<?php if(isset($result->Hotel_description) && !empty($result->Hotel_description)) { ?>
 	<div style="width:444px; float:left; color:#333; font-size:11px; line-height:15px;  margin-top:7px; margin-bottom:-7px; word-wrap:break-word;">
 	 <strong>Description </strong><?php echo preg_replace("/[^a-z0-9_-]/i", " ",  substr($result->Hotel_description,0,200)); ?>
 		<div class="clr"></div>
@@ -74,7 +65,6 @@ if(isset($result_data) && $result_data)
    
 	<div style=" float: left; font-size:12px; margin-top:5px; color:#0263BC;">
 	 <?php if($result_data[$i]['freewifi']!='false' ){ ?><img src="<?php echo base_url(); ?>assets/images/icon_wifi.gif" />Free Wi-Fi<?php }?>
-	 
 <?php if($result_data[$i]['bestdeal']=='True'){ ?>
 								<div style=";text-align: center; float: left;color:#BB00D4;"><b>Best Deal!</b></div><?php }?>
 	<?php if($result_data[$i]['promotion']!='' ){ ?><span style="color:red" ><strong>&nbsp;Enjoy <?php echo $result_data[$i]['promotion']; ?></strong></span><?php }?>
@@ -84,9 +74,7 @@ if(isset($result_data) && $result_data)
 							</div>
 							<div style="width: 114px; float: left;">
 							   <div class="hotel_price_part">
-		   
 									<!--<span class="details_price_small_txt" style="color:#333;"><?php// echo 'SGD  '.$result[$i]->AvgPrice; ?></span><br />-->
-									
 									<span class="text6" style="text-align:center; color: #B31111; font-size:19px;"><strong><?php echo 'SGD '; ?></strong><strong><?php echo $res_total_cost; ?></strong></span>                
 									<?php if(isset($result_data[$i]['max_price']) && !empty($result_data[$i]['max_price'])) { ?>
 									<span style="font-family: arial; font-size: 15px; text-decoration: line-through; color: rgb(255, 115, 0);"> <?php echo $result_data[$i]['max_price']; ?> SGD<br></span>
@@ -123,17 +111,10 @@ if(isset($result_data) && $result_data)
 							<div class="clear"></div>
 							<div class="padding5 border_bottom3"></div>
 						</div>
-									
 					</div>
                  </div>
-            
     <?php    
-		
-		
+		}
 	}
-	
-	}
-	
 }
-
 ?>

@@ -13,17 +13,12 @@
 <script src="<?php echo WEB_DIR_ADMIN ?>js/plugins/datatable/ColVis.min.js"></script>
 <script src="<?php echo WEB_DIR_ADMIN ?>js/plugins/datatable/jquery.dataTables.columnFilter.js"></script>
 <script src="<?php echo WEB_DIR_ADMIN ?>js/plugins/datatable/jquery.dataTables.grouping.js"></script>
-
 <!-- date picker-->
-
 <link rel="stylesheet" href="<?php echo WEB_DIR_ADMIN ?>css/plugins/datepicker/datepicker.css">
 <script src="<?php echo WEB_DIR_ADMIN ?>js/plugins/datepicker/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="<?php print WEB_DIR_ADMIN;?>autofill/js/bsn.AutoSuggest_c_2.0.js"></script>
 <link rel="stylesheet" href="<?php print WEB_DIR_ADMIN;?>autofill/css/autosuggest_inquisitor.css" type="text/css" media="screen" charset="utf-8" />
-<script>
-
 <script src="<?php echo WEB_DIR_ADMIN ?>js/plugins/addmore/jquery-1.3.2.min.js"></script>
-
 <body>
 <div id="modal-user" class="modal hide">
   <div class="modal-header">
@@ -81,31 +76,24 @@
         </div>
         <div class="box-content">
         <form action="<?php echo WEB_URL_ADMIN ?>admin/editpaystaypromo/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>/<?php echo $this->uri->segment(5);?>" method="POST" class='form-horizontal form-validate' id="bb" enctype="multipart/form-data">
-    
               <div class="control-group">
-              
-                <input type='hidden' name="id"  class="input-xlarge datepick" style="width:70px;" value="<?php echo $paystay->id;?>" >
-           
+                <input type='hidden' name="id"  class="input-xlarge datepick" style="width:70px;" value="<?php echo $paystay->id;?>">
               <input type="hidden" name="roomid" id="roomid" value="<?php echo $paystay->Roomcode; ?>">
-         
-          
             <div class="control-group">
               <label for="textfield" class="control-label">Room Rates</label>
               <div class="controls"> From
-                <input type='text' id="ratefrom" name="ratefrom"  class="input-xlarge datepick" style="width:50px;" value="<?php if($paystay->ratefrom!= '') { echo $paystay->ratefrom; } ?>">
+                <input type='text' id="ratefrom" name="ratefrom"  class="input-xlarge datepick" style="width:50px;" value="<?php if($paystay->ratefrom!= '') { echo $paystay->ratefrom; } ?>" data-rule-required="true">
                 To
-                <input type='text' id="rateto" name="rateto"  class="input-xlarge datepick" style="width:50px;" value="<?php if($paystay->rateto!= '') { echo $paystay->ratefrom; } ?>">
+                <input type='text' id="rateto" name="rateto"  class="input-xlarge datepick" style="width:50px;" value="<?php if($paystay->rateto!= '') { echo $paystay->rateto; } ?>" data-rule-required="true">
                 &nbsp;&nbsp;&nbsp;stay
-                <input type='text' id="stay" name="stay"  class="" style="width:50px;" value="<?php if($paystay->stay!= '') { echo $paystay->stay; } ?>"> &nbsp;&nbsp;&nbsp;pay
-                <input type='text' id="pay" name="pay"  class="" style="width:50px;" value="<?php if($paystay->pay!= '') { echo $paystay->pay; } ?>">
+                <input type='text' id="stay" name="stay"  class="" style="width:50px;" value="<?php if($paystay->stay!= '') { echo $paystay->stay; } ?>" data-rule-required="true"> &nbsp;&nbsp;&nbsp;pay
+                <input type='text' id="pay" name="pay"  class="" style="width:50px;" value="<?php if($paystay->pay!= '') { echo $paystay->pay; } ?>" data-rule-required="true">
                 <br/><br/>
                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="breakfast" id="breakfast" value="yes" <?php if($paystay->breakfast =='yes') echo ' checked="checked"';?>>Breakfast included on the free nights <br> <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                  <input type="checkbox" name="breakfast" id="breakfast" value="no"  <?php if($paystay->breakfast =='no') echo ' checked="checked"';?>>Breakfast Chargable on the free nights   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rate &nbsp;&nbsp;
                 <input type='text' id="breakrate" name="breakrate"  class="" style="width:50px;"  value="<?php if($paystay->breakrate != '') { echo $paystay->breakrate ; } ?>"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Markup&nbsp;&nbsp;<input type='text' id="breakmarkup" name="breakmarkup"  class="" style="width:50px;" value="<?php if($paystay->breakmarkup!= '') { echo $paystay->breakmarkup; } ?>"> <br/>
              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
               </div>
- 
-          
           </div>
           <div class="form-actions">
             <input type="submit" class="btn btn-primary" value="Submit">
@@ -114,7 +102,6 @@
             </a> </div>
         </form>
       </div>
-      
       </div>
     </div>
   </div>

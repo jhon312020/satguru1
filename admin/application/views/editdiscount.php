@@ -13,17 +13,12 @@
 <script src="<?php echo WEB_DIR_ADMIN ?>js/plugins/datatable/ColVis.min.js"></script>
 <script src="<?php echo WEB_DIR_ADMIN ?>js/plugins/datatable/jquery.dataTables.columnFilter.js"></script>
 <script src="<?php echo WEB_DIR_ADMIN ?>js/plugins/datatable/jquery.dataTables.grouping.js"></script>
-
 <!-- date picker-->
-
 <link rel="stylesheet" href="<?php echo WEB_DIR_ADMIN ?>css/plugins/datepicker/datepicker.css">
 <script src="<?php echo WEB_DIR_ADMIN ?>js/plugins/datepicker/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="<?php print WEB_DIR_ADMIN;?>autofill/js/bsn.AutoSuggest_c_2.0.js"></script>
 <link rel="stylesheet" href="<?php print WEB_DIR_ADMIN;?>autofill/css/autosuggest_inquisitor.css" type="text/css" media="screen" charset="utf-8" />
-<script>
-
 <script src="<?php echo WEB_DIR_ADMIN ?>js/plugins/addmore/jquery-1.3.2.min.js"></script>
-
 <body>
 <div id="modal-user" class="modal hide">
   <div class="modal-header">
@@ -81,24 +76,18 @@
         </div>
         <div class="box-content">
         <form action="<?php echo WEB_URL_ADMIN ?>admin/updatediscount/<?php echo $this->uri->segment(3);?>/<?php echo $this->uri->segment(4);?>/<?php echo $this->uri->segment(5);?>" method="POST" class='form-horizontal form-validate' id="bb" enctype="multipart/form-data">
-    
               <div class="control-group">
-              
                 <input type='hidden' name="id"  class="input-xlarge datepick" style="width:70px;" value="<?php //echo $paystay->id;?>" >
-           
               <input type="hidden" name="roomid" id="roomid" value="<?php //echo $paystay->RoomCode; ?>">
-         
-          
            <h5>B. %Discount</h5>
-         
              <div class="control-group">
               <label for="textfield" class="control-label"></label>
               <div class="controls"> From
-                <input type='text' id="pricefrom" name="discountfrom"  class="input-xlarge datepick" style="width:50px;"  value="<?php if($getdiscount-> discountfrom   != '') { echo $getdiscount->discountfrom  ; } ?>">&nbsp;
+                <input type='text' id="pricefrom" name="discountfrom"  class="input-xlarge datepick" style="width:50px;"  value="<?php if($getdiscount-> discountfrom   != '') { echo $getdiscount->discountfrom  ; } ?>" data-rule-required="true">&nbsp;
                Till&nbsp;
-                <input type='text' id="priceto" name="discountto"  class="input-xlarge datepick" style="width:50px;"  value="<?php if($getdiscount->discountto != '') { echo $getdiscount->discountto; } ?>">
+                <input type='text' id="priceto" name="discountto"  class="input-xlarge datepick" style="width:50px;"  value="<?php if($getdiscount->discountto != '') { echo $getdiscount->discountto; } ?>" data-rule-required="true">
                 &nbsp;&nbsp;&nbsp;Enjoy
-                <input type='text' id="pricerate" name="discountrate"  class="" style="width:50px;"  value="<?php if($getdiscount->discountrate != '') { echo $getdiscount->discountrate; } ?>"> &nbsp;&nbsp;&nbsp; %</div>
+                <input type='text' id="pricerate" name="discountrate"  class="" style="width:50px;"  value="<?php if($getdiscount->discountrate != '') { echo $getdiscount->discountrate; } ?>" data-rule-required="true"> &nbsp;&nbsp;&nbsp; %</div>
           <div class="form-actions">
             <input type="submit" class="btn btn-primary" value="Submit">
             <a href="<?php echo WEB_URL_ADMIN ?>admin/admin_dashboard">

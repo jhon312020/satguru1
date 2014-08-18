@@ -1,19 +1,13 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    
-    
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-
         <title>DSS DEMO</title>
         <!-- CSS -->
         <!--########### COMMON CSS #############-->    
         <script type="text/javascript" src="<?php echo base_url()?>assets/Validation/js/jquery.validationEngine.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>assets/Validation/js/languages/jquery.validationEngine-en.js"></script>
 <link rel="stylesheet" href="<?php echo base_url()?>assets/Validation/css/validationEngine.jquery.css" media="all" type="text/css" />
-    
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main_style.css" type="text/css"/>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/search_result.css" type="text/css"/>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/smart_tab.css" type="text/css"/>
@@ -22,15 +16,12 @@
 <script src="<?php echo base_url(); ?>assets/js/menu_jquery.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/bjqs-1.3.min.js"></script>
     <!-- Home Slider Javascript--> 
-    
     <script class="secret-source">
     jQuery(document).ready(function($) {
         $('#tabs').smartTab({autoProgress: false, stopOnFocus: true, transitionEffect: 'vSlide'});
     });
     </script>
-      
 	<style type="text/css">
-
 .stepcarousel{
 	position: relative;
 	overflow: scroll; /*leave this value alone*/
@@ -53,7 +44,6 @@ position: absolute; /*leave this value alone*/
 left: 0;
 top: 0;
 }
-
 .stepcarousel .panel{
 	float: left; /*leave this value alone*/
 	overflow: hidden; /*margin around each panel*/
@@ -67,33 +57,18 @@ top: 0;
 	border-right:1px solid #CCCCCC;*/
 	background:none;
 	border:1px solid #ccc;
-	
 }
-
 .header-rights {
 	height:120px !important;
-	
 	}
-
-
-
-
-
-
-
 </style>
        <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js" > </script>
-       
-       
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/slimbox2.js"></script>
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/slimbox2.css" type="text/css" media="screen" />
-        
-        
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/main_style.css" type="text/css"/>
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/search_result.css" type="text/css"/>
         <!--<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/flexslider.css" type="text/css" media="screen" />-->
-        
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/camera.css" type="text/css" media="screen" />
         <!--########### COMMON CSS #############-->    
         <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
@@ -155,7 +130,6 @@ top: 0;
                 </div>
             </div>
         </div>
-                                 
                             </ul>
                             <div style="clear:both;"></div>
                         </li>
@@ -180,9 +154,7 @@ top: 0;
                     <div class="hotel_text_detail" style="width:552px;">
                     <div class="trip_rating_part" align="center">
   <div ></div>
-                        
                         <div class="clr_space"></div>
-                        
                     </div>
                         <div class="text12" style="color:#08427e;"><?php echo $hotel_details->Hotel_name; ?></div>
                         <div style="color:#535353; font-size:11px;"><?php echo $hotel_details->Hotel_address; ?><br /><?php echo $hotel_details->Hotel_location; ?> </div>
@@ -195,12 +167,8 @@ top: 0;
                         <?php  
 						//$cur=floor(0.20669*$hotel_details->AvgPrice);?>
                         <div style="float:right; font-size:20px; color:#2981BC; font-weight:bold;" ><?php //echo 'SGD  '.$hotel_details->AvgPrice	;?></div>
-                        
-                        
                 <?php ?>
                     </div>
-                    
-                    
                     <div class="clear"></div>
                     <!--select room part-->
                     <div>
@@ -211,7 +179,6 @@ top: 0;
                     <div class="padding5 border_bottom3"></div>
                 </div>
                 <div class="clear"></div>
-                
                 <div class="clear_space1"></div>
                 <div class="bg03">
                     <div class="tab-box"> 
@@ -221,15 +188,11 @@ top: 0;
                         <a href="javascript:;" class="tabLink " id="cont-5">Description</a> 
                     </div>
                     <div class="tabcontent" id="cont-1-1" style="padding-left:4px;"> 
-                         
-
-
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tbody><tr>
                 <td></td>
             </tr>
             <tr>
-                
                 <td width="50%" align="left" id="">
                     <table>
                         <tbody><tr>
@@ -239,7 +202,6 @@ top: 0;
                         </tr>
                     </tbody></table>  
                 </td>
-    
                 <td align="right" style="padding-right:7px;">
                     <b><span id="">Currency Converter</span> </b> 
                     <select class="qsb_select" id="" onchange="currency_converter(this.value)"  style="font-family:Arial;font-size:8pt;border-radius: 4px;
@@ -289,50 +251,27 @@ top: 0;
 	<option value="AED">United Arab Emirates Dirham  (AED)</option>
 	<option value="USD">US Dollar (USD)</option>
 	<option value="VND">Vietnamese Dong (VND)</option>
-
 </select>
-                </td>	
+                </td>
             </tr>
-            
             <tr>
-                
                 <td width="50%" align="left" id="">&nbsp;
-                      
                 </td>
-    
                 <td align="right" style="padding-right:7px;">&nbsp;
-                
-                   
-                    
-                </td>	
-            </tr>
-
- <tr>
-                
-                <td width="50%" align="left" id="">
-                      
                 </td>
-    
-                <td align="right" style="padding-right:7px;">
-               
-                   
-                    
-                </td>	
             </tr>
-
-            
+ <tr>
+                <td width="50%" align="left" id="">
+                </td>
+                <td align="right" style="padding-right:7px;">
+                </td>
+            </tr>
 
         </tbody></table>
                     <div id="result">
-               
-                    <div id="progressbar" style=" margin-top:50px;" align="center"><img src="<?php echo base_url();?>assets/images/ajax-loader1.gif" width="" /></div></div>
-                    
-                    </div>
-                    
+                    <div id="progressbar" style=" margin-top:50px;" align="center"><img src="<?php echo base_url();?>assets/images/ajax-loader1.gif" width="" /></div>
                     <div class="tabcontent hide" id="cont-3-1"> 
-                    
                         <div class="padding10">
-      				
 <?php
 if($hotel_details->Hotel_facility!='')
 {
@@ -344,9 +283,6 @@ if($hotel_details->Hotel_facility!='')
           </div>
            <div class="row-fluid">
               <div class="span12">
-             
-                 
-                 
               <div class="span12">
                   <div class=""><br /><?php 
 				$hotel_facility_val = explode(";",$hotel_details->Hotel_facility);
@@ -355,18 +291,11 @@ if($hotel_details->Hotel_facility!='')
 							 echo  '&bull; '.$hotel_facility_val[$ssd].''.'<br> ';
 							// echo  $fac_r_s[$sd].' - '.$fac_r_Fee[$sd].'<br>' ;
 					}
-				
-				
-				
-			
 				?>   <br /><br /> </div>
               </div>
-              
                 <div align="left" style="color:#F00">Note : <?php echo '<img  width="20" src="'.base_url().'assets/img/paid.png">'; ?> Some services shall be paid at the establishment.&nbsp;</div>
               </div>
-               
           </div>
-          
           <?php
 }
 if($hotel_details->Room_facility!='')
@@ -379,9 +308,6 @@ if($hotel_details->Room_facility!='')
           </div>
            <div class="row-fluid">
               <div class="span12">
-             
-                 
-                 
               <div class="span12">
                   <div class=""><br /><?php 
 				$Room_facility_val = explode(";",$hotel_details->Room_facility);
@@ -390,16 +316,11 @@ if($hotel_details->Room_facility!='')
 							 echo  '&bull; '.$Room_facility_val[$ssd].''.'<br> ';
 							// echo  $fac_r_s[$sd].' - '.$fac_r_Fee[$sd].'<br>' ;
 					}
-				
-				
-				
-			
 				?>   <br /><br /> </div>
               </div>
               
                 <div align="left" style="color:#F00">Note : <?php echo '<img  width="20" src="'.base_url().'assets/img/paid.png">'; ?> Some services shall be paid at the establishment.&nbsp;</div>
               </div>
-               
           </div> 
                 <?php
 }
@@ -410,7 +331,6 @@ if($hotel_details->Room_facility!='')
                    <div class="tabcontent hide" id="cont-4-1"> 
                     
                         <div class="padding10" style="width:700px">
-      			
        <?php 
 	  // echo '<pre/>';
 	   //print_r($result['h_images']);exit;
@@ -436,58 +356,41 @@ text-align: center;">
                                       if(isset($hotel_details->Hotel_description))
                                 {
                                 echo '</br>';
-							
                                     echo htmlspecialchars($hotel_details->Hotel_description);
-									
                                 }
                             ?>
                         </div>
                     </div> 
                 </div>
-               
-                
                 <div class="clear_space1"></div>
-                
                  <div class="right_main_bar top10"  style="width:728px;">
                     <div class="fleft left20"> &nbsp;Hotel Map</div>
                 </div>
                 <div id="" style="height:300px; width:720px; border:5px solid #F2F2F2; float:left;" ><div class="">
                   <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-
 <script type="text/javascript">
-             
 function initialize() {
   var myLatlng = new google.maps.LatLng(<?php print $hotel_details->Hotel_latitude; ?>,<?php print $hotel_details->Hotel_longitude; ?>);
   var mapOptions = {
     zoom: 14,
     center: myLatlng
   };
-
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
   var contentString = '<table width="350" cellspacing="5" cellpadding=5><tr><td  width="100" ><img src="<?php echo $hotel_details-> Hotel_thumbnail; ?>" width="100" height="100"></td><td align="left"  width="250" ><span style="font-size:14px;color:red"><?php echo $hotel_details->Hotel_name; ?></span><br><?php echo $hotel_details->Hotel_address ; ?><br /><?php echo $hotel_details->Hotel_location; ?></td></tr></table>';
-
   var infowindow = new google.maps.InfoWindow({
       content: contentString
   });
-
   var marker = new google.maps.Marker({
       position: myLatlng,
       map: map,
 	  icon: '<?php echo base_url();?>assets/images/hotel-icon-50x50-grey.png',
       title: '<?php echo $hotel_details->Hotel_name; ?>'
   });
- 
    google.maps.event.addListener(marker, 'click', function() {
     infowindow.open(map,marker);
   });
-
- 
 }
-
 google.maps.event.addDomListener(window, 'load', initialize);
-
-			 
                 </script>             
      <table align="left" width="724" border="0" cellspacing="0" cellpadding="5" class="sum-txt" style="margin-top:2px; font-size:15px; border-radius:10px;">
       <tr>
@@ -497,29 +400,18 @@ google.maps.event.addDomListener(window, 'load', initialize);
       </tr>
     </table></div></div>
  <div class="clear_space1"></div>
-              
-              
-              
-               
                 <div class="clear"></div>
                  <div class="clear_space1"></div>
-                
             </div>
     </div>
-    
     <div class="clear"></div>
 </div><div class="clear"></div>
 </div>
-
-
-
-
 
 <style type="text/css">
 .tab-box-12 { 
   border-bottom: 1px solid #DDD;
   padding-bottom:5px;
-  
 }
 .tab-box {
 	background-color: #08427E;
@@ -554,11 +446,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 .small { color: #999; margin-top: 100px; border: 1px solid #EEE; padding: 5px; font-size: 9px; font-family:Verdana, Arial, Helvetica, sans-serif; }
 </style>
-
-
- <script src="<?php echo base_url(); ?>assets/js/js-image-slider.js" type="text/javascript"></script>
- 
-
+<script src="<?php echo base_url(); ?>assets/js/js-image-slider.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery_tab.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
@@ -569,15 +457,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
         $(this).addClass("activeLink");
         $(".tabcontent").addClass("hide");
         $("#"+tabeId+"-1").removeClass("hide")   
-        return false;	  
+        return false;
       });
     });  
   });
 </script>
 <script type="text/javascript" src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"></script>
-
-     
-
 </div>
 <?php $this->load->view('header_footer/footer'); ?>
 </body>
@@ -590,16 +475,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
     <!--###########DATE PICKER#############-->
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-    
-    
      <script type='text/javascript' src='<?php echo base_url(); ?>assets/js/slider/jquery.min.js'></script>
     <script type='text/javascript' src='<?php echo base_url(); ?>assets/js/slider/jquery.mobile.customized.min.js'></script>
     <script type='text/javascript' src='<?php echo base_url(); ?>assets/js/slider/jquery.easing.1.3.js'></script> 
     <script type='text/javascript' src='<?php echo base_url(); ?>assets/js/slider/camera.min.js'></script> 
-    
     <script>
 		jQuery(function(){
-			
 			jQuery('#camera_wrap_4').camera({
 				height: 'auto',
 				loader: 'bar',
@@ -609,12 +490,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
 				opacityOnGrid: false,
 				imagePath: '../images/'
 			});
-
 		});
 	</script>
-    
-    
-    
    
     <!--###########DATE PICKER#############--->
     <script type="text/javascript">
@@ -622,8 +499,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
         var siteUrl = "<?php echo site_url() ?>";
     </script>
     <!-- Home Slider Javascript END-->
-  
-    
     <script type="text/javascript">
         $("#searchDetails").click(function(){
 		
@@ -733,7 +608,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
           {
               var nextdayDate = dateADD(selectedDate);
               var nextDateStr = (nextdayDate.getFullYear()) +"-"+zeroPad((nextdayDate.getMonth() + 1), 2)+"-"+zeroPad(nextdayDate.getDate(), 2);
-
               $t = nextDateStr;
               $( "#datepicker1" ).datepicker({
                     numberOfMonths: 3,
@@ -748,54 +622,35 @@ google.maps.event.addDomListener(window, 'load', initialize);
 </html>   
 <script>
 	var api_url='<?php echo site_url(); ?>';
-	  var api_list = [<?php echo $api_fs; ?>];
-	  var i = 0;
-	 
-    function nextCall() 
+	var api_list = [<?php echo $api_fs; ?>];
+	var i = 0;
+	function nextCall() 
 	{
-		
-		if(i == api_list.length) 
+		if (i == api_list.length) 
 		{
 			return; 
 		}
-		
-		
-		 alert(api_list[i]);
-	$.ajax({
+		alert(api_list[i]);
+		$.ajax({
 			  type: 'POST',
 			  url: api_url+'/api/call_api/'+api_list[i]+'/<?php echo $id; ?>',
 			  data: '',
 			  async: true,
 			  dataType: 'json',
 			  beforeSend:function(){
-				 
 			 },
 			success: function(data){
 				i++;
-					nextCall();
-				
+				nextCall();
 				if(data.hotel_search_result == false || data.hotel_search_result == null)
 				{
-				 $('#noresult').fadeIn();
+					$('#noresult').fadeIn();
 				}
-				
-			
 				$('#result').html(data.room_result);
-			
-			
-			
-			
 		  },
-
-		  
 		 	error:function(request, status, error){
-		
-			
 		  }
-		  
 			});
 	}
-		  nextCall();
-		  	</script>
-  
- 
+	nextCall();
+</script>

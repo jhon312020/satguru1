@@ -650,6 +650,7 @@ class Hotel extends CI_Controller {
 
 
         $data['total_record'] = 0;
+        $_SESSION['coordinates'] = array();
         if ($_SESSION['hotel_xml_data'])
         {
 			$data['own_inventory'] = $_SESSION['hotel_xml_data'];
@@ -682,7 +683,8 @@ class Hotel extends CI_Controller {
 		'hotel_search_result' => $hotel_search_result,
 		'total_result' => $tot_rec,
 		'min_val' => $min_val,
-		'max_val' =>$max_val
+		'max_val' =>$max_val,
+		'coordinates'=>$_SESSION['coordinates']
 		));
 	}
 	
@@ -1390,11 +1392,11 @@ echo $profitPercentage;exit;
 				'max_val' =>$max_val	
 			));
 	}
+
 	function hotel_details($id,$api_encode='')
 	{
 		$api = base64_decode($api_encode);
 		//$api= 'Asiantravel';
-		
 		if(isset($_SESSION['session_data_id']))
 		{
 			if($api!='')

@@ -173,7 +173,7 @@ if(!empty($hotelResponse))
 {
 foreach ((array)$hotelResponse as $hnum => $hotel) {
 				
-					$processId = $hotel->processId;					
+					$processId = $hotel->processId;
 					$codev1 =  $hotel->hotelCode;
 					$amount = $hotel->totalPrice; 
 					$currencyv1 =  $hotel->currency;

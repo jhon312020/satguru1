@@ -3,6 +3,7 @@
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery-1.8.0.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.smartTab.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/menu_jquery.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 <link href="<?php echo base_url(); ?>assets/slider_scripts/listings-59ffb9b6c75d3dc35ae9fc56850da63e.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 
@@ -228,10 +229,20 @@ top: 0;
                     </div>
                     <div class="clear"></div>
                    <!--####################### FLIGHT LIST START  #################################-->
+                   <div class="tab-box"> 
+                        <a href="javascript:;" class="tabLink activeLink" id="cont-1">Hotel View</a> 
+						<a href="javascript:;" class="tabLink " id="cont-2">Map View</a> 
+                    </div>
+                    <div class="tabcontent" id="cont-1-1"> 
                    <div class="content resultHotels" id="result" style="background-image:none; float:left; width:771px;">
-                       <div id="progressbar" style=" margin-top:70px;" align="center"><img src="<?php echo base_url();?>assets/images/ajax-loader1.gif" width="" /></div>
+							<div id="progressbar" style=" margin-top:70px;" align="center"><img src="<?php echo base_url();?>assets/images/ajax-loader1.gif" width="" /></div>
                    </div>
-                   
+                   </div>
+                   <div class="tabcontent" id="cont-2-1" style = 'display:none;'> 
+						<div id="map_wrapper">
+							<div id="map_canvas" class="mapping"></div>
+						</div>
+					</div>
                     <input type="hidden" id="setMinPrice" value="0" />
 					<input type="hidden" id="setMaxPrice" value="0" />
 					<input type="hidden" id="setCurrency" value="SGD" />
@@ -265,31 +276,68 @@ top: 0;
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
     <script type="text/javascript">
+		var map;
         var baseUrl = "<?php echo base_url() ?>";
         var siteUrl = "<?php echo site_url() ?>";
     </script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.smartTab.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/bjqs-1.3.min.js"></script>
     <script type="text/javascript">
-    $(document).ready(function()
-    {  
-   					var a = [<?php echo $api_fs; ?>];
-					
-						var api_url='<?php echo site_url(); ?>';
-						var api_dir='<?php echo base_url(); ?>';
-						
-						
-				var total_count = 	'';
-			
-
-  	  var i = 0;
- 	  var aa='';
- 	  $final=0;
-  	  $('#loading').fadeIn();
-	   
+	$(document).ready(function()
+	{
+		function initialize(coordinates) {
+			var mapOptions = {
+				zoom: 14,
+				center: new google.maps.LatLng(coordinates[0]['latitude'], coordinates[0]['longitude'])
+			};
+			map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+			map_markers(coordinates);
+		}
+		function map_markers(coordinates)
+		{
+			if (coordinates)
+			{
+				var infowindow = null;
+				var contentString = null;
+				var infowindow = new google.maps.InfoWindow({
+						content: ''
+				});
+				var latLng = '';
+				var bounds = new google.maps.LatLngBounds();
+				for(var hotel in coordinates)
+				{
+					/*alert(hotel);
+					alert(coordinates[hotel]['name']);
+					alert(coordinates[hotel]['latitude']);
+					alert(coordinates[hotel]['longitude']);*/
+					var marker = null;
+					contentString = '<table width="350" cellspacing="5" cellpadding=5><tr><td  width="100">&nbsp;</td><td align="left"  width="250"><span style="font-size:14px;color:red">'+coordinates[hotel]['name']+'</span><br><span style="font-size:12px;color:black">'+coordinates[hotel]['address']+'</span></td></tr></table>';
+					latLng = new google.maps.LatLng(coordinates[hotel]['latitude'], coordinates[hotel]['longitude']);
+					bounds.extend(latLng);
+					var marker = new google.maps.Marker({
+						position: latLng,
+						map: map,
+						title:coordinates[hotel]['name'],
+						html:contentString
+					});
+					google.maps.event.addListener(marker, 'click', function() {
+						infowindow.setContent(this.html);
+						infowindow.open(map, this);
+					});
+				}
+				//map.fitBounds(bounds);
+			}
+		}
+		var a = [<?php echo $api_fs; ?>];
+		var api_url='<?php echo site_url(); ?>';
+		var api_dir='<?php echo base_url(); ?>';
+		var total_count = 	'';
+		var i = 0;
+		var aa='';
+		$final=0;
+		$('#loading').fadeIn();
     function nextCall() 
 	{
-
 		if(i == a.length) 
 		{
 			$('#loading').fadeOut();
@@ -317,15 +365,13 @@ top: 0;
 			success: function(data){
 				i++;
 				nextCall();
-				
 				if(data.hotel_search_result != "")
 				{
 						$('#preloading_div').fadeOut('slow');
 						$('#black_grid').fadeOut('slow');
-						
 						if(data.hotel_search_result == false || data.hotel_search_result == null)
 						{
-						 $('#noresult').fadeIn();
+							$('#noresult').fadeIn();
 						}
 						$(".nextpage").fadeIn('slow');
 						$("#hotelCount").html(data.total_result);
@@ -333,10 +379,12 @@ top: 0;
 						$('#priceStarts').html(data.per_night_min);
 						$('#chain').html(data.chain);
 						$('#result').html(data.hotel_search_result);
-						if(i == (a.length)) 		
+						if(i == (a.length))
 						{
 							$('.min_rate_final_load').hide();
 							$('.min_rate_final').fadeIn();
+							initialize(data.coordinates);
+							//map_markers(data.coordinates)
 						}
 						//alert(data.min_val);alert(data.max_val);
 						var minVal = parseFloat(data.min_val);
@@ -739,3 +787,64 @@ form.signin input::-webkit-input-placeholder { color:#bbb; text-shadow:0 0 2px #
 .button:hover { background:#ddd; }
 
 </style>
+<style type="text/css">
+.tab-box-12 { 
+  border-bottom: 1px solid #DDD;
+  padding-bottom:5px;
+}
+.tab-box {
+	background-color: #08427E;
+	height: 28px;
+	padding-top: 14px;
+	padding-bottom: 0px;
+  font-size:18px;
+}
+.tab-box a {/*
+  border:1px solid #DDD;*/
+  color:#bad6f4;
+  padding: 8px 20px;
+  text-decoration:none;
+  background-color: #6998ca;
+  margin-left:10px;
+  border-radius:5px 5px 0px 0px;
+  font-size:15px;
+}
+.tab-box a.activeLink { 
+  background-color: #fff; 
+  border-bottom: 0; 
+  padding: 8px 20px;
+  color:#014e81;
+  font-size:15px;
+  border-radius: 7px 7px 0px 0px;
+  -moz-left-radius: 7px 7px 0px 0px;
+  -webkit-left-radius: 7px 7px 0px 0px;
+  -o-border-radius: 7px 7px 0px 0px;
+}
+.tabcontent {border: 0; padding: 5px; float: left;width: 100%;}
+.hide { display: none;}
+
+.small { color: #999; margin-top: 100px; border: 1px solid #EEE; padding: 5px; font-size: 9px; font-family:Verdana, Arial, Helvetica, sans-serif; }
+
+#map_wrapper {
+    height: 400px;
+}
+
+#map_canvas {
+    width: 100%;
+    height: 100%;
+}
+</style>
+<script type = 'text/javascript'>
+$(document).ready(function() {
+    $(".tabLink").each(function(){
+      $(this).click(function(){
+        tabeId = $(this).attr('id');
+        $(".tabLink").removeClass("activeLink");
+        $(this).addClass("activeLink");
+        $(".tabcontent").hide();
+        $("#"+tabeId+"-1").show();   
+        return false;
+      });
+    });
+  });
+</script>

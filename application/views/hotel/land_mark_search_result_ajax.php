@@ -6,19 +6,17 @@
 	{
 		echo $own_inventory;
 	}
-	if (isset($result_data) && $result_data)
+	if (isset($land_marks) && $land_marks)
 	{
-		$ii = 0;
-		$count_val = $total_record;
-		foreach ($result_data as $i=>$v) 
+		$i = 0;
+		unset($_SESSION['center_coordinates']);
+		foreach ($land_marks as $result) 
 		{
-			$res_api = @$result_data[$i]['api'];
-			$res_hotel_code = @$result_data[$i]['hotel_code'];
-			$res_total_cost = @$result_data[$i]['total_cost'];
+			$res_hotel_code = $result->Hotelspro_Hotelcode;
+			$res_api = $result_data[$res_hotel_code]['api'];
+			//$res_hotel_code = $result_data[$hotel_code]['hotel_code'];
+			$res_total_cost = $result_data[$res_hotel_code]['total_cost'];
 			$available = 'Instant';
-			$api_table = 'get_permanent_details_v4_'.$res_api;
-			$result = $this->Hotel_Model->$api_table($res_hotel_code);
-			// echo $this->db->last_query();echo '<br>';
 			if (isset($result->Hotel_name) && $result->Hotel_name !='')
 			{
 				if (in_array($result->Hotel_name, $own_inventory_hotel_list))
@@ -26,6 +24,11 @@
 					continue;
 				}
 				$image = $result->Hotel_thumbnail;
+				if (!isset($_SESSION['center_coordinates']))
+				{
+					$_SESSION['center_coordinates']['latitude'] = $result->Hotel_latitude;
+					$_SESSION['center_coordinates']['longtitude'] = $result->Hotel_longitude;
+				}
 				$_SESSION['coordinates'][] = array('name'=>$result->Hotel_name,'latitude'=>$result->Hotel_latitude,'longitude'=>$result->Hotel_longitude, 'address'=>$result->Hotel_address);
 				if ($image == '')
 				{
@@ -64,20 +67,20 @@
 	</br>
    
 	<div style=" float: left; font-size:12px; margin-top:5px; color:#0263BC;">
-	 <?php if($result_data[$i]['freewifi']!='false' ){ ?><img src="<?php echo base_url(); ?>assets/images/icon_wifi.gif" />Free Wi-Fi<?php }?>
-<?php if($result_data[$i]['bestdeal']=='True'){ ?>
+	 <?php if($result_data[$res_hotel_code]['freewifi']!='false' ){ ?><img src="<?php echo base_url(); ?>assets/images/icon_wifi.gif" />Free Wi-Fi<?php }?>
+<?php if($result_data[$res_hotel_code]['bestdeal']=='True'){ ?>
 								<div style=";text-align: center; float: left;color:#BB00D4;"><b>Best Deal!</b></div><?php }?>
-	<?php if($result_data[$i]['promotion']!='' ){ ?><span style="color:red" ><strong>&nbsp;Enjoy <?php echo $result_data[$i]['promotion']; ?></strong></span><?php }?>
+	<?php if($result_data[$res_hotel_code]['promotion']!='' ){ ?><span style="color:red" ><strong>&nbsp;Enjoy <?php echo $result_data[$res_hotel_code]['promotion']; ?></strong></span><?php }?>
 	
 	</div>
 				   <!-- <div style="width: 480px; float: left;margin-top: 25px;margin-left: 70px;color:black;"><strong>Promotion</strong></div>-->
 							</div>
 							<div style="width: 114px; float: left;">
 							   <div class="hotel_price_part">
-									<!--<span class="details_price_small_txt" style="color:#333;"><?php// echo 'SGD  '.$result[$i]->AvgPrice; ?></span><br />-->
+									<!--<span class="details_price_small_txt" style="color:#333;"><?php// echo 'SGD  '.$result[$res_hotel_code]->AvgPrice; ?></span><br />-->
 									<span class="text6" style="text-align:center; color: #B31111; font-size:19px;"><strong><?php echo 'SGD '; ?></strong><strong><?php echo $res_total_cost; ?></strong></span>                
-									<?php if(isset($result_data[$i]['max_price']) && !empty($result_data[$i]['max_price'])) { ?>
-									<span style="font-family: arial; font-size: 15px; text-decoration: line-through; color: rgb(255, 115, 0);"> <?php echo $result_data[$i]['max_price']; ?> SGD<br></span>
+									<?php if(isset($result_data[$res_hotel_code]['max_price']) && !empty($result_data[$res_hotel_code]['max_price'])) { ?>
+									<span style="font-family: arial; font-size: 15px; text-decoration: line-through; color: rgb(255, 115, 0);"> <?php echo $result_data[$res_hotel_code]['max_price']; ?> SGD<br></span>
 									<?php } ?>
 									<span class="detail_txt1">
 									<br>
@@ -91,8 +94,8 @@
 									</a><?php }?>
 									<br>
 									
-									<?php if(ceil($result_data[$i]['re_score'])!='0'){ ?>
-									<br> <div style="margin-top: 10px; font-weight: bold; font-size: 15px;"><img width="100px" src="<?php echo base_url().'assets/images/dummy/review_'.ceil($result_data[$i]['re_score']).'.png'; ?>"> SCORE <?php echo ceil($result_data[$i]['re_score']); ?> / 5 </div><?php }?>
+									<?php if(ceil($result_data[$res_hotel_code]['re_score'])!='0'){ ?>
+									<br> <div style="margin-top: 10px; font-weight: bold; font-size: 15px;"><img width="100px" src="<?php echo base_url().'assets/images/dummy/review_'.ceil($result_data[$res_hotel_code]['re_score']).'.png'; ?>"> SCORE <?php echo ceil($result_data[$res_hotel_code]['re_score']); ?> / 5 </div><?php }?>
 									</span>
 
 								</div>
@@ -114,6 +117,7 @@
 					</div>
                  </div>
     <?php    
+		$i++;
 		}
 	}
 }

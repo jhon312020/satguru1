@@ -1639,4 +1639,22 @@
 			return $data;
 		}
 	}
+
+	/**
+	 * Function get_land_mark_based_hotelspro_hotels()
+	 * Returns the land marks based on the city code
+	 * Author Megamind computing solutions
+	 * Params $land_mark_id as integer
+	 * @return array();
+	 */
+	public function get_land_mark_based_hotelspro_hotels($land_mark_id = '', $land_mark_latitude = '', $land_mark_longtitude = '')
+	{
+		$que = "SELECT *, ( 3959 * acos( cos( radians($land_mark_latitude) ) * cos( radians( Hotel_latitude ) ) *  cos( radians( Hotel_longitude ) - radians($land_mark_longtitude) ) + sin( radians($land_mark_latitude) ) * sin( radians( Hotel_latitude ) ) ) ) AS distance FROM api_permanent_hotel_hotelspro WHERE  Hotelspro_Hotelcode in ($land_mark_id) ORDER BY distance";
+		$query = $this->db->query($que);
+		if ($query->num_rows() =='') {
+			return '';
+		} else {
+			return $query->result();
+		}
+	}
 }

@@ -645,14 +645,12 @@ class Hotel extends CI_Controller {
 		
 		////Hotel mapping end 
 
-        $data['min_val'] =  '';
-        $data['max_val'] = '';
-
-
-        $data['total_record'] = 0;
-        $_SESSION['coordinates'] = array();
-        if ($_SESSION['hotel_xml_data'])
-        {
+		$data['min_val'] =  '';
+		$data['max_val'] = '';
+		$data['total_record'] = 0;
+		$_SESSION['coordinates'] = array();
+		if ($_SESSION['hotel_xml_data'])
+		{
 			$data['own_inventory'] = $_SESSION['hotel_xml_data'];
 			$data['own_inventory'] = $this->load->view('hotel/OwnInventory/search_result_ajax', $data, true);
 		}
@@ -661,9 +659,8 @@ class Hotel extends CI_Controller {
 			$data['own_inventory'] = '';
 			$_SESSION['OwnInventoryHotelList'] = array();
 		}
-        $data['result_data'] = $result;
-        $_SESSION['temp_hotels'] = $result;
-   
+		$data['result_data'] = $result;
+		$_SESSION['temp_hotels'] = $result;
 		$hotel_search_result = $this->load->view('hotel/search_result_ajax', $data, true);
 		$last = count($data['result_data'])-1;
 		$city_code = array_unique(array_map(function ($i) { return $i['city_code']; }, $data['result_data']));
@@ -698,12 +695,12 @@ class Hotel extends CI_Controller {
 	}
 	
 	function hotel_min_max_price($mapped_id,$array)
-	{				
+	{
 		foreach($array as $key => $value)
-		{					
+		{
 			if($value['mapped_id'] == $mapped_id)
-			{								
-				$temp[] = $value['total_cost'];							
+			{
+				$temp[] = $value['total_cost'];
 			}
 		}
 		$temp1 = array('min_price' => min($temp), 'max_price' => max($temp));

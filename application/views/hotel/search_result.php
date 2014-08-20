@@ -242,6 +242,7 @@ top: 0;
                    <div class="tabcontent" id="cont-2-1" style = 'display:none;'> 
 						<div id="map_wrapper">
 							<div id="map_canvas" class="mapping"></div>
+							<div id="progressbar-map" style = "margin-top:70px;display:none;" align="center"><img src="<?php echo base_url();?>assets/images/ajax-loader1.gif" width="" /></div>
 						</div>
 					</div>
                     <input type="hidden" id="setMinPrice" value="0" />
@@ -281,19 +282,28 @@ top: 0;
 		var center = '';
         var baseUrl = "<?php echo base_url() ?>";
         var siteUrl = "<?php echo site_url() ?>";
+        var oldMarkers = [];
     </script>
     <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/jquery.smartTab.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/bjqs-1.3.min.js"></script>
     <script type="text/javascript">
 	$(document).ready(function()
 	{
-		function initialize(coordinates) {
+		function initialize(coordinates, land_mark = null) {
 			var mapOptions = {
-				zoom: 14,
+				zoom: 10,
 				center: new google.maps.LatLng(coordinates[0]['latitude'], coordinates[0]['longitude'])
 			};
 			map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
 			map_markers(coordinates);
+		}
+		function clear_markers(){
+			if(oldMarkers) {
+			for(var i=0;i<oldMarkers.length;i++){
+				oldMarkers[i].setMap(null);
+			}
+			oldMarkers.length=0;
+			}
 		}
 		function map_markers(coordinates)
 		{
@@ -322,6 +332,7 @@ top: 0;
 						title:coordinates[hotel]['name'],
 						html:contentString
 					});
+					oldMarkers.push(marker);
 					google.maps.event.addListener(marker, 'click', function() {
 						infowindow.setContent(this.html);
 						infowindow.open(map, this);
@@ -386,7 +397,7 @@ top: 0;
 						{
 							$('.min_rate_final_load').hide();
 							$('.min_rate_final').fadeIn();
-							initialize(data.coordinates);
+							initialize(data.coordinates, null);
 							//map_markers(data.coordinates)
 						}
 						//alert(data.min_val);alert(data.max_val);
@@ -434,7 +445,6 @@ top: 0;
 						});
 						$( "#star" ).val( $( "#slider-range-star" ).slider( "values", 0 ) +
 							" - " + $( "#slider-range-star" ).slider( "values", 1 ) );*/
-				
 					$('#setMinPrice').val(minVal);
 					$('#setMaxPrice').val(maxVal);
 					setPriceSlider();
@@ -491,6 +501,39 @@ top: 0;
 	{
 		filter();
 	});
+	$(document).on('click', ".click_land_mark", function(){ 
+		$('#result').html('<div id="progressbar" style=" margin-top:70px;" align="center"><img src="<?php echo base_url();?>assets/images/ajax-loader1.gif" width="" /></div>');
+		$('#map_canvas').hide();
+		$('#progressbar-map').show();
+		$.ajax({
+			type: 'POST',
+			data: {land_mark_id: this.id},
+			dataType: 'json',
+			url: '<?php echo site_url(); ?>'+'/ajax/land_mark',
+			success: function(data) {
+				if (data)
+				{
+					$('#result').html(data.hotel_search_result);
+					clear_markers();
+					map_markers(data.coordinates);
+					map.setCenter(new google.maps.LatLng(data.center['latitude'], data.center['longtitude']));
+					$('#land_marks').html(data.land_marks);
+				}
+				else
+				{
+					$('#result').html('Sorry something went wrong! Try again later.');
+				}
+				$('#progressbar-map').hide();
+				$('#map_canvas').show();
+			},
+			error: function(jqXHR, exception) 
+			{
+				alert('Sorry for inconvenience, some server error occurs.  Please try after sometime.');
+				$('#progressbar-map').hide();
+				$('#map_canvas').show();
+			}
+		});
+	}); 
     });
     $("#loc_name0").click(function()
     {

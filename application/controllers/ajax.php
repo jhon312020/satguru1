@@ -23,6 +23,8 @@ class Ajax extends CI_Controller {
 	 * @return html content if data exists
 	 * reference link http://stackoverflow.com/questions/11112926/how-to-find-nearest-location-using-latitude-and-longitude-from-sql-database
 	 * http://www.geodatasource.com/developers/php
+	 * ALTER TABLE `hotel_search_list` CHANGE `geo_coordinates` `latitude` VARCHAR( 50 ) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL ; ALTER TABLE `hotel_search_list` ADD `longitude` VARCHAR( 50 ) NULL AFTER `latitude` ; ALTER TABLE `land_marks` ADD `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP; ALTER TABLE `land_marks` ADD `updated` DATETIME NULL DEFAULT NULL AFTER `created`;
+
 	 */
 	function land_mark()
 	{
@@ -40,30 +42,38 @@ class Ajax extends CI_Controller {
 				if ($result)
 				{
 					$hotel_codes = array_unique(array_map(function ($i) { return $i['hotel_code']; }, $result));
-					//print_r($hotel_codes);
+					$land_mark_list_own = '';
+					if ($_SESSION['hotel_xml_data'])
+					{
+						$own_hotel_codes = $_SESSION['hotel_xml_data'];
+						$own_hotel_codes = array_unique(array_map(function ($i) { return $i->hotel_id; }, $own_hotel_codes));
+						$own_hotel_codes = implode('","', $own_hotel_codes);
+						$land_mark_list_own = $this->Hotel_Model->get_land_mark_based_own_hotels('"'.$own_hotel_codes.'"', $land_mark->latitude, $land_mark->longitude);
+					}
 					$hotel_codes = implode('","', $hotel_codes);
-					$land_mark_list = $this->Hotel_Model->get_land_mark_based_hotelspro_hotels('"'.$hotel_codes.'"', $land_mark->latitude, $land_mark->longtitude);
+					$land_mark_list = $this->Hotel_Model->get_land_mark_based_hotelspro_hotels('"'.$hotel_codes.'"', $land_mark->latitude, $land_mark->longitude);
 					$grouped_list = $this->_generate_group_list($result, 'hotel_code');
-					$land_marks['land_marks'] = $this->Land_Marks_Model->get_land_marks_and_distance($land_mark->citycode, $land_mark->latitude, $land_mark->longtitude);
+					if ($land_mark_list_own)
+					{
+						$land_mark_list = array_merge_recursive($land_mark_list_own, $land_mark_list);
+						usort($land_mark_list, array($this, '_sort_by_distance'));
+					}
+					//echo '<br/> count Own:'. count($land_mark_list_own);
+					//echo '<br/> count Combined:'. count($land_mark_list);
+					//echo '<br/> count Combined:'. count($land_mark_list_combined);
+					//print_r($land_mark_list);
+					//exit;
+					$land_marks['land_marks'] = $this->Land_Marks_Model->get_land_marks_and_distance($land_mark->citycode, $land_mark->latitude, $land_mark->longitude);
 					$land_mark_result = $this->load->view('hotel/land_marks_result', $land_marks, true);
 					//$center_coordinates['latitude'] = $land_mark->latitude;
-					//$center_coordinates['longtitude'] = $land_mark->longtitude;
+					//$center_coordinates['longitude'] = $land_mark->longitude;
 					//print_r($grouped_list);
-				}
-				if ($_SESSION['hotel_xml_data'])
-				{
-					$data['own_inventory'] = $_SESSION['hotel_xml_data'];
-					$data['own_inventory'] = $this->load->view('hotel/OwnInventory/search_result_ajax', $data, true);
-				}
-				else
-				{
-					$data['own_inventory'] = '';
-					$_SESSION['OwnInventoryHotelList'] = array();
 				}
 				//print_r($land_mark_list);
 				//exit;
 				$data['result_data'] = $grouped_list;
 				$data['land_marks'] = $land_mark_list;
+				$data['land_mark_name'] = $land_mark->name;
 				$hotel_search_result = $this->load->view('hotel/land_mark_search_result_ajax', $data, true);
 				print json_encode(array(
 					'hotel_search_result' => $hotel_search_result,
@@ -96,5 +106,21 @@ class Ajax extends CI_Controller {
 			}
 		}
 		return $group_list;
+	}
+	
+	/**
+	 * Function _sort_by_distance()
+	 * List of files to be grouped 
+	 * together under common key field
+	 * Author Megamind computing solutions
+	 * param lists as array
+	 * param key_field as string
+	 * param table_name as string
+	 * @return array
+	 */
+	function _sort_by_distance($a, $b) 
+	{
+		if ($a->distance == $b->distance) return 0;
+		return ($a->distance > $b->distance) ? 1 : -1;
 	}
 }

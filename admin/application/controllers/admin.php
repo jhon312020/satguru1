@@ -243,11 +243,13 @@ class Admin extends CI_Controller
 			$geo_info = $address.', '. $city.', '.$country;
 			$geo_info = str_replace(' ', '+', $geo_info).'&sensor=false';
 			$geocode = @file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$geo_info");
-			$geoCoordinates = '';
+			$latitude = '';
+			$longitude = '';
 			if ($geocode)
 			{
 				$output = json_decode($geocode);
-				$geoCoordinates = $output->results[0]->geometry->location->lat.','.$output->results[0]->geometry->location->lng;
+				$latitude = $output->results[0]->geometry->location->lat;
+				$longitude = $output->results[0]->geometry->location->lng;
 			}
 			/* End of lat and long 22-July-2014 */
 			$contractfrom = $this->input->post('contractfrom');
@@ -292,7 +294,7 @@ class Admin extends CI_Controller
 				 $sports='';
 			}
 				
-			$this->Home_Model->add_hotel($left_ban2,$country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo, $geoCoordinates);
+			$this->Home_Model->add_hotel($left_ban2,$country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo, $latitude, $longitude);
 			$hotelid_id = $this->db->insert_id();
 			$hotelcode="H".$hotelid_id;
 			$this->Home_Model->add_hotelcode($hotelcode,$hotelid_id);
@@ -420,11 +422,13 @@ class Admin extends CI_Controller
 			$geocode = @file_get_contents("http://maps.google.com/maps/api/geocode/json?address=$geo_info");
 			//print_r($geocode);
 			//exit;
-			$geoCoordinates = '';
+			$latitude = '';
+			$longitude = '';
 			if ($geocode)
 			{
 				$output = json_decode($geocode);
-				$geoCoordinates = $output->results[0]->geometry->location->lat.','.$output->results[0]->geometry->location->lng;
+				$latitude = $output->results[0]->geometry->location->lat;
+				$longitude = $output->results[0]->geometry->location->lng;
 			}
 			/* End of lat and long 22-July-2014 */
 			//exit;
@@ -442,34 +446,34 @@ class Admin extends CI_Controller
 			$carparking = $this->input->post('carparking');
 			$sports1 = $this->input->post('sports');
 			//$sports = $sports."#";
-			if($sports1!=""){
-			  $flag1=0;
-			  foreach($sports1 as $sport){
-			  $sports .= $sport."#";
-			  $flag1=1;
-			  }
-			  if($flag1==1){
-			  $sports=rtrim($sports);
-			  } 
-			} else
+			$sports = '';
+			if ($sports1 != "") {
+				$flag1 = 0;
+				foreach($sports1 as $sport) {
+					$sports .= $sport."#";
+					$flag1 = 1;
+				}
+				if ($flag1 == 1) {
+					$sports = rtrim($sports);
+				} 
+			} 
+			else
 			{
-				 $sports='';
+				$sports = '';
 			}
-			$this->Home_Model->edit_hotel($country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo,$id, $geoCoordinates);
-			
+			$status = 1;
+			$this->Home_Model->edit_hotel($country,$city,$hotelname,$starrating,$address,$postalcode,$contactno,$faxno,$checkintime,$checkouttime,$hoteldesc,$avarageprice,$hotelcode,$contractfrom,$contractto,$directorsales,$salespersonname,$salesno,$salesemail,$extranetpersonname,$extranetnumber,$extranetemail,$hoteldescmore,$internetfacility,$carparking,$sports,$status,$geo,$id, $latitude, $longitude);
 			$facility = $this->input->post('facility');
 			$sql=mysql_query("delete from  hotel_facilities where HotelCode='".$hotelcode."'");
 			
-			if($facility!=""){
-			for($i = 0; $i < count($facility); $i++)  {
-			$this->Home_Model->add_facility($hotelcode,$facility[$i]);
-			$facility_id = $this->db->insert_id();
-			$facilitycode="F".$facility_id;
-			$this->Home_Model->add_facilitycode($facilitycode,$facility_id);
-		}  }
-			
-			
-			
+			if ($facility!="") {
+				for ($i = 0; $i < count($facility); $i++) {
+					$this->Home_Model->add_facility($hotelcode,$facility[$i]);
+					$facility_id = $this->db->insert_id();
+					$facilitycode="F".$facility_id;
+					$this->Home_Model->add_facilitycode($facilitycode, $facility_id);
+				} 
+			}
 			redirect('admin/edithotel/'.$id,'refresh');
 		}
 		else

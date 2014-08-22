@@ -516,7 +516,7 @@ top: 0;
 					$('#result').html(data.hotel_search_result);
 					clear_markers();
 					map_markers(data.coordinates);
-					map.setCenter(new google.maps.LatLng(data.center['latitude'], data.center['longtitude']));
+					map.setCenter(new google.maps.LatLng(data.center['latitude'], data.center['longitude']));
 					$('#land_marks').html(data.land_marks);
 				}
 				else
@@ -606,7 +606,7 @@ $(document).ready(function()
         // Update the count
        $("#hotelCount").text(count);	
         
-    });   
+    }); 
 	
 	$("#searchDetails").click(function(){
 		
@@ -619,13 +619,10 @@ $(document).ready(function()
 		{
 			$("#searchDetails").removeClass('modify_search_icon1');
 			$("#searchDetails").addClass('modify_search_icon');
-		}			
-			$("#searchDetails_block").slideToggle();
-			
+		}
+		$("#searchDetails_block").slideToggle();
 	});
-        
-        $("#modifysearch").click(function(){
-		
+		$("#modifysearch").click(function(){
 		if ($('#modifysearch_block').css('display') == 'none') 
 		{
 			$("#modifysearch").removeClass('modify_search_icon');
@@ -635,12 +632,10 @@ $(document).ready(function()
 		{
 			$("#modifysearch").removeClass('modify_search_icon1');
 			$("#modifysearch").addClass('modify_search_icon');
-		}			
+		}
 			$("#modifysearch_block").slideToggle();
-			
 	});
-	
-	
+
 	$("#facilityDetails").click(function(){
 		
 		if ($('#facilities_block').css('display') == 'none') 
@@ -652,12 +647,9 @@ $(document).ready(function()
 		{
 			$("#facilityDetails").removeClass('modify_search_icon1');
 			$("#facilityDetails").addClass('modify_search_icon');
-		}			
+		}
 			$("#facilities_block").slideToggle();
-			
 	});
-	
-    
 });
 
 

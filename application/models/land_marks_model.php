@@ -37,7 +37,7 @@ class Land_Marks_Model extends CI_Model {
 	 */
 	public function get_land_mark($land_mark_id = '')
 	{
-		$this->db->select('latitude, longtitude, citycode')
+		$this->db->select('name, latitude, longitude, citycode')
 		->from('land_marks');
 		$this->db->where('id', $land_mark_id);
 		$this->db->order_by('type');
@@ -51,15 +51,15 @@ class Land_Marks_Model extends CI_Model {
 	/**
 	 * Function get_land_marks_and_distance()
 	 * Returns the land marks and distance based 
-	 * on the latitude and longtitude value
+	 * on the latitude and longitude value
 	 * Author Megamind computing solutions
 	 * Params $city_code as string, $given_latitude as string 
-	 * and $given_longtitude as string
+	 * and $given_longitude as string
 	 * @return array();
 	 */
-	public function get_land_marks_and_distance($city_code = '', $given_latitude = '', $given_longtitude = '')
+	public function get_land_marks_and_distance($city_code = '', $given_latitude = '', $given_longitude = '')
 	{
-		$que = "SELECT *, ( 3959 * acos( cos( radians($given_latitude) ) * cos( radians( latitude ) ) *  cos( radians( longtitude ) - radians($given_longtitude) ) + sin( radians($given_latitude) ) * sin( radians( latitude ) ) ) ) AS distance FROM land_marks WHERE  citycode = '$city_code' ORDER BY type";
+		$que = "SELECT *, ( 3959 * acos( cos( radians($given_latitude) ) * cos( radians( latitude ) ) *  cos( radians( longitude ) - radians($given_longitude) ) + sin( radians($given_latitude) ) * sin( radians( latitude ) ) ) ) AS distance FROM land_marks WHERE  citycode = '$city_code' ORDER BY type";
 		$query = $this->db->query($que);
 		if ($query->num_rows() =='') {
 			return '';

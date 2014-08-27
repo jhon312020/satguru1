@@ -501,13 +501,13 @@ top: 0;
 	{
 		filter();
 	});
-	$(document).on('click', ".click_land_mark", function(){ 
+	$(document).on('change', ".click_land_mark", function(){ 
 		$('#result').html('<div id="progressbar" style=" margin-top:70px;" align="center"><img src="<?php echo base_url();?>assets/images/ajax-loader1.gif" width="" /></div>');
 		$('#map_canvas').hide();
 		$('#progressbar-map').show();
 		$.ajax({
 			type: 'POST',
-			data: {land_mark_id: this.id},
+			data: {land_mark_id: $(this).val()},
 			dataType: 'json',
 			url: '<?php echo site_url(); ?>'+'/ajax/land_mark',
 			success: function(data) {

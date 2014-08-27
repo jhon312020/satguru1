@@ -3,6 +3,11 @@
 	$latitude = $result->latitude;
 	$longitude = $result->longitude;
 	$address = preg_replace("/[^a-z0-9_-]/i", " ",  $result->Address).'   '.$result->Location.'   '.$result->PostalCode;
+	if (!isset($_SESSION['center_coordinates']))
+	{
+		$_SESSION['center_coordinates']['latitude'] = $latitude;
+		$_SESSION['center_coordinates']['longitude'] = $longitude;
+	}
 	$_SESSION['coordinates'][] = array('name'=>$result->HotelName,'latitude'=>$latitude,'longitude'=>$longitude, 'address'=>$address);
 	$image = $result->FrontPgImage;
 	$totalPriceAry[]=$result->AvgPrice;

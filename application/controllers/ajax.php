@@ -37,7 +37,14 @@ class Ajax extends CI_Controller {
 			//print_r($land_mark);
 			if ($land_mark)
 			{
-				$result = array_merge_recursive($_SESSION['hotelspro_xml_data'], $_SESSION['asiantravel_xml_data']);
+				if ($_SESSION['hotelspro_xml_data'] && $_SESSION['asiantravel_xml_data'])
+				{
+					$result = array_merge_recursive($_SESSION['hotelspro_xml_data'], $_SESSION['asiantravel_xml_data']);
+				}
+				else
+				{
+					$result = $_SESSION['hotelspro_xml_data'];
+				}
 				//print_r($result);
 				if ($result)
 				{
@@ -55,7 +62,14 @@ class Ajax extends CI_Controller {
 					$grouped_list = $this->_generate_group_list($result, 'hotel_code');
 					if ($land_mark_list_own)
 					{
-						$land_mark_list = array_merge_recursive($land_mark_list_own, $land_mark_list);
+						if ($land_mark_list)
+						{
+							$land_mark_list = array_merge_recursive($land_mark_list_own, $land_mark_list);
+						}
+						else
+						{
+							$land_mark_list = $land_mark_list_own;
+						}
 						usort($land_mark_list, array($this, '_sort_by_distance'));
 					}
 					//echo '<br/> count Own:'. count($land_mark_list_own);
@@ -64,6 +78,7 @@ class Ajax extends CI_Controller {
 					//print_r($land_mark_list);
 					//exit;
 					$land_marks['land_marks'] = $this->Land_Marks_Model->get_land_marks_and_distance($land_mark->citycode, $land_mark->latitude, $land_mark->longitude);
+					$land_marks['land_mark_id'] = $land_mark_id;
 					$land_mark_result = $this->load->view('hotel/land_marks_result', $land_marks, true);
 					//$center_coordinates['latitude'] = $land_mark->latitude;
 					//$center_coordinates['longitude'] = $land_mark->longitude;

@@ -335,4 +335,23 @@ function update_currency()
 
 				</ul>
 			</div>
+			<div class="subnav">
+				<div class="subnav-title">
+					<a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span>Country</span></a>
+				</div>
+				<ul class="subnav-menu">
+					<li class='dropdown'>
+						<a href="#" data-toggle="dropdown">Manage Country</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="<?php echo WEB_URL_ADMIN ?>country/add">Add Country</a>
+							</li>
+							<li>
+								<a href="<?php echo WEB_URL_ADMIN ?>country/listing">Manage Country</a>
+							</li>
+						</ul>
+					</li>
+
+				</ul>
+			</div>
 		</div>

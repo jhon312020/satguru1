@@ -1410,8 +1410,8 @@ class Admin extends CI_Controller
 	{
 		if($this->session->userdata('admin_id')!='')
 		{
-			$orgroom_id = $this->uri->segment(5);
-			$hotelid = $this->uri->segment(4);
+			$orgroom_id = $this->uri->segment($this->uri->total_segments());
+			$hotelid = $this->uri->segment(($this->uri->total_segments() - 1));
 			//$room_id1=substr($orgroom_id,1);
 			$ext = $orgroom_id."/".$hotelid;
 			$this->Home_Model->delete_price($id);

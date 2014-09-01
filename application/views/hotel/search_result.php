@@ -247,7 +247,8 @@ top: 0;
 					</div>
                     <input type="hidden" id="setMinPrice" value="0" />
 					<input type="hidden" id="setMaxPrice" value="0" />
-					<input type="hidden" id="setCurrency" value="SGD" />
+					<?php //<input type="hidden" id="setCurrency" value="SGD" /> ?>
+					<input type="hidden" id="setCurrency" value="USD" />
                    <!--####################### FLIGHT LIST END ####################################-->
                 </div>
           </div>
@@ -289,7 +290,8 @@ top: 0;
     <script type="text/javascript">
 	$(document).ready(function()
 	{
-		function initialize(coordinates, land_mark = null) {
+		var land_mark = null;
+		function initialize(coordinates, land_mark) {
 			var mapOptions = {
 				zoom: 10,
 				center: new google.maps.LatLng(coordinates[0]['latitude'], coordinates[0]['longitude'])

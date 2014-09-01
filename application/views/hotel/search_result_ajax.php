@@ -32,7 +32,8 @@
 					$image = base_url().'assets/images/img/noimagefound.jpg';
 				}
 				$totalPriceAry[] = $res_total_cost;
-				$currency = 'SGD';
+				//$currency = 'SGD';
+				$currency = 'USD';
 				$link = 'index.php/hotel/hotel_details/'.$res_hotel_code.'/'.base64_encode($res_api);
 ?>
 				<div class="bg_whight searchhotel_box margin_bottom10">
@@ -75,9 +76,9 @@
 							<div style="width: 114px; float: left;">
 							   <div class="hotel_price_part">
 									<!--<span class="details_price_small_txt" style="color:#333;"><?php// echo 'SGD  '.$result[$i]->AvgPrice; ?></span><br />-->
-									<span class="text6" style="text-align:center; color: #B31111; font-size:19px;"><strong><?php echo 'SGD '; ?></strong><strong><?php echo $res_total_cost; ?></strong></span>                
+									<span class="text6" style="text-align:center; color: #B31111; font-size:19px;"><strong><?php echo 'USD '; ?></strong><strong><?php echo $res_total_cost; ?></strong></span>                
 									<?php if(isset($result_data[$i]['max_price']) && !empty($result_data[$i]['max_price'])) { ?>
-									<span style="font-family: arial; font-size: 15px; text-decoration: line-through; color: rgb(255, 115, 0);"> <?php echo $result_data[$i]['max_price']; ?> SGD<br></span>
+									<span style="font-family: arial; font-size: 15px; text-decoration: line-through; color: rgb(255, 115, 0);"> <?php echo $result_data[$i]['max_price']; ?> USD<br></span>
 									<?php } ?>
 									<span class="detail_txt1">
 									<br>

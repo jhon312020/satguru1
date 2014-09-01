@@ -15,23 +15,8 @@
           </ul>
         </div>
       </div>
-      
+		<?php echo $this->session->flashdata('message'); ?>
     </div>
-    <script type="text/javascript"  language="javascript">
-			  function confirm_update(id,del_status)
-			  {
-				  var st = (del_status==0)?'Active':'Inactive';
-				  var r=confirm("Are you sure you want to change Status to "+st+"?");
-			  if (r==true)
-				{
-				self.location="<?php echo WEB_URL_ADMIN ?>admin/change_hotelstatus/"+id+"/"+del_status;
-				}
-			  else
-				{
-				
-				}
-			  }
-			  </script>
     <div class="box box-color box-bordered red">
       <div class="box-title">
         <h3> <i class="icon-table"></i> Manage Country Details </h3>
@@ -57,9 +42,9 @@
               <td><?php echo $i; ?></td>
               <td><?php echo $data['name']; ?></td>
               <td class='hidden-350'><?php echo $data['phonecode']; ?></td>
-              <td class=''><?php echo anchor('country/modify/'.$data['country_id'], 'Edit')
+              <td class=''><?php echo anchor('country/update/'.$data['country_id'], 'Edit')
 . ' / '
-. anchor('country/remove/'.$data['country_id'], 'Delete'); ?></td>
+. anchor('country/delete/'.$data['country_id'], 'Delete', array('onclick' => "return confirm('Are you sure you want to delete?')")); ?></td>
             </tr>
             <?php $i++; endforeach;  } } ?>
           </tbody>

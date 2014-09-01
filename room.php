@@ -85,20 +85,21 @@
 		$discountrate = mysql_query("select discountrate from  hotel_price_discount where '".$newdate."' between discountfrom and  discountto  and HotelCode='".$hotelIds."' and Roomcode='".$hotelRoomRow['RoomCode']."'");
 		$numfetchdiscount = mysql_num_rows($discountrate);
 		$fetchdiscount = mysql_fetch_array($discountrate);
-		$discountrate=$fetchdiscount['discountrate'];
-		if($numfetchdiscount>0)
+		if($numfetchdiscount > 0)
 		{
-			$totalprice1 = $totalprice/$discountrate;
-			$totalprice = $totalprice-$totalprice1;
+			$discountrate = $fetchdiscount['discountrate'];
+			$totalprice1 = ($totalprice * $discountrate) / 100;
+			$totalprice = $totalprice - $totalprice1;
 		}
 		// hotel_roompricediscount
 		$roomprice = mysql_query("select pricerate from  hotel_roompricediscount where '".$newdate."' between pricefrom and  priceto  and HotelCode='".$hotelIds."' and Roomcode='".$hotelRoomRow['RoomCode']."'");
 		$numfetchpricediscount = mysql_num_rows($roomprice);
 		$fetchdiscountprice = mysql_fetch_array($roomprice);
-		$discountpricerate = $fetchdiscountprice['pricerate'];
-		if($numfetchpricediscount>0)
+		if($numfetchpricediscount > 0)
 		{
-			$totalprice = $totalprice-$discountpricerate;
+			$discountpricerate = $fetchdiscountprice['pricerate'];
+			$discount_room_price = ($totalprice * $discountpricerate) / 100;
+			$totalprice = $totalprice - $discount_room_price;
 		}
 		// Pay stay Promotion
 		//echo "select * from hotel_paystaypromo where '".$newdate."' between ratefrom and rateto and HotelCode='".$hotelIds."' and Roomcode='".$hotelRoomRow['RoomCode']."'";

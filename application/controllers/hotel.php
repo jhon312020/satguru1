@@ -2,7 +2,8 @@
 
 class Hotel extends CI_Controller {
 	private $ses_id;
-	public $base_currency = 'SGD';
+	//public $base_currency = 'SGD';
+	public $base_currency = 'USD';
 	public $domain;
 
 	function __construct()

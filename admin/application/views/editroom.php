@@ -157,73 +157,39 @@ function airlinname_empty(val)
                   </div>
                 </div> <br>
                 
-                 <?php $fa1 = $fa2 = $fa3 = $fa4 = $fa5 = $fa6 = $fa7 = $fa8 = $fa9 = $fa10 = $fa11 = $fa12 = $fa13 = $fa14 = $fa15 = ''; $i =1; if(isset($aminity)) { if($aminity != '') { foreach($aminity as $list) { ?> 
+                 <?php $fa1 = $fa2 = $fa3 = $fa4 = $fa5 = $fa6 = $fa7 = $fa8 = $fa9 = $fa10 = $fa11 = $fa12 = $fa13 = $fa14 = $fa15 = ''; $i =1; 
+                 if(isset($aminity)) { if($aminity != '') { foreach($aminity as $list) { ?> 
           <?php  
-			
 	  		  if($list->RoomAmenities=='air conditioning')
-			   	$fa1='yes';
-					else
-				$fa1='';
-				
+				$fa1='yes';
 			 if($list->RoomAmenities=='separate shower and tub')
 			  $fa2='yes';
-					else
-				$fa2='';
 			 if($list->RoomAmenities=='ironing facilities')
 			   	$fa3='yes';
-					else
-				$fa3='';
 			 if($list->RoomAmenities=='mini bar')
 			   	$fa4='yes';
-					else
-				$fa4='';
 			 if($list->RoomAmenities=='daily newspaper')
 			   	$fa5='yes';
-					else
-				$fa5='';
-				
 			 if($list->RoomAmenities=='desk')
 			   	$fa6='yes';
-					else
-				$fa6='';
-				
 			 if($list->RoomAmenities=='shower')
 			   	$fa7='yes';
-					else
-				$fa7='';
 			 if($list->RoomAmenities=='complimentary bottled water')
 			   	$fa8='yes';
-					else
-				$fa8='';
 			 if($list->RoomAmenities=='satellite/cable TV')
 			   	$fa9='yes';
-					else
-				$fa9='';
 			 if($list->RoomAmenities=='bathtub')
 			   	$fa10='yes';
-					else
-				$fa10='';
-				
 			 if($list->RoomAmenities=='hair dryer')
-			   	$fa11='yes';
-					else
 				$fa11='';
 			 if($list->RoomAmenities=='bathrobes')
 			   	$fa12='yes';
-					else
-				$fa12=''; 
 			if($list->RoomAmenities=='seating area')
 			 $fa13='yes';
-					else
-				$fa13=''; 
 			if($list->RoomAmenities=='Free WiFi')
 			   	$fa14='yes';
-					else
-				$fa14='';
 			 if($list->RoomAmenities=='coffee/tea maker')
 			   $fa15='yes';
-					else
-				$fa15=''; 
 		   ?>
           
           <?php }}}?> 

@@ -35,7 +35,7 @@
 							<div class="box-content">
 							<?php
 								$this->load->helper('form');
-								echo form_open('country/update');
+								echo form_open('country/update_country');
 								echo form_fieldset('Edit country');
 								echo form_label('Country Name: ');
 								echo form_input('country_name', $view_data['name']);

@@ -6,9 +6,10 @@
 	$latitude = '';
 	$longitude = '';
 	//print_r($hotel_details);
-	if ($hotel_details && $hotel_details->geo_coordinates)
+	if ($hotel_details)
 	{
-		list($latitude, $longitude) = explode(',', $hotel_details->geo_coordinates);
+		$latitude = $hotel_details->latitude;
+		$longitude = $hotel_details->longitude;
 	}
 ?>
 <script type="text/javascript" src="<?php echo base_url()?>assets/Validation/js/jquery.validationEngine.js"></script>
